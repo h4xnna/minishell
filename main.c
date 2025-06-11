@@ -1,6 +1,44 @@
 # include "minishell.h"
 #include <string.h>
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
 
+	i = 0;
+	while (s1[i] == s2[i] && (s1[i] != '\0' && s2[i] != '\0'))
+		i++;
+	return (s1[i] - s2[i]);
+
+}
+
+void	exec(t_list *list, char **env)
+{
+	t_data *data = list->begin;
+	pid_t pid;
+	int status;
+
+	while (data)
+	{
+		if (ft_strcmp(data->type, "CMD") == 0)
+		{
+			
+			pid = fork();
+			if (pid < 0)
+			{
+				perror("fork failed");
+				exit(EXIT_FAILURE);
+			}
+			else if (pid == 0)
+			{
+				execve(data->word, data->args, env);
+				perror("execve failed");
+				exit(EXIT_FAILURE);
+			}
+		}
+		data = data->next;
+	}
+	waitpid(-1, &status, 0);	
+}
 
 // int return_code(char *const argv[])
 // {
@@ -205,17 +243,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	strcat = ft_strcat(s1, s2);
 	return (strcat);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && (s1[i] != '\0' && s2[i] != '\0'))
-		i++;
-	return (s1[i] - s2[i]);
-
 }
 
 int	ft_strlen_cmd(t_data *data)
@@ -433,27 +460,18 @@ void	get_args_cmd(t_data *data, t_list *list)
 	}
 }
 
-int	is_cmd(char *word)
+int	is_cmd(char *word, t_data *data)
 {
-	char *cmds[] = {"ls", "grep", "cat", "export",
-	"echo", "cd", "unset", "pwd", "mkdir", "rem", "chmod",
-	"touch", "env", "expr", "exit", "whoami",
-	"ifconfig", "whereis", "time", "sleep", NULL};
-	int	i;
+	char	*path;
+	char	*slash;
+	char	*str;
+	char	cmd[256];
+	int		i;
+	int		j;
+	struct 	stat check;
 
+	path = getenv("PATH");
 	i = 0;
-	while (cmds[i])
-	{
-		if (ft_strcmp(word, cmds[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	is_cmd2(char *word)
-{
-	struct stat check;
 	if (access(word, X_OK) == 0)
 	{
 		if (stat(word, &check) == 0)
@@ -462,6 +480,28 @@ int	is_cmd2(char *word)
 				return (1);
 		}
 	}
+	while (path[i])
+	{
+		j = 0;
+		while (path[i] && path[i] != ':')
+			cmd[j++] = path[i++];
+		cmd[j] = '\0';
+		slash = ft_strjoin(cmd, "/");
+		str = ft_strjoin(slash, word);
+		if (access(str, X_OK) == 0)
+		{
+			if (stat(str, &check) == 0)
+			{
+				if (S_ISREG(check.st_mode))
+				{
+					data->word = ft_strdup(str);
+					return (1);
+				}
+			}
+		}
+		i++;
+	}
+	
 	return (0);
 }
 
@@ -470,9 +510,7 @@ void	get_type(t_data *data, t_list *list)
 	data = list->begin;
 	while (data)
 	{
-		if (is_cmd(data->word))
-			data->type = "CMD";
-		else if(is_cmd2(data->word))
+		if (is_cmd(data->word, data))
 			data->type = "CMD";
 		else if (ft_strcmp(data->word, ">") == 0)
 			data->type = "REDIR_OUT";
@@ -538,6 +576,8 @@ void	single_quote_pars(t_data *data, char *args)
 		data->retour[data->j++] = args[data->i++];
 	if (args[data->i] == '\'')
 		data->i++;
+	else
+		exit (1);
 }
 
 void	expansion(t_data *data, char *args)
@@ -596,6 +636,8 @@ void	double_quotes_pars(t_data *data, char *args)
 	}
 	if (args[data->i] == '"')
 		data->i++;
+	else 
+		exit (1);
 }
 
 // void	return_code(t_data *data, char *args)
@@ -617,16 +659,21 @@ void	double_quotes_pars(t_data *data, char *args)
 
 void	dollar_pars(t_data *data, char *args)
 {
+	char c;
+
 	data->i++;
 	if (is_digit(args[data->i]) || is_quote(args[data->i]))
 	{
+		c = args[data->i];
 		data->i++;
 		if (is_quote(args[data->i - 1]))
 		{
-			while (!is_quote(args[data->i]))
+			while (args[data->i] && !is_quote(args[data->i]))
 				data->retour[data->j++] = args[data->i++];
-			if (is_quote(args[data->i]))
+			if (args[data->i] == c)
 				data->i++;
+			else
+				exit (1);
 		}
 		while (is_digit(args[data->i]))
 			data->i++;
@@ -701,7 +748,8 @@ int	main(int ac, char **av, char **env)
 		get_type(data, list);
 		get_args_cmd(data, list);
 		get_file(list);
-		print_list(list);
+		// print_list(list);
+		exec(list, env);
 		rl_redisplay();
 		free_list(list);
 	}
