@@ -1,5 +1,5 @@
 # include "minishell.h"
-void get_word(t_list *list, char *args, t_data *data)
+void get_word(t_list *list, char *args, t_data *data, t_global global)
 {
 	while (args[data->i] == ' ')
 		data->i++;
@@ -14,7 +14,7 @@ void get_word(t_list *list, char *args, t_data *data)
 		else if (is_operator(args[data->i]))
 			operator_pars(list, data, args);
 		else if (args[data->i] == '$')
-			dollar_pars(data, args);
+			dollar_pars(data, args, global);
 		else
 			data->retour[data->j++] = args[data->i++];
 	}
@@ -33,7 +33,11 @@ void	node_creation(t_list *list, char *retour)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		exit (1);
-	data->word = ft_strdup(retour);
+	ft_memset(data, 0, sizeof(t_data));
+	if (retour[0] != '\0')
+		data->word = ft_strdup(retour);
+	else
+		data->word = ft_strdup(" ");
 	data->next = NULL;
 	data->back = NULL;
 	if (list->end == NULL)
@@ -54,7 +58,7 @@ void	initialisation(t_data *data, char *args, char **env)
 	data->i = 0;
 	data->j = 0;
 	data->k = 0;
-	data->index = 0;
+	data->args = NULL;
 	data->len = ft_strlen(args);
 	data->retour = malloc(sizeof(char) * (data->len + 1));
 }

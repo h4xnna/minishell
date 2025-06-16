@@ -7,7 +7,7 @@ void	get_file(t_list *list)
 	data = list->begin;
 	while (data)
 	{
-		if (ft_strcmp(data->type, "REDIR_OUT") == 0 || ft_strcmp(data->type, "REDIR_IN") == 0)
+		if (ft_strcmp(data->type, "REDIR_OUT") == 0 || ft_strcmp(data->type, "REDIR_IN") == 0 || ft_strcmp(data->type, "REDIR_OUT_APPEND") == 0)
 		{
 			if (data->next && ft_strcmp(data->next->type, "ARG") == 0)
 				data->next->type = "FILE";
@@ -24,7 +24,7 @@ void	get_file(t_list *list)
 	}
 }
 
-void	exec(t_list *list, char **env)
+void	exec(t_list *list, char **env, t_global global)
 {
 	t_data *data = list->begin;
 	int	cmds_numb = get_cmd_nb(data);
@@ -79,21 +79,21 @@ void	exec(t_list *list, char **env)
 	{
 		ft_close_all_pipes(pipefd, data, list);
 	}
-	i = 0;
 	while (k < cmds_numb)
 	{
 		if (waitpid(pid[k], &status, 0) == -1)
 		{
-			// perror("waitpid");
+			perror("waitpid");
 			return ;
 		}
 		if (k == cmds_numb - 1)
 		{
 			if (WIFEXITED(status))
-				data->rcode = WEXITSTATUS(status);
+				g_r_code = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
-				data->rcode = WTERMSIG(status) + 128;
+				g_r_code = WTERMSIG(status) + 128;
 		}
+		k++;
 	}
 	if (cmds_numb > 1) 
 	{

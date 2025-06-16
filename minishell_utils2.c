@@ -36,3 +36,20 @@ int	ft_strlen_cmd(t_data *data)
 	}
 	return (i);
 }
+
+void	*ft_memset(void *str, int c, size_t len)
+{
+	size_t i;
+	char ch;
+	char *s;
+
+	s = str;
+	ch = c;
+	i = 0;
+	while(i < len)
+	{
+		s[i] = ch;
+		i++;
+	}
+	return (str);
+}

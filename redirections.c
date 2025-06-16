@@ -79,6 +79,46 @@ void	ft_redir_out(t_data *data)
 	}
 }
 
+int	is_redir_out_append(t_data *data)
+{
+	while (data)
+	{
+		if (ft_strcmp(data->type, "REDIR_OUT_APPEND") == 0)
+			return (1);
+		data = data->next;
+	}
+	return (0);
+}
+
+
+void	ft_redir_out_append(t_data *data)
+{
+	int fd_outfile;
+	while (data)
+	{
+		if (ft_strcmp(data->type, "REDIR_OUT_APPEND") == 0)
+		{
+			while (data)
+			{
+				if (ft_strcmp(data->type, "FILE") == 0 && data->word != NULL)
+				{
+					fd_outfile = open(data->word, O_CREAT | O_WRONLY | O_APPEND, S_IRUSR | S_IWUSR);
+					if (fd_outfile < 0)
+					{
+						perror("open failed");
+						exit(EXIT_FAILURE);
+					}
+					dup2(fd_outfile, STDOUT_FILENO);
+					close(fd_outfile);
+					break;
+				}
+				data = data->next;
+			}
+		}
+		data = data->next;
+	}
+}
+
 void	search_redir(t_data * data)
 {
 	while (data && ft_strcmp(data->type, "PIPE"))
@@ -87,6 +127,8 @@ void	search_redir(t_data * data)
 			ft_redir_in(data);
 		if (is_redir_out(data))
 			ft_redir_out(data);
+		if (is_redir_out_append(data))
+			ft_redir_out_append(data);
 		data = data->next;
 	}
 }

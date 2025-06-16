@@ -66,7 +66,7 @@ void	double_quotes_pars(t_data *data, char *args)
 		exit (1);
 }
 
-void	dollar_pars(t_data *data, char *args)
+void	dollar_pars(t_data *data, char *args, t_global global)
 {
 	char c;
 
@@ -91,7 +91,7 @@ void	dollar_pars(t_data *data, char *args)
 		data->retour[data->j++] = '$';
 	else if (args[data->i] == '?')
 	{
-		return_code(data, args);
+		return_code(data, args, global);
 		data->i++;
 	}
 	else

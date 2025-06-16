@@ -1,19 +1,5 @@
 # include "minishell.h"
 
-int	get_cmd_nb(t_data *data)
-{
-	int cmds_numb;
-
-	cmds_numb = 0;
-	while (data)
-	{
-		if (ft_strcmp(data->type, "CMD") == 0)
-			cmds_numb++;
-		data = data->next;
-	}
-	return (cmds_numb);
-}
-
 void	ft_first_cmd(int **pipefd, int i)
 {
 	dup2(pipefd[i][1], STDOUT_FILENO);

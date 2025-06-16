@@ -7,10 +7,17 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include <string.h>
+
+int	g_r_code;
+
+typedef struct s_global
+{
+	int index;
+}t_global;
 
 typedef struct s_data
 {
@@ -22,7 +29,6 @@ typedef struct s_data
 	int				j;
 	int				k;
 	int				len;
-	int				rcode;
 	char			*retour;
 	struct s_data	*next;
 	struct s_data	*back;
@@ -47,7 +53,7 @@ int		is_redir_in(t_data *data);
 void	ft_redir_in(t_data *data);
 int		is_redir_out(t_data *data);
 void	ft_redir_out(t_data *data);
-void	exec(t_list *list, char **env);
+void	exec(t_list *list, char **env, t_global global);
 int		ft_strlen(char const *args);
 char	*ft_realloc(char *expanded, char *retour, t_data *data);
 int		is_quote(char c);
@@ -75,9 +81,14 @@ void	single_quote_pars(t_data *data, char *args);
 void	expansion(t_data *data, char *args);
 void	double_quotes_expansion(t_data *data, char *args);
 void	double_quotes_pars(t_data *data, char *args);
-void	return_code(t_data *data, char *args);
-void	dollar_pars(t_data *data, char *args);
-void 	get_word(t_list *list, char *args, t_data *data);
+void	return_code(t_data *data, char *args, t_global global);
+void	dollar_pars(t_data *data, char *args, t_global global);
+void	get_word(t_list *list, char *args, t_data *data, t_global global);
 void	initialisation(t_data *data, char *args, char **env);
 void	search_redir(t_data * data);
+int		is_redir_out_append(t_data *data);
+void	ft_redir_out_append(t_data *data);
+void	*ft_memset(void *str, int c, size_t len);
+int		signal_handlers(t_global global);
+void	signal_handler(int signum);
 #endif

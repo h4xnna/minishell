@@ -1,12 +1,11 @@
 # include "minishell.h"
 
-int	is_operator2(char *word)
+int	is_operator2(char *word) 
 {
 	char *operators[] = {"|", ">", "<", ">>", NULL};
 	int i = 0;
 
-	while (operators[i]) 
-	{
+	while (operators[i]) {
 		if (ft_strcmp(word, operators[i]) == 0)
 			return (1);
 		i++;
@@ -26,12 +25,12 @@ void	fill_args_cmd(t_data *data, int k)
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
-			cmd->args[k] = data->word;
+			cmd->args[k] = ft_strdup(data->word);
 			k++;
 		}
 		else if (ft_strcmp(data->type, "ARG") == 0)
 		{
-			cmd->args[k] = data->word;
+			cmd->args[k] = ft_strdup(data->word);
 			k++;
 		}
 		data = data->next;
@@ -56,4 +55,18 @@ void	get_args_cmd(t_data *data, t_list *list)
 		else
 			data = data->next;
 	}
+}
+
+int	get_cmd_nb(t_data *data)
+{
+	int cmds_numb;
+
+	cmds_numb = 0;
+	while (data)
+	{
+		if (ft_strcmp(data->type, "CMD") == 0)
+			cmds_numb++;
+		data = data->next;
+	}
+	return (cmds_numb);
 }
