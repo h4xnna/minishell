@@ -1,4 +1,4 @@
-# include "minishell.h"
+# include "../minishell.h"
 void get_word(t_list *list, char *args, t_data *data, t_global global)
 {
 	while (args[data->i] == ' ')
@@ -53,7 +53,7 @@ void	node_creation(t_list *list, char *retour)
 	}
 }
 
-void	initialisation(t_data *data, char *args, char **env)
+void	initialisation(t_data *data, char *args,char **env)
 {
 	data->i = 0;
 	data->j = 0;
@@ -61,4 +61,5 @@ void	initialisation(t_data *data, char *args, char **env)
 	data->args = NULL;
 	data->len = ft_strlen(args);
 	data->retour = malloc(sizeof(char) * (data->len + 1));
+	(void)env;
 }

@@ -23,5 +23,6 @@ int	signal_handlers(t_global global)
 	action.sa_flags = 0;
 	sigaction(SIGINT, &action, NULL);
 	sigaction(SIGQUIT, &action, NULL);
+	(void)global;
 	return (0);
 }

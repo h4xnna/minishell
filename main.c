@@ -1,10 +1,12 @@
-# include "minishell.h"
-int	g_r_code;
+#include "minishell.h"
+
+
+int g_r_code;
 void	print_list(t_list *list)
 {
 	t_data *data;
-	int	i;
-	int j;
+	// int i;
+	// int j;
 
 	data = list->begin;
 	// while (data)
@@ -36,14 +38,14 @@ void	print_list(t_list *list)
 	printf("\n");
 }
 
-void free_list(t_list *list)
+void	free_list(t_list *list)
 {
 	t_data *data;
 	t_data *temp;
 	int i;
 
 	if (!list)
-		return;
+		return ;
 	data = list->begin;
 	while (data)
 	{
@@ -67,7 +69,6 @@ void free_list(t_list *list)
 	}
 	list->begin = NULL;
 	free(list);
-	
 }
 
 void	get_type(t_data *data, t_list *list)
@@ -97,9 +98,9 @@ void	get_type(t_data *data, t_list *list)
 
 void	return_code(t_data *data, char *args, t_global global)
 {
-	int	i;
+	int i;
 	char *code;
-
+	(void)args;
 	i = 0;
 	if (global.index == 1)
 		data->retour[data->j++] = '0';
@@ -115,15 +116,17 @@ void	return_code(t_data *data, char *args, t_global global)
 int	main(int ac, char **av, char **env)
 {
 	t_list *list;
-	t_data	*data;
+	t_data *data;
 	t_global global;
+	global.index = 0;
 	char *args;
+	
 	signal_handlers(global);
 	while (1)
 	{
 		data = malloc(sizeof(t_data));
 		list = malloc(sizeof(t_list));
-		if (!list ||!data)
+		if (!list || !data)
 			return (0);
 		list->begin = NULL;
 		list->end = NULL;
@@ -131,7 +134,7 @@ int	main(int ac, char **av, char **env)
 		if (!args)
 		{
 			write(1, "exit\n", 5);
-			break;
+			break ;
 		}
 		add_history(args);
 		initialisation(data, args, env);
@@ -141,18 +144,20 @@ int	main(int ac, char **av, char **env)
 		get_args_cmd(data, list);
 		get_file(list);
 		// print_list(list);
+
 		data = list->begin;
 		while (data)
 		{
 			if (ft_strcmp(data->type, "CMD") == 0)
 			{
-				exec(list, env, global);
-				break;
+				// exec(list, env, global);
+				run_pipex(ac, av, env, data);
+				break ;
 			}
 			else
 			{
 				print_list(list);
-				break;
+				break ;
 			}
 			data = data->next;
 		}

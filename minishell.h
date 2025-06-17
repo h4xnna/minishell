@@ -11,8 +11,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+# include "libft/libft.h"
 
-int	g_r_code;
 
 typedef struct s_global
 {
@@ -40,55 +40,119 @@ typedef struct s_List
 	struct s_data	*end;
 }t_list;
 
-char	*ft_itoa(int n);
-char	ft_base(int number);
-int		ft_len (int n);
-int		ft_strcmp(char *s1, char *s2);
+
+
+typedef struct s_pipex
+{
+	int		infilefd;
+	int		outfilefd;
+	pid_t	*pid;
+	int		**pipefd;
+	int		count_cmd;
+}			t_pipex;
+
+extern int g_r_code;
+//args_cmd
+int		is_operator2(char *word);
+void	fill_args_cmd(t_data *data, int k);
+void	get_args_cmd(t_data *data, t_list *list);
 int		get_cmd_nb(t_data *data);
+
+//execution
+void	get_file(t_list *list);
+// void	exec(t_list *list, char **env, t_global global);
+int run_pipex(int ac, char **av, char **envp, t_data *data);
+
+void	child_process(t_pipex *pipex, int i, char **av, char **envp,  t_data *data);
+void	exect(char *command, char **envp, t_data *data);
+void	close_pipes(t_pipex *pipex);
+
+
+
+//expeansion
+char	*get_var_name(char *retour);
+char	*get_expand(char *retour);
+void	expansion(t_data *data, char *args);
+void	double_quotes_expansion(t_data *data, char *args);
+
+//itoa
+char	*ft_itoa(int n);
+
+//list_creation
+void	get_word(t_list *list, char *args, t_data *data, t_global global);
+void	node_creation(t_list *list, char *retour);
+void	initialisation(t_data *data, char *args,char **env);
+
+//main
+void	print_list(t_list *list);
+void	free_list(t_list *list);
+void	get_type(t_data *data, t_list *list);
+void	return_code(t_data *data, char *args, t_global global);
+
+//minishell_utils
+// int		ft_strchr(char *left_char, char c);
+// char	*ft_strdup(char *s1);
+// char	*ft_strcat(char const *s1, char const *s2);
+// char	*ft_strjoin(char const *s1, char const *s2);
+// // int		ft_strlen(char const *args);
+// size_t  ft_strlen(const char *s);
+char	*ft_realloc(char *expanded, char *retour, t_data *data);
+int		ft_strcmp(char *s1, char *s2);
+
+//minishell_utils2
+int		is_quote(char c);
+int		is_digit(char c);
+int		is_operator(char c);
+int		ft_strlen_cmd(t_data *data);
+void	*ft_memset(void *str, int c, size_t len);
+
+//parsing_function
+void	space_pars(t_list *list, t_data *data);
+void	operator_pars(t_list *list, t_data *data, char *args);
+void	single_quote_pars(t_data *data, char *args);
+void	double_quotes_pars(t_data *data, char *args);
+void	dollar_pars(t_data *data, char *args, t_global global);
+
+//path_cmmand
+int		is_cmd(char *word, t_data *data);
+char	*find_path(char *cmd, char **envp);
+
+//utils
+void	ft_free_split(char **split);
+int	open_infile(int infilefd, char *infile);
+t_pipex	*init_pipex(int ac, char **av);
+void	close_pipes(t_pipex *pipex);
+int	word_lenght(char const *s, char c);
+int	get_out_lenght(char const *s, char c);
+char	*special_strdup(char const *s, char c, int *outi);
+char	**ft_split(char const *s, char c);
+void	free_split(char **out, int i);
+void	*ft_calloc(size_t nmemb, size_t size);
+
+
+
+//pipes
 void	ft_first_cmd(int **pipefd, int i);
 void	ft_middle_cmd(int **pipefd, int i);
 void	ft_last_cmd(int **pipefd, int i);
 void	ft_close_all_pipes(int **pipefd, t_data *data, t_list *list);
+
+//redirection
 int		is_redir_in(t_data *data);
 void	ft_redir_in(t_data *data);
 int		is_redir_out(t_data *data);
 void	ft_redir_out(t_data *data);
-void	exec(t_list *list, char **env, t_global global);
-int		ft_strlen(char const *args);
-char	*ft_realloc(char *expanded, char *retour, t_data *data);
-int		is_quote(char c);
-int		is_digit(char c);
-int		is_operator(char c);
-int		ft_strchr(char *left_char, char c);
-char	*ft_strdup(char *s1);
-char	*ft_strcat(char const *s1, char const *s2);
-char	*ft_strjoin(char const *s1, char const *s2);
-int		ft_strlen_cmd(t_data *data);
-void	print_list(t_list *list);
-char	*get_var_name(char *retour);
-char	*get_expand(char *retour);
-void	free_list(t_list *list);
-void	node_creation(t_list *list, char *retour);
-void	get_file(t_list *list);
-int		is_operator2(char *word);
-void	fill_args_cmd(t_data *data, int k);
-void	get_args_cmd(t_data *data, t_list *list);
-int		is_cmd(char *word, t_data *data);
-void	get_type(t_data *data, t_list *list);
-void	space_pars(t_list *list, t_data *data);
-void	operator_pars(t_list *list, t_data *data, char *args);
-void	single_quote_pars(t_data *data, char *args);
-void	expansion(t_data *data, char *args);
-void	double_quotes_expansion(t_data *data, char *args);
-void	double_quotes_pars(t_data *data, char *args);
-void	return_code(t_data *data, char *args, t_global global);
-void	dollar_pars(t_data *data, char *args, t_global global);
-void	get_word(t_list *list, char *args, t_data *data, t_global global);
-void	initialisation(t_data *data, char *args, char **env);
-void	search_redir(t_data * data);
 int		is_redir_out_append(t_data *data);
 void	ft_redir_out_append(t_data *data);
-void	*ft_memset(void *str, int c, size_t len);
+void	search_redir(t_data * data);
+
+//signal
 int		signal_handlers(t_global global);
 void	signal_handler(int signum);
+
+char	ft_base(int number);
+int		ft_len (int n);
+
+
+
 #endif

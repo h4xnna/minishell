@@ -1,4 +1,4 @@
-# include "minishell.h"
+# include "../minishell.h"
 
 void	ft_first_cmd(int **pipefd, int i)
 {
