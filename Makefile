@@ -28,18 +28,25 @@ LIBFT_NAME        = libft.a
 LIBFT            = $(LIBFT_PATH)$(LIBFT_NAME)
 
 SRCS	=	pars/args_cmds.c\
-			exec/execution.c\
-			exec/expansion.c\
 			pars/ft_itoa.c\
 			pars/list_creation.c\
 			main.c\
 			pars/minishell_utils.c\
 			pars/minishell_utils2.c\
 			pars/parsing_functions.c\
+			exec/execution.c\
+			exec/expansion.c\
 			exec/path_cmd.c\
 			exec/pipes.c\
 			exec/redirections.c\
 			exec/utils.c\
+			exec/builtin/cd.c\
+			exec/builtin/export.c\
+			exec/builtin/unset.c\
+			exec/builtin/env.c\
+			exec/builtin/exit.c\
+			exec/builtin/cd.c\
+			exec/builtin/echo.c\
 			signals.c
 
 
@@ -59,6 +66,10 @@ ${NAME}: ${OBJS} $(LIBFT)
 $(LIBFT):
 	@make -sC libft -j
 
+VMINI = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes -s\
+        --suppressions=minishell.supp \
+        --track-fds=yes --quiet
+
 clean:
 	@rm -f ${OBJS}
 	@make -sC libft clean -j
@@ -68,7 +79,12 @@ fclean: clean
 	@rm -f ${NAME}
 	@make -sC libft clean -j
 	@echo $(BROWN)fclean reussi
-
 re: fclean all
 
-.PHONY : re fclean clean all
+rlleaks: $(NAME)
+	$(VMINI) ./minishell
+
+leaks: $(NAME)
+	$(VMINI) env -i ./minishell
+
+.PHONY : re fclean clean all rlleaks leaks

@@ -13,7 +13,7 @@ void	signal_handler(int signum)
 		return ;
 }
 
-int	signal_handlers(t_global global)
+int	signal_handlers()
 {
 	struct sigaction	action;
 
@@ -22,7 +22,6 @@ int	signal_handlers(t_global global)
 	sigemptyset(&action.sa_mask);
 	action.sa_flags = 0;
 	sigaction(SIGINT, &action, NULL);
-	sigaction(SIGQUIT, &action, NULL);
-	(void)global;
+	signal(SIGQUIT, SIG_IGN);
 	return (0);
 }
