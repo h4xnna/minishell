@@ -9,16 +9,8 @@ void	get_file(t_list *list)
 	{
 		if (ft_strcmp(data->type, "REDIR_OUT") == 0 || ft_strcmp(data->type, "REDIR_IN") == 0 || ft_strcmp(data->type, "REDIR_OUT_APPEND") == 0)
 		{
-			if (data->next && ft_strcmp(data->next->type, "ARG") == 0)
+			if (data->next)
 				data->next->type = "FILE";
-			else if (data->next && ft_strcmp(data->next->type, "SPACE") == 0)
-			{
-				data = data->next;
-				while (data && ft_strcmp(data->type, "SPACE") == 0)
-					data = data->next;
-				if (ft_strcmp(data->type, "ARG") == 0)
-					data->type = "FILE";
-			}
 		}
 		data = data->next;
 	}
@@ -33,6 +25,8 @@ void	get_file(t_list *list)
 // 	int	i = 0;
 // 	int k;
 // 	pid_t *pid = malloc(sizeof(pid_t) * cmds_numb);
+// 	int save_stdout = dup(STDOUT_FILENO);
+// 	int save_stdin = dup(STDIN_FILENO);
 
 // 	data = list->begin;
 // 	k = 0;
@@ -46,6 +40,8 @@ void	get_file(t_list *list)
 // 	i = 0;
 // 	while (data && i < cmds_numb)
 // 	{
+// 		signal(SIGINT, SIG_IGN);
+// 		is_redir_start(data);
 // 		if (ft_strcmp(data->type, "CMD") == 0)
 // 		{
 // 			pid[i] = fork();
@@ -56,6 +52,7 @@ void	get_file(t_list *list)
 // 			}
 // 			else if (pid[i] == 0)
 // 			{ 
+// 				signal(SIGINT, SIG_DFL);
 // 				search_redir(data);
 // 				if (!is_redir_out(data) && cmds_numb > 1)
 // 				{
@@ -75,6 +72,10 @@ void	get_file(t_list *list)
 // 		}
 // 		data = data->next;
 // 	}
+// 	dup2(save_stdout, STDOUT_FILENO);
+// 	dup2(save_stdin, STDIN_FILENO);
+// 	close(save_stdin);
+// 	close(save_stdout);
 // 	if (cmds_numb > 1) 
 // 	{
 // 		ft_close_all_pipes(pipefd, data, list);
@@ -91,7 +92,19 @@ void	get_file(t_list *list)
 // 			if (WIFEXITED(status))
 // 				g_r_code = WEXITSTATUS(status);
 // 			else if (WIFSIGNALED(status))
-// 				g_r_code = WTERMSIG(status) + 128;
+// 			{
+// 				if (WTERMSIG(status) == SIGINT)
+// 				{
+// 					write(1, "\n", 1);
+// 					g_r_code = WTERMSIG(status) + 128;
+// 				}
+// 				if (WTERMSIG(status) == SIGQUIT)
+// 				{
+// 					write(1, "\n", 1);
+// 					g_r_code = WTERMSIG(status) + 128;
+// 				}
+// 			}
+				
 // 		}
 // 		k++;
 // 	}
@@ -103,7 +116,6 @@ void	get_file(t_list *list)
 // 		free(pipefd);
 // 	}
 // 	free(pid);
-// 	(void)global;
 // }
 
 
