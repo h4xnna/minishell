@@ -49,9 +49,13 @@ char	*get_expand(char *retour)
 	j = 0;
 	var = get_var_name(retour);
 	if (!var[0])
-		return (ft_strdup("$"));
+	{
+		free(var);
+		return ("$");
+	}
 	else
-		env_value = ft_strdup(getenv(var));
+		env_value = getenv(var);
+	free(var);
 	return (env_value);
 }
 
@@ -65,7 +69,6 @@ void	expansion(t_data *data, char *args)
 	k = 0;
 	len = ft_strlen(args);
 	var = malloc(sizeof(char) * (len + 1));
-	expand = ft_strdup("");
 	var[k++] = '$';
 	while (args[data->i] && !is_operator(args[data->i])
 		&& !is_quote(args[data->i]) && args[data->i] != '$')
@@ -84,7 +87,6 @@ void	double_quotes_expansion(t_data *data, char *args)
 	int		k;
 	int		len;
 
-	expanded = ft_strdup("");
 	len = ft_strlen(args);
 	temp = malloc(sizeof(char) * (len + 1));
 	data->i++;
@@ -97,5 +99,6 @@ void	double_quotes_expansion(t_data *data, char *args)
 	expanded = get_expand(temp);
 	data->retour[data->j] = '\0';
 	data->retour = ft_realloc(expanded, data->retour, data);
+	free(expanded);
 	free(temp);
 }

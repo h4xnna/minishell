@@ -69,13 +69,13 @@ void	tokenisation_and_exec(t_list *list, char *args,
 	if (wrong_token_error(data, list))
 	{
 		free_list(list);
+		free(args);
 		signal_handlers(global);
 		return ;
 	}
 	get_args_cmd(data, list);
 	print_exec(list, global, args, env);
 	rl_redisplay();
-	free_list(list);
 	signal_handlers(global);
 }
 
@@ -95,6 +95,8 @@ void	program_handler(t_list *list, char *args, t_global global, char **env)
 	}
 	get_word(list, args, data, global);
 	tokenisation_and_exec(list, args, global, env);
+	free_list(list);
+	free(args);
 }
 
 int	main(int ac, char **av, char **env)
@@ -114,6 +116,7 @@ int	main(int ac, char **av, char **env)
 		args = readline("Minishell > ");
 		if (!args)
 		{
+			free_list(list);
 			write(1, "exit\n", 5);
 			break ;
 		}
@@ -121,5 +124,6 @@ int	main(int ac, char **av, char **env)
 		global.index++;
 		program_handler(list, args, global, env);
 	}
+	rl_clear_history();
 	return (0);
 }

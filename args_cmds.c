@@ -39,12 +39,12 @@ void	fill_args_cmd(t_data *data, int k)
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
-			cmd->args[k] = ft_strdup(data->word);
+			cmd->args[k] = data->word;
 			k++;
 		}
 		else if (ft_strcmp(data->type, "ARG") == 0)
 		{
-			cmd->args[k] = ft_strdup(data->word);
+			cmd->args[k] = data->word;
 			k++;
 		}
 		data = data->next;

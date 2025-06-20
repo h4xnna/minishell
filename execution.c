@@ -53,7 +53,8 @@ void	exec(t_list *list, char **env, t_global global)
 
 	data = list->begin;
 	k = 0;
-	pipefd = malloc(sizeof(int *) * cmds_numb);
+	if (cmds_numb > 1)
+		pipefd = malloc(sizeof(int *) * (cmds_numb - 1));
 	while (i < (cmds_numb - 1))
 	{
 		pipefd[i] = malloc(sizeof(int) * 2);

@@ -55,8 +55,8 @@ int	build_check_path_cmd(char *word, t_data *data, int i, int j)
 		str = build_path(cmd, word);
 		if (check_path_cmd(str))
 		{
-			data->word = ft_strdup(str);
-			free(str);
+			free(data->word);
+			data->word = str;
 			return (1);
 		}
 		free(str);

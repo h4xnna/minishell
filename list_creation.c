@@ -34,9 +34,11 @@ void	get_word(t_list *list, char *args, t_data *data, t_global global)
 	if (data->j > 0)
 	{
 		data->retour[data->j] = '\0';
-		node_creation(list, ft_strdup(data->retour));
+		node_creation(list, data->retour);
+		free(data->retour);
+		free(data);
+		data = NULL;
 	}
-	free(data->retour);
 }
 
 void	node_creation(t_list *list, char *retour)

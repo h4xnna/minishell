@@ -16,7 +16,7 @@ void	free_args_cmd(t_data *temp, int i)
 {
 	while (temp->args[i])
 	{
-		free(temp->args[i]);
+		// free(temp->args[i]);
 		temp->args[i] = NULL;
 		i++;
 	}
@@ -43,6 +43,7 @@ void	free_list(t_list *list)
 		}
 		data = data->next;
 		free(temp->word);
+		temp->word = NULL;
 		free(temp);
 		temp = NULL;
 	}

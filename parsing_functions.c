@@ -17,7 +17,7 @@ void	space_pars(t_list *list, t_data *data)
 	if (data->j > 0)
 	{
 		data->retour[data->j] = '\0';
-		node_creation(list, ft_strdup(data->retour));
+		node_creation(list, data->retour);
 		data->j = 0;
 	}
 	data->i++;
@@ -28,24 +28,24 @@ void	operator_pars(t_list *list, t_data *data, char *args)
 	if (data->j > 0)
 	{
 		data->retour[data->j] = '\0';
-		node_creation(list, ft_strdup(data->retour));
+		node_creation(list, data->retour);
 		data->j = 0;
 	}
 	if (args[data->i] == '>' && args[data->i + 1] == '>')
 	{
-		node_creation(list, ft_strdup(">>"));
+		node_creation(list, ">>");
 		data->i += 2;
 	}
 	else if (args[data->i] == '<' && args[data->i + 1] == '<')
 	{
-		node_creation(list, ft_strdup("<<"));
+		node_creation(list, "<<");
 		data->i += 2;
 	}
 	else
 	{
 		data->retour[0] = args[data->i++];
 		data->retour[1] = '\0';
-		node_creation(list, ft_strdup(data->retour));
+		node_creation(list, data->retour);
 	}
 }
 
