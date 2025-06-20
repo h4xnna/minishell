@@ -12,25 +12,38 @@
 
 #include "minishell.h"
 
+char	*get_token_type(t_data *data, int *cmd_nb)
+{
+	if (*cmd_nb == 0 && is_cmd(data->word, data))
+	{
+		(*cmd_nb)++;
+		return "CMD";
+	}
+	else if (ft_strcmp(data->word, ">") == 0)
+		return "REDIR_OUT";
+	else if (ft_strcmp(data->word, ">>") == 0)
+		return "REDIR_OUT_APPEND";
+	else if (ft_strcmp(data->word, "<") == 0)
+		return "REDIR_IN";
+	else if (ft_strcmp(data->word, "<<") == 0)
+		return "HEREDOC";
+	else if (ft_strcmp(data->word, "|") == 0)
+	{
+		*cmd_nb = 0;
+		return "PIPE";
+	}
+	else
+		return "ARG";
+}
+
 void	get_type(t_data *data, t_list *list)
 {
+	int	cmd_nb = 0;
+
 	data = list->begin;
 	while (data)
 	{
-		if (is_cmd(data->word, data))
-			data->type = "CMD";
-		else if (ft_strcmp(data->word, ">") == 0)
-			data->type = "REDIR_OUT";
-		else if (ft_strcmp(data->word, "<") == 0)
-			data->type = "REDIR_IN";
-		else if (ft_strcmp(data->word, ">>") == 0)
-			data->type = "REDIR_OUT_APPEND";
-		else if (ft_strcmp(data->word, "<<") == 0)
-			data->type = "HEREDOC";
-		else if (ft_strcmp(data->word, "|") == 0)
-			data->type = "PIPE";
-		else
-			data->type = "ARG";
+		data->type = get_token_type(data, &cmd_nb);
 		data = data->next;
 	}
 }

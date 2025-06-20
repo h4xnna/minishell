@@ -105,4 +105,5 @@ void	free_args_cmd(t_data *temp, int i);
 void	print_exec(t_list *list, t_global global, char *args, char **env);
 void	program_handler(t_list *list, char *args, t_global global, char **env);
 void	tokenisation_and_exec(t_list *list, char *args, t_global global, char **env);
+char	*get_token_type(t_data *data, int *cmd_nb);
 #endif
