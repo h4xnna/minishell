@@ -1,13 +1,24 @@
 # include "../minishell.h"
 
+int	is_redirections(t_data *data)
+{
+	if (ft_strcmp(data->type, "REDIR_OUT") == 0)
+		return (1);
+	if (ft_strcmp(data->type, "REDIR_IN") == 0)
+		return (1);
+	if (ft_strcmp(data->type, "REDIR_OUT_APPEND") == 0)
+		return (1);
+	return (0);
+}
+
 void	get_file(t_list *list)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = list->begin;
 	while (data)
 	{
-		if (ft_strcmp(data->type, "REDIR_OUT") == 0 || ft_strcmp(data->type, "REDIR_IN") == 0 || ft_strcmp(data->type, "REDIR_OUT_APPEND") == 0)
+		if (is_redirections(data))
 		{
 			if (data->next)
 				data->next->type = "FILE";
@@ -18,7 +29,7 @@ void	get_file(t_list *list)
 
 // void	exec(t_list *list, char **env, t_global global)
 // {
-// 	t_data *data = list->begin;
+// 	t_data	*data = list->begin;
 // 	int	cmds_numb = get_cmd_nb(data);
 // 	int	**pipefd;
 // 	int	status;
@@ -30,7 +41,8 @@ void	get_file(t_list *list)
 
 // 	data = list->begin;
 // 	k = 0;
-// 	pipefd = malloc(sizeof(int *) * cmds_numb);
+// 	if (cmds_numb > 1)
+// 		pipefd = malloc(sizeof(int *) * (cmds_numb - 1));
 // 	while (i < (cmds_numb - 1))
 // 	{
 // 		pipefd[i] = malloc(sizeof(int) * 2);
@@ -117,7 +129,6 @@ void	get_file(t_list *list)
 // 	}
 // 	free(pid);
 // }
-
 
 void	child_process(t_pipex *pipex, int i, char **av, char **envp,  t_data *data )
 {

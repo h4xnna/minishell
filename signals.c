@@ -1,4 +1,17 @@
-# include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/19 09:07:45 by acrusoe           #+#    #+#             */
+/*   Updated: 2025/06/19 09:07:45 by acrusoe          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
 void	signal_handler(int signum)
 {
 	if (signum == SIGINT)
@@ -6,7 +19,7 @@ void	signal_handler(int signum)
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay(); 
+		rl_redisplay();
 		g_r_code = 130;
 	}
 	else if (signum == SIGQUIT)
@@ -23,6 +36,5 @@ int	signal_handlers(t_global global)
 	action.sa_flags = 0;
 	sigaction(SIGINT, &action, NULL);
 	sigaction(SIGQUIT, &action, NULL);
-	(void)global;
 	return (0);
 }

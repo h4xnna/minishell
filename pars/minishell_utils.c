@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/19 08:51:59 by acrusoe           #+#    #+#             */
+/*   Updated: 2025/06/19 08:51:59 by acrusoe          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 # include "../minishell.h"
 
 // int	ft_strchr(char *left_char, char c)
@@ -37,8 +48,6 @@
 // 	return (str);
 // }
 
-
-
 // char	*ft_strcat(char const *s1, char const *s2)
 // {
 // 	int		i;
@@ -73,43 +82,16 @@
 // 	return (strcat);
 // }
 
-// int	ft_strlen(char const *args)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!args)
-// 		return (0);
-// 	while (args[i])
-// 		i++;
-// 	return (i);
-// }
-
-char	*ft_realloc(char *expanded, char *retour, t_data *data)
+int	ft_strlen(char const *args)
 {
-	int		length;
-	int		i;
-	char	*str;
-	int		k;
+	int	i;
 
-	length = ft_strlen(retour) + ft_strlen(expanded);
-	str = malloc(sizeof(char) * (length + 1));
-	k = 0;
-	if (!str)
-		return (NULL);
 	i = 0;
-	while (retour[i])
-	{
-		str[i] = retour[i];
+	if (!args)
+		return (0);
+	while (args[i])
 		i++;
-	}
-	while (expanded[k])
-		str[i++] = expanded[k++];
-	str[i] = '\0';
-	free (retour);
-	free(expanded);
-	data->j = i;
-	return (str);
+	return (i);
 }
 
 int	ft_strcmp(char *s1, char *s2)
@@ -120,5 +102,4 @@ int	ft_strcmp(char *s1, char *s2)
 	while (s1[i] == s2[i] && (s1[i] != '\0' && s2[i] != '\0'))
 		i++;
 	return (s1[i] - s2[i]);
-
 }

@@ -1,4 +1,16 @@
-# include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_utils2.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/19 08:53:05 by acrusoe           #+#    #+#             */
+/*   Updated: 2025/06/19 08:53:05 by acrusoe          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include "../minishell.h"
 
 int	is_quote(char c)
 {
@@ -39,17 +51,43 @@ int	ft_strlen_cmd(t_data *data)
 
 void	*ft_memset(void *str, int c, size_t len)
 {
-	size_t i;
-	char ch;
-	char *s;
+	size_t	i;
+	char	ch;
+	char	*s;
 
 	s = str;
 	ch = c;
 	i = 0;
-	while(i < len)
+	while (i < len)
 	{
 		s[i] = ch;
 		i++;
 	}
+	return (str);
+}
+
+char	*ft_realloc(char *expanded, char *retour, t_data *data)
+{
+	int		length;
+	int		i;
+	char	*str;
+	int		k;
+
+	length = ft_strlen(retour) + ft_strlen(expanded);
+	str = malloc(sizeof(char) * (length + 2));
+	k = 0;
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (retour[i])
+	{
+		str[i] = retour[i];
+		i++;
+	}
+	while (expanded && expanded[k])
+		str[i++] = expanded[k++];
+	str[i] = '\0';
+	free (retour);
+	data->j = i;
 	return (str);
 }
