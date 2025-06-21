@@ -30,16 +30,26 @@ LIBFT            = $(LIBFT_PATH)$(LIBFT_NAME)
 SRCS	=	pars/args_cmds.c\
 			exec/execution.c\
 			exec/expansion.c\
+			exec/free_memory.c\
+			exec/get_return_code.c\
+			exec/path_cmd.c\
+			exec/pipes.c\
+			exec/pipes.c\
+			exec/print_command_error.c\
+			exec/redirection_checker.c\
+			exec/redirection_in.c\
+			exec/redirection_out.c\
+			exec/utils.c\
 			pars/ft_itoa.c\
+			pars/args_cmds.c\
+			pars/dollar_hanling_functions.c\
 			pars/list_creation.c\
-			main.c\
 			pars/minishell_utils.c\
 			pars/minishell_utils2.c\
 			pars/parsing_functions.c\
-			exec/path_cmd.c\
-			exec/pipes.c\
-			exec/redirections.c\
-			exec/utils.c\
+			pars/syntax_error_token.c\
+			pars/tokenisation.c\
+			main.c\
 			signals.c
 
 
