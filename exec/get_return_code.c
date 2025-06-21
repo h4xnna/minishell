@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+# include "../minishell.h"
 
 void	return_code(t_data *data, char *args, t_global global)
 {
