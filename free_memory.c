@@ -16,7 +16,6 @@ void	free_args_cmd(t_data *temp, int i)
 {
 	while (temp->args[i])
 	{
-		// free(temp->args[i]);
 		temp->args[i] = NULL;
 		i++;
 	}

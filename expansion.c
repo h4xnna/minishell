@@ -99,6 +99,5 @@ void	double_quotes_expansion(t_data *data, char *args)
 	expanded = get_expand(temp);
 	data->retour[data->j] = '\0';
 	data->retour = ft_realloc(expanded, data->retour, data);
-	free(expanded);
 	free(temp);
 }

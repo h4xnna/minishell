@@ -17,29 +17,30 @@ char	*get_token_type(t_data *data, int *cmd_nb)
 	if (*cmd_nb == 0 && is_cmd(data->word, data))
 	{
 		(*cmd_nb)++;
-		return "CMD";
+		return ("CMD");
 	}
 	else if (ft_strcmp(data->word, ">") == 0)
-		return "REDIR_OUT";
+		return ("REDIR_OUT");
 	else if (ft_strcmp(data->word, ">>") == 0)
-		return "REDIR_OUT_APPEND";
+		return ("REDIR_OUT_APPEND");
 	else if (ft_strcmp(data->word, "<") == 0)
-		return "REDIR_IN";
+		return ("REDIR_IN");
 	else if (ft_strcmp(data->word, "<<") == 0)
-		return "HEREDOC";
+		return ("REDIR_IN");
 	else if (ft_strcmp(data->word, "|") == 0)
 	{
 		*cmd_nb = 0;
-		return "PIPE";
+		return ("PIPE");
 	}
 	else
-		return "ARG";
+		return ("ARG");
 }
 
 void	get_type(t_data *data, t_list *list)
 {
-	int	cmd_nb = 0;
+	int	cmd_nb;
 
+	cmd_nb = 0;
 	data = list->begin;
 	while (data)
 	{

@@ -65,3 +65,29 @@ void	*ft_memset(void *str, int c, size_t len)
 	}
 	return (str);
 }
+
+char	*ft_realloc(char *expanded, char *retour, t_data *data)
+{
+	int		length;
+	int		i;
+	char	*str;
+	int		k;
+
+	length = ft_strlen(retour) + ft_strlen(expanded);
+	str = malloc(sizeof(char) * (length + 2));
+	k = 0;
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (retour[i])
+	{
+		str[i] = retour[i];
+		i++;
+	}
+	while (expanded && expanded[k])
+		str[i++] = expanded[k++];
+	str[i] = '\0';
+	free (retour);
+	data->j = i;
+	return (str);
+}

@@ -1,23 +1,35 @@
-# ifndef MINI_SHELL_H
-# define MINI_SHELL_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/21 09:33:42 by acrusoe           #+#    #+#             */
+/*   Updated: 2025/06/21 09:33:42 by acrusoe          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <fcntl.h>
+# include <signal.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
 
 int	g_r_code;
 
 typedef struct s_global
 {
-	int index;
-}t_global;
+	int	index;
+}	t_global;
 
 typedef struct s_data
 {
@@ -32,17 +44,17 @@ typedef struct s_data
 	char			*retour;
 	struct s_data	*next;
 	struct s_data	*back;
-}t_data;
+}	t_data;
 
 typedef struct s_List
 {
 	struct s_data	*begin;
 	struct s_data	*end;
-}t_list;
+}	t_list;
 
 char	*ft_itoa(int n);
 char	ft_base(int number);
-int		ft_len (int n);
+int		ft_len(int n);
 int		ft_strcmp(char *s1, char *s2);
 int		get_cmd_nb(t_data *data);
 void	ft_first_cmd(int **pipefd, int i);
@@ -86,13 +98,13 @@ void	return_code(t_data *data, char *args, t_global global);
 void	dollar_pars(t_data *data, char *args, t_global global);
 void	get_word(t_list *list, char *args, t_data *data, t_global global);
 void	initialisation(t_data *data, char *args, char **env);
-void	search_redir(t_data * data);
+void	search_redir(t_data *data);
 int		is_redir_out_append(t_data *data);
 void	ft_redir_out_append(t_data *data);
 void	*ft_memset(void *str, int c, size_t len);
 int		signal_handlers(t_global global);
 void	signal_handler(int signum);
-void	is_redir_start(t_data * data);
+void	is_redir_start(t_data *data);
 int		is_error(char *args);
 int		wrong_token_error(t_data *data, t_list *list);
 int		is_unclosed_quotes(char *args);
@@ -104,6 +116,7 @@ void	dollar_pars_digit_quote(t_data *data, char *args);
 void	free_args_cmd(t_data *temp, int i);
 void	print_exec(t_list *list, t_global global, char *args, char **env);
 void	program_handler(t_list *list, char *args, t_global global, char **env);
-void	tokenisation_and_exec(t_list *list, char *args, t_global global, char **env);
+void	tokenisation_and_exec(t_list *list, char *args,
+			t_global global, char **env);
 char	*get_token_type(t_data *data, int *cmd_nb);
 #endif

@@ -35,4 +35,3 @@ void	ft_redir_in(t_data *data)
 		close(fd_infile);
 	}
 }
-
