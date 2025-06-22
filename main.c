@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-int	g_r_code;
-
 void	print_exec(t_list *list, t_global global, char *args, char **env)
 {
 	t_data	*data;
@@ -23,6 +21,7 @@ void	print_exec(t_list *list, t_global global, char *args, char **env)
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
+			test_builtins(data, env);
 			exec(list, env, global);
 			break ;
 		}
@@ -90,7 +89,7 @@ void	program_handler(t_list *list, char *args, t_global global, char **env)
 	{
 		free_list(list);
 		signal_handlers(global);
-		g_r_code = 0;
+		set_get_exit_status(0);
 		return ;
 	}
 	get_word(list, args, data, global);
@@ -105,7 +104,8 @@ int	main(int ac, char **av, char **env)
 	t_global	global;
 	char		*args;
 
-	signal_handlers(global);
+	print_splash_screen();
+	signal_handlers();
 	while (1)
 	{
 		list = malloc(sizeof(t_list));
@@ -126,4 +126,6 @@ int	main(int ac, char **av, char **env)
 	}
 	rl_clear_history();
 	return (0);
+	(void)av;
+	(void)ac;
 }

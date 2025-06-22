@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	is_redirections(t_data *data)
 {
@@ -114,18 +114,18 @@ void	exec(t_list *list, char **env, t_global global)
 		if (k == cmds_numb - 1)
 		{
 			if (WIFEXITED(status))
-				g_r_code = WEXITSTATUS(status);
+				set_get_exit_status( WEXITSTATUS(status));
 			else if (WIFSIGNALED(status))
 			{
 				if (WTERMSIG(status) == SIGINT)
 				{
 					write(1, "\n", 1);
-					g_r_code = WTERMSIG(status) + 128;
+					set_get_exit_status (WTERMSIG(status) + 128);
 				}
 				if (WTERMSIG(status) == SIGQUIT)
 				{
 					write(1, "\n", 1);
-					g_r_code = WTERMSIG(status) + 128;
+					set_get_exit_status( WTERMSIG(status) + 128);
 				}
 			}
 				
@@ -140,4 +140,5 @@ void	exec(t_list *list, char **env, t_global global)
 		free(pipefd);
 	}
 	free(pid);
+	(void)global;
 }

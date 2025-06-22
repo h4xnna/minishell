@@ -9,7 +9,7 @@
 /*   Updated: 2025/06/19 08:51:59 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+#include "../minishell.h"
 
 int	ft_strchr(char *left_char, char c)
 {

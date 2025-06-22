@@ -20,13 +20,13 @@ void	signal_handler(int signum)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_r_code = 130;
+		set_get_exit_status(130);
 	}
 	else if (signum == SIGQUIT)
 		return ;
 }
 
-int	signal_handlers(t_global global)
+int	signal_handlers(void)
 {
 	struct sigaction	action;
 

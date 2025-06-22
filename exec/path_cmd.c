@@ -40,7 +40,6 @@ char	*build_path(char *cmd, char *word)
 
 int	build_check_path_cmd(char *word, t_data *data, int i, int j)
 {
-	char		*slash;
 	char		*str;
 	char		cmd[256];
 	char		*path;
