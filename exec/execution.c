@@ -88,6 +88,8 @@ void	exec(t_list *list, char **env)
 						ft_middle_cmd(pipefd, i);
 					ft_close_all_pipes(pipefd, data, list);
 				}
+				if (built_cmd(data->word))
+					test_builtins(data, env);
 				execve(data->word, data->args, env);
 				perror("execve");
 				exit(EXIT_FAILURE);

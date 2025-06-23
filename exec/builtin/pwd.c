@@ -6,21 +6,21 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 22:35:54 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/06/22 22:36:02 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/06/23 23:23:16 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_pwd(void)
+void	ft_pwd(void)
 {
 	char	cwd[1024];
 
 	if (!getcwd(cwd, sizeof(cwd)))
 	{
 		perror("pwd");
-		return (1);
+		exit(1);
 	}
 	printf("%s\n", cwd);
-	return (0);
+	exit(0);
 }

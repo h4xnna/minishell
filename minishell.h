@@ -85,7 +85,9 @@ int	check_path_cmd(char *word);
 int	build_check_path_cmd(char *word, t_data *data, int i, int j);
 char	*build_path(char *cmd, char *word);
 int	is_chevrons(t_data *data);
-int	is_cmd(char *word, t_data *data);
+ int	is_cmd(char *word, t_data *data);
+
+
 
 // exec../pipes
 void	ft_first_cmd(int **pipefd, int i);
@@ -94,12 +96,12 @@ void	ft_last_cmd(int **pipefd, int i);
 void	ft_close_all_pipes(int **pipefd, t_data *data, t_list *list);
 
 //exec../builtin../echo
-int ft_echo(char **av);
+void ft_echo(char **av);
 int	is_valid_n_option(char *str);
 int ft_strncmp(char *s1, char *s2, int n);
 
 //exec../builtin../pwd
-int	ft_pwd(void);
+void	ft_pwd(void);
 
 //exec../builtin../unset
 
@@ -174,6 +176,7 @@ void	ft_redir_out_append(t_data *data);
 void	get_type(t_data *data, t_list *list);
 char	*get_token_type(t_data *data, int *cmd_nb);
 
+
 // utils../free_memory
 void	free_args_cmd(t_data *temp, int i);
 void	free_list(t_list *list);
@@ -229,5 +232,6 @@ void	program_handler(t_list *list, char *args, t_global global, char **env);
 
 char	ft_base(int number);
 int		ft_len(int n);
+int built_cmd(char *str);
 
 #endif

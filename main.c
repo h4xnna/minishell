@@ -21,7 +21,6 @@ void	print_exec(t_list *list, char *args, char **env)
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
-			test_builtins(data, env);
 			exec(list, env);
 			break ;
 		}
