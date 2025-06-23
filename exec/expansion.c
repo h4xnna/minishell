@@ -40,13 +40,7 @@ char	*get_expand(char *retour)
 {
 	char	*env_value;
 	char	*var;
-	int		i;
-	int		j;
-	int		len;
 
-	len = ft_strlen(retour);
-	i = 0;
-	j = 0;
 	var = get_var_name(retour);
 	if (!var[0])
 	{

@@ -39,7 +39,7 @@ void	get_file(t_list *list)
 	}
 }
 
-void	exec(t_list *list, char **env, t_global global)
+void	exec(t_list *list, char **env)
 {
 	t_data	*data = list->begin;
 	int	cmds_numb = get_cmd_nb(data);
@@ -140,5 +140,4 @@ void	exec(t_list *list, char **env, t_global global)
 		free(pipefd);
 	}
 	free(pid);
-	(void)global;
 }

@@ -49,3 +49,26 @@ void	free_list(t_list *list)
 	list->begin = NULL;
 	free(list);
 }
+
+void	free_env_list(t_list_env *env_list)
+{
+	t_env	*data;
+	t_env	*temp;
+
+	if (!env_list)
+		return ;
+	data = env_list->begin;
+	while (data)
+	{
+		temp = data;
+		data = data->next;
+		free(temp->key);
+		temp->key = NULL;
+		free(temp->value);
+		temp->value = NULL;
+		free(temp);
+		temp = NULL;
+	}
+	env_list->begin = NULL;
+	free(env_list);
+}

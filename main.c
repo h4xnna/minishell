@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	print_exec(t_list *list, t_global global, char *args, char **env)
+void	print_exec(t_list *list, char *args, char **env)
 {
 	t_data	*data;
 
@@ -22,7 +22,7 @@ void	print_exec(t_list *list, t_global global, char *args, char **env)
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			test_builtins(data, env);
-			exec(list, env, global);
+			exec(list, env);
 			break ;
 		}
 		data = data->next;
@@ -57,8 +57,7 @@ int	is_unclosed_quotes(char *args)
 	return (0);
 }
 
-void	tokenisation_and_exec(t_list *list, char *args,
-	t_global global, char **env)
+void	tokenisation_and_exec(t_list *list, char *args, char **env)
 {
 	t_data	*data;
 
@@ -69,50 +68,63 @@ void	tokenisation_and_exec(t_list *list, char *args,
 	{
 		free_list(list);
 		free(args);
-		signal_handlers(global);
+		signal_handlers();
 		return ;
 	}
 	get_args_cmd(data, list);
-	print_exec(list, global, args, env);
+	print_exec(list, args, env);
 	rl_redisplay();
-	signal_handlers(global);
+	signal_handlers();
 }
 
 void	program_handler(t_list *list, char *args, t_global global, char **env)
 {
 	t_data	*data;
+	t_list_env	*env_list;
 
 	data = malloc(sizeof(t_data));
 	ft_memset(data, 0, sizeof(t_data));
-	initialisation(data, args, env);
+	initialisation(data, args, &env_list);
 	if (is_unclosed_quotes(args))
 	{
 		free_list(list);
-		signal_handlers(global);
+		free_env_list(env_list);
+		signal_handlers();
 		set_get_exit_status(0);
 		return ;
 	}
+	get_env_key(env, env_list);
+	env_value(env_list, env);
 	get_word(list, args, data, global);
-	tokenisation_and_exec(list, args, global, env);
+	tokenisation_and_exec(list, args, env);
 	free_list(list);
+	free_env_list(env_list);
 	free(args);
+}
+
+void	initialisation_list(t_list **list)
+{
+	*list = malloc(sizeof(t_list));
+	if (!*list)
+		return ;
+	(*list)->begin = NULL;
+	(*list)->end = NULL;
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_list		*list;
 	t_global	global;
+	t_list		*list;
 	char		*args;
 
+	global.index = 0;
+	(void)av;
+	(void)ac;
 	print_splash_screen();
 	signal_handlers();
 	while (1)
 	{
-		list = malloc(sizeof(t_list));
-		if (!list)
-			return (0);
-		list->begin = NULL;
-		list->end = NULL;
+		initialisation_list(&list);
 		args = readline("Minishell > ");
 		if (!args)
 		{
@@ -124,8 +136,5 @@ int	main(int ac, char **av, char **env)
 		global.index++;
 		program_handler(list, args, global, env);
 	}
-	rl_clear_history();
 	return (0);
-	(void)av;
-	(void)ac;
 }

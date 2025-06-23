@@ -42,6 +42,7 @@ SRCS 	=  exec/execution.c\
 			pars/redirection_out.c\
 			pars/tokenisation.c\
 			pars/print_command_error.c\
+			pars/chained_list_env_variables.c\
 			utils/free_memory.c\
 			utils/return_code.c\
 			utils/ft_itoa.c\

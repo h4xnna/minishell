@@ -47,25 +47,30 @@ typedef struct s_data
 	struct s_data *back;
 } t_data;
 
-// typedef struct s_env
-// {
-// 	char *valeur;
-// 	//tous ce qu'il y a apres le '='
-// 	char *cle;
-// 	//tous ce qu'il y a avant le '='
-// }	t_env
-
-
 typedef struct s_List
 {
 	struct s_data *begin;
 	struct s_data *end;
 } t_list;
 
+typedef struct s_env
+{
+	char			*value;
+	char			*key;
+	struct s_env	*next;
+	struct s_env	*back;
+}	t_env;
+
+typedef struct s_List_env
+{
+	struct s_env	*begin;
+	struct s_env	*end;
+}	t_list_env;
+
 // exec..execution
 void	get_file(t_list *list);
-int	is_redirections(t_data *data);
-void	exec(t_list *list, char **env, t_global global);
+int		is_redirections(t_data *data);
+void	exec(t_list *list, char **env);
 
 // exec ../expansion
 char	*get_var_name(char *retour);
@@ -120,7 +125,13 @@ int	ft_exit(char **args);
 // pars../list_creation
 void	get_word(t_list *list, char *args, t_data *data, t_global global);
 void	node_creation(t_list *list, char *retour);
-void	initialisation(t_data *data, char *args, char **env);
+void	initialisation(t_data *data, char *args, t_list_env **env_list);
+
+// pars../list_creation
+void	node_creation_env_variables(t_list_env *env_list, char *str);
+void	env_value(t_list_env *env_list, char **env);
+void	get_env_key(char **env, t_list_env *env_list);
+char	*ft_value(char *str);
 
 // pars../parsing_function
 void	space_pars(t_list *list, t_data *data);
@@ -163,9 +174,10 @@ void	ft_redir_out_append(t_data *data);
 void	get_type(t_data *data, t_list *list);
 char	*get_token_type(t_data *data, int *cmd_nb);
 
-// utils../free_mmory
+// utils../free_memory
 void	free_args_cmd(t_data *temp, int i);
 void	free_list(t_list *list);
+void	free_env_list(t_list_env *env_list);
 
 // utils../ft_itoa
 char	*ft_itoa(int n);
@@ -202,20 +214,20 @@ int	check_file_after_redirout(t_data *data);
 
 
 //util../return_code
-int	set_get_exit_status(int exit_code);
+int		set_get_exit_status(int exit_code);
 
 // signal
-int	signal_handlers();
+int		signal_handlers();
 void	signal_handler(int signum);
 
 // main
-int	is_unclosed_quotes(char *args);
-void	print_exec(t_list *list, t_global global, char *args, char **env);
-void	tokenisation_and_exec(t_list *list, char *args, t_global global,
-		char **env);
+int		is_unclosed_quotes(char *args);
+void	initialisation_list(t_list **list);
+void	print_exec(t_list *list, char *args, char **env);
+void	tokenisation_and_exec(t_list *list, char *args, char **env);
 void	program_handler(t_list *list, char *args, t_global global, char **env);
 
 char	ft_base(int number);
-int	ft_len(int n);
+int		ft_len(int n);
 
 #endif
