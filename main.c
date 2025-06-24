@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	print_exec(t_list *list, char *args, char **env)
+void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 {
 	t_data	*data;
 
@@ -21,7 +21,7 @@ void	print_exec(t_list *list, char *args, char **env)
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
-			exec(list, env);
+			exec(list, env, env_list);
 			break ;
 		}
 		data = data->next;
@@ -56,7 +56,7 @@ int	is_unclosed_quotes(char *args)
 	return (0);
 }
 
-void	tokenisation_and_exec(t_list *list, char *args, char **env)
+void	tokenisation_and_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 {
 	t_data	*data;
 
@@ -71,33 +71,28 @@ void	tokenisation_and_exec(t_list *list, char *args, char **env)
 		return ;
 	}
 	get_args_cmd(data, list);
-	print_exec(list, args, env);
+	print_exec(list, args, env, env_list);
 	rl_redisplay();
 	signal_handlers();
 }
 
-void	program_handler(t_list *list, char *args, t_global global, char **env)
+void	program_handler(t_list *list, char *args, t_global global, char **env, t_list_env *env_list)
 {
 	t_data	*data;
-	t_list_env	*env_list;
 
 	data = malloc(sizeof(t_data));
 	ft_memset(data, 0, sizeof(t_data));
-	initialisation(data, args, &env_list);
+	initialisation(data, args);
 	if (is_unclosed_quotes(args))
 	{
 		free_list(list);
-		free_env_list(env_list);
 		signal_handlers();
 		set_get_exit_status(0);
 		return ;
 	}
-	get_env_key(env, env_list);
-	env_value(env_list, env);
 	get_word(list, args, data, global);
-	tokenisation_and_exec(list, args, env);
+	tokenisation_and_exec(list, args, env, env_list);
 	free_list(list);
-	free_env_list(env_list);
 	free(args);
 }
 
@@ -121,6 +116,15 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	print_splash_screen();
 	signal_handlers();
+	t_list_env	*env_list;
+
+	env_list = malloc(sizeof(t_list_env));
+	if (!env_list)
+		return (1);
+	(env_list)->begin = NULL;
+	(env_list)->end = NULL;
+	get_env_key(env, env_list);
+	env_value(env_list, env);
 	while (1)
 	{
 		initialisation_list(&list);
@@ -133,7 +137,8 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(args);
 		global.index++;
-		program_handler(list, args, global, env);
+		program_handler(list, args, global, env, env_list);
 	}
+	free_env_list(env_list);
 	return (0);
 }

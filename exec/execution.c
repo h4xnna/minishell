@@ -39,7 +39,7 @@ void	get_file(t_list *list)
 	}
 }
 
-void	exec(t_list *list, char **env)
+void	exec(t_list *list, char **env, t_list_env *env_list)
 {
 	t_data	*data = list->begin;
 	int	cmds_numb = get_cmd_nb(data);
@@ -68,6 +68,11 @@ void	exec(t_list *list, char **env)
 		is_redir_start(data);
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
+			if(built_cmd_parent(data->word))
+			{
+				test_builtins_parents(data, env_list);
+				return;
+			}
 			pid[i] = fork();
 			if (pid[i] < 0)
 			{
@@ -88,8 +93,8 @@ void	exec(t_list *list, char **env)
 						ft_middle_cmd(pipefd, i);
 					ft_close_all_pipes(pipefd, data, list);
 				}
-				if (built_cmd(data->word))
-					test_builtins(data, env);
+				if (built_cmd_child(data->word))
+					test_builtins_child(data, env_list);
 				execve(data->word, data->args, env);
 				perror("execve");
 				exit(EXIT_FAILURE);

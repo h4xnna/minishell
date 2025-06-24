@@ -68,7 +68,7 @@ void	node_creation(t_list *list, char *retour)
 	}
 }
 
-void	initialisation(t_data *data, char *args, t_list_env **env_list)
+void	initialisation(t_data *data, char *args)
 {
 	data->i = 0;
 	data->j = 0;
@@ -76,9 +76,4 @@ void	initialisation(t_data *data, char *args, t_list_env **env_list)
 	data->args = NULL;
 	data->len = ft_strlen(args);
 	data->retour = malloc(sizeof(char) * (data->len + 1));
-	*env_list = malloc(sizeof(t_list_env));
-	if (!*env_list)
-		return ;
-	(*env_list)->begin = NULL;
-	(*env_list)->end = NULL;
 }

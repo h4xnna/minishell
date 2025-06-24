@@ -70,7 +70,7 @@ typedef struct s_List_env
 // exec..execution
 void	get_file(t_list *list);
 int		is_redirections(t_data *data);
-void	exec(t_list *list, char **env);
+void	exec(t_list *list, char **env, t_list_env *env_list);
 
 // exec ../expansion
 char	*get_var_name(char *retour);
@@ -86,7 +86,8 @@ int	build_check_path_cmd(char *word, t_data *data, int i, int j);
 char	*build_path(char *cmd, char *word);
 int	is_chevrons(t_data *data);
  int	is_cmd(char *word, t_data *data);
-
+ int	built_cmd_child(char *str);
+int	built_cmd_parent(char *str);
 
 
 // exec../pipes
@@ -111,11 +112,13 @@ char	*get_env_value(const char *name, char **envp);
 char	*make_env_str(const char *key, const char *value);
 int	update_env_var(const char *key, const char *value, char ***envp);
 int	handle_path(char **args, char ***envp, char **path);
-int	ft_cd(char **args, char ***envp);
+void	ft_cd(char **args, t_list_env *envp);
 
 
 //exec../builtin../export
 
+//exec../builtin../env
+void ft_env( t_list_env *envp);
 
 
 //exec../builtin../exit
@@ -127,7 +130,7 @@ int	ft_exit(char **args);
 // pars../list_creation
 void	get_word(t_list *list, char *args, t_data *data, t_global global);
 void	node_creation(t_list *list, char *retour);
-void	initialisation(t_data *data, char *args, t_list_env **env_list);
+void	initialisation(t_data *data, char *args);
 
 // pars../list_creation
 void	node_creation_env_variables(t_list_env *env_list, char *str);
@@ -155,7 +158,8 @@ void	dollar_pars_digit_quote(t_data *data, char *args);
 // pars../get_return_code
 void	return_code(t_data *data, char *args, t_global global);
  void	print_splash_screen(void);
- void	test_builtins(t_data *data, char **env);
+ void	test_builtins_child(t_data *data, t_list_env *env);
+ void	test_builtins_parents(t_data *data, t_list_env *env);
 
 // pars../print_command_error
 int	is_error(char *args);
@@ -226,9 +230,9 @@ void	signal_handler(int signum);
 // main
 int		is_unclosed_quotes(char *args);
 void	initialisation_list(t_list **list);
-void	print_exec(t_list *list, char *args, char **env);
-void	tokenisation_and_exec(t_list *list, char *args, char **env);
-void	program_handler(t_list *list, char *args, t_global global, char **env);
+void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list);
+void	tokenisation_and_exec(t_list *list, char *args, char **env, t_list_env *env_list);
+void	program_handler(t_list *list, char *args, t_global global, char **env, t_list_env *env_list);
 
 char	ft_base(int number);
 int		ft_len(int n);
