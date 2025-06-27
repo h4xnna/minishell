@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   path_cmd.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+      
+/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2025/06/19 08:56:28 by acrusoe           #+#    #+#             */
 /*   Updated: 2025/06/19 08:56:28 by acrusoe          ###   ########.fr       */
@@ -84,10 +84,8 @@ int	built_cmd_child(char *str)
 	if (strcmp(str, "echo") == 0)
 		return (1);
 	else if (strcmp(str, "pwd") == 0)
-		return (1); 
-	else if (strcmp(str, "env") == 0)
 		return (1);
-	else if (strcmp(str, "exit") == 0)
+	else if (strcmp(str, "env") == 0)
 		return (1);
 	return (0);
 }
@@ -100,7 +98,9 @@ int	built_cmd_parent(char *str)
 		return (1);
 	else if (strcmp(str, "unset") == 0)
 		return (1);
-	return(0);
+	else if (strcmp(str, "exit") == 0)
+		return (1);
+	return (0);
 }
 
 int	is_cmd(char *word, t_data *data)
@@ -114,8 +114,8 @@ int	is_cmd(char *word, t_data *data)
 		return (0);
 	if (built_cmd_parent(word))
 		return (1);
-	if(built_cmd_child(word))
-		return(1);
+	if (built_cmd_child(word))
+		return (1);
 	if (check_path_cmd(word))
 		return (1);
 	if (build_check_path_cmd(word, data, i, j))

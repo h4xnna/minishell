@@ -105,13 +105,11 @@ int ft_strncmp(char *s1, char *s2, int n);
 void	ft_pwd(void);
 
 //exec../builtin../unset
+void ft_unset(t_list_env *envp, char **args);
+
 
 
 //exec../builtin../cd
-char	*get_env_value(const char *name, char **envp);
-char	*make_env_str(const char *key, const char *value);
-int	update_env_var(const char *key, const char *value, char ***envp);
-int	handle_path(char **args, char ***envp, char **path);
 void	ft_cd(char **args, t_list_env *envp);
 
 
@@ -218,7 +216,18 @@ int	check_delim_after_heredoc(t_data *data);
 int	pipe_not_followed_by_cmd(t_data *data);
 int	check_file_after_redirout(t_data *data);
 
+//util../split
+int	word_lenght(char const *s, char c);
+void *ft_calloc(size_t count, size_t size);
+int	get_out_lenght(char const *s, char c);
+char	*special_strdup(char const *s, char c, int *outi);
+char	**ft_split(char const *s, char c);
 
+//util../split2
+void	free_split(char **out, int i);
+void	free_split2(char **split);
+void free_env_node(t_env *node);
+char	*ft_strjoin_three(char *s1, char *s2, char *s3);
 
 //util../return_code
 int		set_get_exit_status(int exit_code);

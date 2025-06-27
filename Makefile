@@ -50,6 +50,8 @@ SRCS 	=  exec/execution.c\
 			utils/minishell_utils2.c\
 			utils/redirection_checker.c\
 			utils/syntax_error_token.c\
+			utils/split.c\
+			utils/split2.c\
 			main.c\
 			signals.c
 
