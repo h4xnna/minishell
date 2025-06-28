@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+      
+/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2025/06/21 09:33:42 by acrusoe           #+#    #+#             */
 /*   Updated: 2025/06/21 09:33:42 by acrusoe          ###   ########.fr       */
@@ -29,29 +29,29 @@
 
 typedef struct s_global
 {
-	int index;
-} t_global;
+	int		index;
+}		t_global;
 
 typedef struct s_data
 {
-	char *word;
-	char *type;
-	int index;
-	char **args;
-	int i;
-	int j;
-	int k;
-	int len;
-	char *retour;
-	struct s_data *next;
-	struct s_data *back;
-} t_data;
+	char			*word;
+	char			*type;
+	int				index;
+	char			**args;
+	int				i;
+	int				j;
+	int				k;
+	int				len;
+	char			*retour;
+	struct s_data	*next;
+	struct s_data	*back;
+}		t_data;
 
 typedef struct s_List
 {
-	struct s_data *begin;
-	struct s_data *end;
-} t_list;
+	struct s_data	*begin;
+	struct s_data	*end;
+}		t_list;
 
 typedef struct s_env
 {
@@ -59,13 +59,13 @@ typedef struct s_env
 	char			*key;
 	struct s_env	*next;
 	struct s_env	*back;
-}	t_env;
+}		t_env;
 
 typedef struct s_List_env
 {
 	struct s_env	*begin;
 	struct s_env	*end;
-}	t_list_env;
+}		t_list_env;
 
 // exec..execution
 void	get_file(t_list *list);
@@ -81,14 +81,13 @@ void	expansion(t_data *data, char *args);
 void	double_quotes_expansion(t_data *data, char *args);
 
 // exec../path_cmd
-int	check_path_cmd(char *word);
-int	build_check_path_cmd(char *word, t_data *data, int i, int j);
+int		check_path_cmd(char *word);
+int		build_check_path_cmd(char *word, t_data *data, int i, int j);
 char	*build_path(char *cmd, char *word);
-int	is_chevrons(t_data *data);
- int	is_cmd(char *word, t_data *data);
- int	built_cmd_child(char *str);
-int	built_cmd_parent(char *str);
-
+int		is_chevrons(t_data *data);
+int		is_cmd(char *word, t_data *data);
+int		built_cmd_child(char *str);
+int		built_cmd_parent(char *str);
 
 // exec../pipes
 void	ft_first_cmd(int **pipefd, int i);
@@ -96,34 +95,28 @@ void	ft_middle_cmd(int **pipefd, int i);
 void	ft_last_cmd(int **pipefd, int i);
 void	ft_close_all_pipes(int **pipefd, t_data *data, t_list *list);
 
-//exec../builtin../echo
-void ft_echo(char **av);
-int	is_valid_n_option(char *str);
-int ft_strncmp(char *s1, char *s2, int n);
+// exec../builtin../echo
+void	ft_echo(char **av);
+int		is_valid_n_option(char *str);
+int		ft_strncmp(char *s1, char *s2, int n);
 
-//exec../builtin../pwd
+// exec../builtin../pwd
 void	ft_pwd(void);
 
-//exec../builtin../unset
-void ft_unset(t_list_env *envp, char **args);
+// exec../builtin../unset
+void	ft_unset(t_list_env *envp, char **args);
 
-
-
-//exec../builtin../cd
+// exec../builtin../cd
 void	ft_cd(char **args, t_list_env *envp);
 
+// exec../builtin../export
+void	ft_export(t_list_env *envp, char **args);
 
-//exec../builtin../export
+// exec../builtin../env
+void	ft_env(t_list_env *envp);
 
-//exec../builtin../env
-void ft_env( t_list_env *envp);
-
-
-//exec../builtin../exit
-int	ft_exit(char **args);
-
-
-
+// exec../builtin../exit
+int		ft_exit(char **args);
 
 // pars../list_creation
 void	get_word(t_list *list, char *args, t_data *data, t_global global);
@@ -143,11 +136,10 @@ void	single_quote_pars(t_data *data, char *args);
 void	double_quotes_pars(t_data *data, char *args);
 
 // pars../args_cmd
-int	is_operator2(char *word);
+int		is_operator2(char *word);
 void	fill_args_cmd(t_data *data, int k);
 void	get_args_cmd(t_data *data, t_list *list);
-int	get_cmd_nb(t_data *data);
-
+int		get_cmd_nb(t_data *data);
 
 // pars../dollar_hanling_functions
 void	dollar_pars(t_data *data, char *args, t_global global);
@@ -155,29 +147,27 @@ void	dollar_pars_digit_quote(t_data *data, char *args);
 
 // pars../get_return_code
 void	return_code(t_data *data, char *args, t_global global);
- void	print_splash_screen(void);
- void	test_builtins_child(t_data *data, t_list_env *env);
- void	test_builtins_parents(t_data *data, t_list_env *env);
+void	print_splash_screen(void);
+void	test_builtins_child(t_data *data, t_list_env *env);
+void	test_builtins_parents(t_data *data, t_list_env *env);
 
 // pars../print_command_error
-int	is_error(char *args);
+int		is_error(char *args);
 void	print_error(t_list *list, char *args);
 
-
 // pars../redirection_in
-int	is_redir_in(t_data *data);
+int		is_redir_in(t_data *data);
 void	ft_redir_in(t_data *data);
 
 // pars../redirection_out
-int	is_redir_out(t_data *data);
+int		is_redir_out(t_data *data);
 void	ft_redir_out(t_data *data);
-int	is_redir_out_append(t_data *data);
+int		is_redir_out_append(t_data *data);
 void	ft_redir_out_append(t_data *data);
 
 // pars../tokenisation
 void	get_type(t_data *data, t_list *list);
 char	*get_token_type(t_data *data, int *cmd_nb);
-
 
 // utils../free_memory
 void	free_args_cmd(t_data *temp, int i);
@@ -187,22 +177,21 @@ void	free_env_list(t_list_env *env_list);
 // utils../ft_itoa
 char	*ft_itoa(int n);
 void	ft_char(char number, long i, long nbr, char *str);
-int	ft_length(long n);
-
+int		ft_length(long n);
 
 // utils../minishell_utils
-int	ft_strchr(char *left_char, char c);
+int		ft_strchr(char *left_char, char c);
 char	*ft_strdup(char *s1);
 char	*ft_strcat(char const *s1, char const *s2);
 char	*ft_strjoin(char const *s1, char const *s2);
-int	ft_strlen(char const *args);
-int	ft_strcmp(char *s1, char *s2);
+int		ft_strlen(char const *args);
+int		ft_strcmp(char *s1, char *s2);
 
 // utils../minishell_utils2
-int	is_quote(char c);
-int	is_digit(char c);
-int	is_operator(char c);
-int	ft_strlen_cmd(t_data *data);
+int		is_quote(char c);
+int		is_digit(char c);
+int		is_operator(char c);
+int		ft_strlen_cmd(t_data *data);
 void	*ft_memset(void *str, int c, size_t len);
 char	*ft_realloc(char *expanded, char *retour, t_data *data);
 
@@ -211,40 +200,33 @@ void	search_redir(t_data *data);
 void	is_redir_start(t_data *data);
 
 // utils../syntax_error_token
-int	wrong_token_error(t_data *data, t_list *list);
-int	check_delim_after_heredoc(t_data *data);
-int	pipe_not_followed_by_cmd(t_data *data);
-int	check_file_after_redirout(t_data *data);
+int		wrong_token_error(t_data *data, t_list *list);
+int		check_delim_after_heredoc(t_data *data);
+int		pipe_not_followed_by_cmd(t_data *data);
+int		check_file_after_redirout(t_data *data);
 
-//util../split
-int	word_lenght(char const *s, char c);
-void *ft_calloc(size_t count, size_t size);
-int	get_out_lenght(char const *s, char c);
-char	*special_strdup(char const *s, char c, int *outi);
-char	**ft_split(char const *s, char c);
+// util../builtin_utils
+int		is_valid_identifier(char *str);
+char	*ft_strndup(char *s, int n);
 
-//util../split2
-void	free_split(char **out, int i);
-void	free_split2(char **split);
-void free_env_node(t_env *node);
-char	*ft_strjoin_three(char *s1, char *s2, char *s3);
-
-//util../return_code
+// util../return_code
 int		set_get_exit_status(int exit_code);
 
 // signal
-int		signal_handlers();
+int		signal_handlers(void);
 void	signal_handler(int signum);
 
 // main
 int		is_unclosed_quotes(char *args);
 void	initialisation_list(t_list **list);
 void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list);
-void	tokenisation_and_exec(t_list *list, char *args, char **env, t_list_env *env_list);
-void	program_handler(t_list *list, char *args, t_global global, char **env, t_list_env *env_list);
+void	tokenisation_and_exec(t_list *list, char *args, char **env,
+			t_list_env *env_list);
+void	program_handler(t_list *list, char *args, t_global global, char **env,
+			t_list_env *env_list);
 
 char	ft_base(int number);
 int		ft_len(int n);
-int built_cmd(char *str);
+int		built_cmd(char *str);
 
 #endif

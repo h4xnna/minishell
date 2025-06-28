@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 22:35:54 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/06/24 21:58:53 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/06/28 18:10:22 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_pwd(void)
 {
-	char	cwd [1024];
+	char cwd[1024];
 
 	if (!getcwd(cwd, sizeof(cwd)))
 	{

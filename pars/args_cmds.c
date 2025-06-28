@@ -14,7 +14,7 @@
 
 int	is_operator2(char *word)
 {
-	char	*operators[] = {"|", ">", "<", ">>", NULL};
+	char	*operators[]= {"|", ">", "<", ">>", NULL};
 	int		i;
 
 	i = 0;

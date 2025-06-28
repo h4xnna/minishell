@@ -1,8 +1,0 @@
-			exec/builtin/cd.c\
-			exec/builtin/echo.c\
-			exec/builtin/env.c\
-			exec/builtin/exit.c\
-			exec/builtin/export.c\
-			exec/builtin/pwd.c\
-			exec/builtin/unset.c\
-			pars/chained_list_env_variables.c\

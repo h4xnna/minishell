@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 19:44:03 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/06/27 18:22:31 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/06/28 17:42:13 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	test_builtins_child(t_data *data, t_list_env *envp)
 		ft_echo(data->args);
 	else if (ft_strcmp(data->word, "pwd") == 0)
 		ft_pwd();
-	else if(ft_strcmp(data->word, "env") == 0)
+	else if (ft_strcmp(data->word, "env") == 0)
 		ft_env(envp);
 }
 
@@ -57,8 +57,10 @@ void	test_builtins_parents(t_data *data, t_list_env *env)
 		ft_exit(data->args);
 	else if (ft_strcmp(data->word, "cd") == 0)
 		ft_cd(data->args, env);
-	if(ft_strcmp(data->word, "unset") == 0)
+	else if (ft_strcmp(data->word, "unset") == 0)
 		ft_unset(env, data->args);
+	else if (ft_strcmp(data->word, "export") == 0)
+		ft_export(env, data->args);
 }
 // int main(void)
 // {

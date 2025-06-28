@@ -128,7 +128,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		initialisation_list(&list);
-		args = readline("Minishell > ");
+		args = readline("\033[1m\033[38;5;129mMinishell → \033[0m");
 		if (!args)
 		{
 			free_list(list);

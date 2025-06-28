@@ -39,6 +39,7 @@ void	get_file(t_list *list)
 	}
 }
 
+
 void	exec(t_list *list, char **env, t_list_env *env_list)
 {
 	t_data	*data = list->begin;
@@ -148,3 +149,5 @@ void	exec(t_list *list, char **env, t_list_env *env_list)
 	}
 	free(pid);
 }
+
+

@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 20:50:12 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/06/24 23:15:13 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/06/28 18:09:09 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	pwd_value(t_list_env *envp, char *key)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			// free(current->value);
-			// ft_strdup(current->value);
 			getcwd(cwd, sizeof(cwd));
 			new_value = ft_strdup(cwd);
 			if (!new_value)
