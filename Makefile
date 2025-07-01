@@ -33,6 +33,7 @@ SRCS 	=  exec/execution.c\
 			exec/builtin/export.c\
 			exec/builtin/pwd.c\
 			exec/builtin/unset.c\
+			exec/here_doc.c \
 			pars/list_creation.c\
 			pars/parsing_functions.c\
 			pars/args_cmds.c\

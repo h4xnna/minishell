@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 21:40:34 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/06/28 18:09:39 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/01 20:46:58 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	ft_echo(char **av)
 
 	if (av)
 	{
-		while (av[i] && ft_strncmp(av[i], "-n", 2) == 0
-			&& is_valid_n_option(av[i]))
+		while (av[i] && is_valid_n_option(av[i]))
 		{
 			newline = 0;
 			i++;

@@ -59,7 +59,7 @@ int	build_check_path_cmd(char *word, t_data *data, int i, int j,
 			env->begin = env->begin->next;
 	}
 	if (!path)
-		return (0);
+		return (1);
 	while (path[i])
 	{
 		j = 0;
@@ -83,12 +83,12 @@ int	is_chevrons(t_data *data)
 {
 	if (ft_strcmp(data->back->word, ">") == 0)
 		return (1);
-	if (ft_strcmp(data->back->word, ">>") == 0)
+	else if (ft_strcmp(data->back->word, ">>") == 0)
 		return (1);
-	if (ft_strcmp(data->back->word, "<") == 0)
+	else if (ft_strcmp(data->back->word, "<") == 0)
 		return (1);
-	if(ft_strcmp(data->back->word, "<<") == 0)
-		return(1);
+	else if (ft_strcmp(data->back->word, "<<") == 0)
+		return (1);
 	return (0);
 }
 

@@ -26,9 +26,7 @@ char	*get_token_type(t_data *data, int *cmd_nb, t_list_env *env)
 	else if (ft_strcmp(data->word, "<") == 0)
 		return ("REDIR_IN");
 	else if (ft_strcmp(data->word, "<<") == 0)
-		return ("REDIR_IN");
-	else if(ft_strcmp(data->word, "<<") == 0)
-		return("REDIR_IN");
+		return ("HERE_DOC");
 	else if (ft_strcmp(data->word, "|") == 0)
 	{
 		*cmd_nb = 0;

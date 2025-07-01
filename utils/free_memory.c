@@ -41,9 +41,11 @@ void	free_list(t_list *list)
 			free_args_cmd(temp, i);
 		}
 		data = data->next;
-		free(temp->word);
+		if (temp->word)
+			free(temp->word);
 		temp->word = NULL;
-		free(temp);
+		if (temp)
+			free(temp);
 		temp = NULL;
 	}
 	list->begin = NULL;

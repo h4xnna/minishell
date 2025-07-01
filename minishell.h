@@ -229,4 +229,10 @@ char	ft_base(int number);
 int		ft_len(int n);
 int		built_cmd(char *str);
 
+void	here_doc(t_data *data);
+int		has_heredoc(t_data *data);
+void	create_heredoc(t_data *data);
+
+
+
 #endif
