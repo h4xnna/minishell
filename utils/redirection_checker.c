@@ -18,6 +18,8 @@ void	search_redir(t_data *data)
 	{
 		if (is_redir_in(data))
 			ft_redir_in(data);
+		else if (has_heredoc(data))
+			here_doc(data);
 		else if (is_redir_out(data))
 			ft_redir_out(data);
 		else if (is_redir_out_append(data))

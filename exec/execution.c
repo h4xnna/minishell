@@ -84,27 +84,16 @@ void	exec(t_list *list, char **env, t_list_env *env_list)
 			{
 				signal(SIGINT, SIG_DFL);
 				search_redir(data);
-				// if (has_heredoc(data))
-				// {
-				// 	heredoc_fd = open("here_tmp.txt", O_RDONLY);
-				// 	if (heredoc_fd < 0)
-				// 	{
-				// 		dprintf(1, "heredoc open failed");
-				// 		exit(0);
-				// 	}
-				// 	dup2(heredoc_fd, STDIN_FILENO);
-				// 	close(heredoc_fd) ;
-				// }
-				 if (!is_redir_out(data) && cmds_numb > 1)
-					{
-						if (i == 0)
-							ft_first_cmd(pipefd, i);
-						else if (i == cmds_numb - 1)
-							ft_last_cmd(pipefd, i);
-						else
-							ft_middle_cmd(pipefd, i);
-						ft_close_all_pipes(pipefd, data, list);
-					}
+				if (!is_redir_out(data) && cmds_numb > 1)
+				{
+					if (i == 0)
+						ft_first_cmd(pipefd, i);
+					else if (i == cmds_numb - 1)
+						ft_last_cmd(pipefd, i);
+					else
+						ft_middle_cmd(pipefd, i);
+					ft_close_all_pipes(pipefd, data, list);
+				}
 				else if (built_cmd_child(data->word))
 						test_builtins_child(data, env_list);
 					execve(data->word, data->args, env);
