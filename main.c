@@ -61,7 +61,7 @@ void	tokenisation_and_exec(t_list *list, char *args, char **env, t_list_env *env
 	t_data	*data;
 
 	data = list->begin;
-	get_type(data, list);
+	get_type(data, list, env_list);
 	get_file(list);
 	if (wrong_token_error(data, list))
 	{

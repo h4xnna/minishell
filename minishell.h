@@ -82,10 +82,10 @@ void	double_quotes_expansion(t_data *data, char *args);
 
 // exec../path_cmd
 int		check_path_cmd(char *word);
-int		build_check_path_cmd(char *word, t_data *data, int i, int j);
+int	build_check_path_cmd(char *word, t_data *data, int i, int j, t_list_env *env);
 char	*build_path(char *cmd, char *word);
 int		is_chevrons(t_data *data);
-int		is_cmd(char *word, t_data *data);
+int		is_cmd(char *word, t_data *data, t_list_env *env);
 int		built_cmd_child(char *str);
 int		built_cmd_parent(char *str);
 
@@ -166,8 +166,8 @@ int		is_redir_out_append(t_data *data);
 void	ft_redir_out_append(t_data *data);
 
 // pars../tokenisation
-void	get_type(t_data *data, t_list *list);
-char	*get_token_type(t_data *data, int *cmd_nb);
+void	get_type(t_data *data, t_list *list, t_list_env *env);
+char	*get_token_type(t_data *data, int *cmd_nb, t_list_env *env);
 
 // utils../free_memory
 void	free_args_cmd(t_data *temp, int i);

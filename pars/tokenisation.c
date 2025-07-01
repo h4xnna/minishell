@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-char	*get_token_type(t_data *data, int *cmd_nb)
+char	*get_token_type(t_data *data, int *cmd_nb, t_list_env *env)
 {
-	if (*cmd_nb == 0 && is_cmd(data->word, data))
+	if (*cmd_nb == 0 && is_cmd(data->word, data, env))
 	{
 		(*cmd_nb)++;
 		return ("CMD");
@@ -27,6 +27,8 @@ char	*get_token_type(t_data *data, int *cmd_nb)
 		return ("REDIR_IN");
 	else if (ft_strcmp(data->word, "<<") == 0)
 		return ("REDIR_IN");
+	else if(ft_strcmp(data->word, "<<") == 0)
+		return("REDIR_IN");
 	else if (ft_strcmp(data->word, "|") == 0)
 	{
 		*cmd_nb = 0;
@@ -36,7 +38,7 @@ char	*get_token_type(t_data *data, int *cmd_nb)
 		return ("ARG");
 }
 
-void	get_type(t_data *data, t_list *list)
+void	get_type(t_data *data, t_list *list, t_list_env *env)
 {
 	int	cmd_nb;
 
@@ -44,7 +46,7 @@ void	get_type(t_data *data, t_list *list)
 	data = list->begin;
 	while (data)
 	{
-		data->type = get_token_type(data, &cmd_nb);
+		data->type = get_token_type(data, &cmd_nb, env);
 		data = data->next;
 	}
 }

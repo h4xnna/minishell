@@ -2,16 +2,14 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   path_cmd.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2025/06/19 08:56:28 by acrusoe           #+#    #+#             */
-/*   Updated: 2025/06/19 08:56:28 by acrusoe          ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/29 18:36:50 by hmimouni          #+#    #+#             */
+/*   Updated: 2025/06/29 18:36:50 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -42,13 +40,26 @@ char	*build_path(char *cmd, char *word)
 	return (string);
 }
 
-int	build_check_path_cmd(char *word, t_data *data, int i, int j)
+int	build_check_path_cmd(char *word, t_data *data, int i, int j,
+		t_list_env *env)
 {
 	char *str;
 	char cmd[256];
 	char *path;
 
-	path = getenv("PATH");
+	path = NULL;
+	while (env->begin)
+	{
+		if (ft_strcmp(env->begin->key, "PATH") == 0)
+		{
+			path = env->begin->value;
+			break ;
+		}
+		else
+			env->begin = env->begin->next;
+	}
+	if (!path)
+		return (0);
 	while (path[i])
 	{
 		j = 0;
@@ -76,6 +87,8 @@ int	is_chevrons(t_data *data)
 		return (1);
 	if (ft_strcmp(data->back->word, "<") == 0)
 		return (1);
+	if(ft_strcmp(data->back->word, "<<") == 0)
+		return(1);
 	return (0);
 }
 
@@ -103,7 +116,7 @@ int	built_cmd_parent(char *str)
 	return (0);
 }
 
-int	is_cmd(char *word, t_data *data)
+int	is_cmd(char *word, t_data *data, t_list_env *env)
 {
 	int i;
 	int j;
@@ -118,7 +131,7 @@ int	is_cmd(char *word, t_data *data)
 		return (1);
 	if (check_path_cmd(word))
 		return (1);
-	if (build_check_path_cmd(word, data, i, j))
+	if (build_check_path_cmd(word, data, i, j, env))
 		return (1);
 	return (0);
 }
