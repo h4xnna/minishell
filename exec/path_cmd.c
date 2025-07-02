@@ -46,17 +46,19 @@ int	build_check_path_cmd(char *word, t_data *data, int i, int j,
 	char *str;
 	char cmd[256];
 	char *path;
+	t_env *current;
 
 	path = NULL;
-	while (env->begin)
+	current = env->begin;
+	while (current)
 	{
-		if (ft_strcmp(env->begin->key, "PATH") == 0)
+		if (ft_strcmp(current->key, "PATH") == 0)
 		{
-			path = env->begin->value;
+			path = current->value;
 			break ;
 		}
 		else
-			env->begin = env->begin->next;
+			current = current->next;
 	}
 	if (!path)
 		return (1);

@@ -14,7 +14,7 @@
 
 char	*get_token_type(t_data *data, int *cmd_nb, t_list_env *env)
 {
-	if (*cmd_nb == 0 && is_cmd(data->word, data, env))
+	if (*cmd_nb == 0 && is_cmd(data->word, data, env) == 1)
 	{
 		(*cmd_nb)++;
 		return ("CMD");
