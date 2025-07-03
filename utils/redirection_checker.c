@@ -34,4 +34,7 @@ void	is_redir_start(t_data *data)
 		ft_redir_in(data);
 	else if (ft_strcmp(data->type, "REDIR_OUT") == 0)
 		ft_redir_out(data);
+	else if(ft_strcmp(data->type, "HERE_DOC") == 0)
+		 here_doc(data);
+
 }

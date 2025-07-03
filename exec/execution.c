@@ -54,7 +54,6 @@ void	exec(t_list *list, char **env, t_list_env *env_list)
 	pid_t *pid = malloc(sizeof(pid_t) * cmds_numb);
 	int save_stdout = dup(STDOUT_FILENO);
 	int save_stdin = dup(STDIN_FILENO);
-	// int heredoc_fd;
 
 	data = list->begin;
 	k = 0;
@@ -67,17 +66,11 @@ void	exec(t_list *list, char **env, t_list_env *env_list)
 		i++;
 	}
 	i = 0;
-
-	// t_data *test = list->begin;
-	// while(test)
-	// {
-	// 	printf("%s : %s\n", test->type, test->word);
-	// 	test = test->next;
-	// }
 	while (data && i < cmds_numb)
 	{
 		signal(SIGINT, SIG_IGN);
 		is_redir_start(data);
+		// printf("%s, %s,", data->args, data)
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			if (built_cmd_parent(data->word))
