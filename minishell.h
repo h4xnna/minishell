@@ -114,7 +114,7 @@ void	ft_cd(char **args, t_list_env *envp);
 void	ft_export(t_list_env *envp, char **args);
 
 // exec../builtin../env
-void	ft_env(t_list_env *envp);
+void	ft_env(t_list_env *envp, t_data *data);
 
 // exec../builtin../exit
 int		ft_exit(char **args);
@@ -221,7 +221,7 @@ void	signal_handler(int signum);
 int		is_unclosed_quotes(char *args);
 void	initialisation_list(t_list **list);
 void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list);
-void	tokenisation_and_exec(t_list *list, char *args, char **env,
+int		tokenisation_and_exec(t_list *list, char *args, char **env,
 			t_list_env *env_list);
 void	program_handler(t_list *list, char *args, t_global global, char **env,
 			t_list_env *env_list);

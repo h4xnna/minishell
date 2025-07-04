@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 19:44:03 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/06/28 17:42:13 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/04 23:08:31 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	test_builtins_child(t_data *data, t_list_env *envp)
 	else if (ft_strcmp(data->word, "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(data->word, "env") == 0)
-		ft_env(envp);
+		ft_env(envp, data);
 }
 
 void	test_builtins_parents(t_data *data, t_list_env *env)

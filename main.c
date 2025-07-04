@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2025/06/19 08:38:35 by acrusoe           #+#    #+#             */
 /*   Updated: 2025/06/19 08:38:35 by acrusoe          ###   ########.fr       */
 /*                                                                            */
@@ -12,9 +15,10 @@
 
 #include "minishell.h"
 
+
 void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 {
-	t_data	*data;
+	t_data *data;
 
 	data = list->begin;
 	while (data)
@@ -22,11 +26,13 @@ void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			exec(list, env, env_list);
+			if (data->here_doc_fd > 0)
+				unlink("here_doc");
 			data->here_doc_fd = 0;
 			return ;
 		}
 		data = data->next;
-	} 
+	}
 	if (list->begin && ft_strcmp(list->begin->type, "HERE_DOC") == 0)
 	{
 		data = list->begin;
@@ -38,9 +44,9 @@ void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 
 int	is_unclosed_quotes(char *args)
 {
-	int	i;
-	int	count;
-	int	count2;
+	int i;
+	int count;
+	int count2;
 
 	i = 0;
 	count = 0;
@@ -62,29 +68,27 @@ int	is_unclosed_quotes(char *args)
 	return (0);
 }
 
-void	tokenisation_and_exec(t_list *list, char *args, char **env, t_list_env *env_list)
+int	tokenisation_and_exec(t_list *list, char *args, char **env,
+		t_list_env *env_list)
 {
-	t_data	*data;
+	t_data *data;
 
 	data = list->begin;
 	get_type(data, list, env_list);
 	get_file(list);
 	if (wrong_token_error(data, list))
-	{
-		free_list(list);
-		free(args);
-		signal_handlers();
-		return ;
-	}
+		return (0);
 	get_args_cmd(data, list);
 	print_exec(list, args, env, env_list);
 	rl_redisplay();
 	signal_handlers();
+	return (1);
 }
 
-void	program_handler(t_list *list, char *args, t_global global, char **env, t_list_env *env_list)
+void	program_handler(t_list *list, char *args, t_global global, char **env,
+		t_list_env *env_list)
 {
-	t_data	*data;
+	t_data *data;
 
 	data = malloc(sizeof(t_data));
 	ft_memset(data, 0, sizeof(t_data));
@@ -97,8 +101,15 @@ void	program_handler(t_list *list, char *args, t_global global, char **env, t_li
 		return ;
 	}
 	get_word(list, args, data, global);
-	tokenisation_and_exec(list, args, env, env_list);
-	free_list(list);
+	if (!tokenisation_and_exec(list, args, env, env_list))
+	{
+		free_list(list);
+		free(args);
+		signal_handlers();
+		return ;
+	}
+	if(list)
+		free_list(list);
 	free(args);
 }
 
@@ -113,16 +124,16 @@ void	initialisation_list(t_list **list)
 
 int	main(int ac, char **av, char **env)
 {
-	t_global	global;
-	t_list		*list;
-	char		*args;
+	t_global global;
+	t_list *list;
+	char *args;
 
 	global.index = 0;
 	(void)av;
 	(void)ac;
 	print_splash_screen();
 	signal_handlers();
-	t_list_env	*env_list;
+	t_list_env *env_list;
 
 	env_list = malloc(sizeof(t_list_env));
 	if (!env_list)
