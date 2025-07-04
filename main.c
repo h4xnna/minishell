@@ -22,10 +22,11 @@ void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			exec(list, env, env_list);
-			break ;
+			data->here_doc_fd = 0;
+			return ;
 		}
 		data = data->next;
-	}
+	} 
 	if (list->begin && ft_strcmp(list->begin->type, "HERE_DOC") == 0)
 	{
 		data = list->begin;

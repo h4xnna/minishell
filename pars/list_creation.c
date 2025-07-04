@@ -73,6 +73,7 @@ void	initialisation(t_data *data, char *args)
 	data->i = 0;
 	data->j = 0;
 	data->k = 0;
+	data->here_doc_fd = 0;
 	data->args = NULL;
 	data->len = ft_strlen(args);
 	data->retour = malloc(sizeof(char) * (data->len + 1));

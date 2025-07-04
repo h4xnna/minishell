@@ -42,6 +42,7 @@ typedef struct s_data
 	int				j;
 	int				k;
 	int				len;
+	int				here_doc_fd;
 	char			*retour;
 	struct s_data	*next;
 	struct s_data	*back;

@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/04 18:05:50 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:20:18 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,18 @@ int	has_heredoc(t_data *data)
 void	here_doc(t_data *data)
 {
 	(void)data;
-	static int fd = 0;
+	int fd;
 	char *line = NULL;
 	
 	if (!data->next || !data)
 		return ;
-	if (!fd)
+	if (!data->here_doc_fd)
 	{
-		fd = open("here_doc", O_TRUNC | O_CREAT | O_WRONLY, 0677);
-		if (fd < 0)
+		data->here_doc_fd = open("here_doc", O_TRUNC | O_CREAT | O_RDWR, 0677);
+		if (data->here_doc_fd < 0)
 			return ;
 	}
+	fd = data->here_doc_fd;
 	while ((line = readline("\033[1m\033[31mheredoc → \033[0m")) != NULL
 		&& ft_strcmp(data->next->word, line) != 0)
 	{
@@ -72,10 +73,7 @@ void	here_doc(t_data *data)
 		dup2(fd, STDIN_FILENO);
 		unlink("here_doc");
 		close(fd);
-		return ;
-		return;
 	}
-	return ;
 }
 
 
