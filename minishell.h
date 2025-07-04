@@ -231,7 +231,8 @@ int		built_cmd(char *str);
 
 void	here_doc(t_data *data);
 int		has_heredoc(t_data *data);
-void	create_heredoc(t_data *data);
+void here_doc_cmd(t_data *data);
+
 
 
 

@@ -26,6 +26,11 @@ void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 		}
 		data = data->next;
 	}
+	if (list->begin && ft_strcmp(list->begin->type, "HERE_DOC") == 0)
+	{
+		data = list->begin;
+		here_doc(data);
+	}
 	if (!data)
 		print_error(list, args);
 }

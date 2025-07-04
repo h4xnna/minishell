@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/03 20:31:17 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:05:50 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,33 @@ int	has_heredoc(t_data *data)
 	return (0);
 }
 
+// void here_doc_cmd(t_data *data)
+// {
+// 	int fd;
+// 	char *line = NULL;
+// 	if (data->next->next && ft_strcmp(data->next->next->type, "CMD") == 0
+// 		&& ft_strcmp(data->next->word, line) != 0)
+// 	{
+// 		// printf("%s", data->next->next->type);
+// 		fd = open("here_doc", O_RDONLY);
+// 		if (fd < 0)
+// 			return ;
+// 		dup2(fd, STDIN_FILENO);
+// 		unlink("here_doc");
+// 		close(fd);
+// 		return ;
+// 	}
+// 	return ;
+// }
+
 void	here_doc(t_data *data)
 {
 	(void)data;
 	static int fd = 0;
 	char *line = NULL;
-
+	
+	if (!data->next || !data)
+		return ;
 	if (!fd)
 	{
 		fd = open("here_doc", O_TRUNC | O_CREAT | O_WRONLY, 0677);
@@ -38,14 +59,23 @@ void	here_doc(t_data *data)
 		write(fd, "\n", 1);
 		free(line);
 	}
-	if(line)
+	if (line)
 		free(line);
 	close(fd);
-	fd = open("here_doc", O_RDONLY);
-	if (fd < 0)
+	if (data->next->next && ft_strcmp(data->next->next->type, "CMD") == 0
+		&& ft_strcmp(data->next->word, line) != 0)
+	{
+		// printf("%s", data->next->next->type);
+		fd = open("here_doc", O_RDONLY);
+		if (fd < 0)
+			return ;
+		dup2(fd, STDIN_FILENO);
+		unlink("here_doc");
+		close(fd);
 		return ;
-	dup2(fd, STDIN_FILENO);
-	unlink("here_doc");
-	close(fd);
+		return;
+	}
 	return ;
 }
+
+

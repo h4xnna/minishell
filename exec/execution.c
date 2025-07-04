@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: hmimouni <hmimouni@>                       +#+  +:+      
+/*   By: hmimouni <hmimouni@>                       +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2025/07/01 20:06:03 by hmimouni          #+#    #+#             */
 /*   Updated: 2025/07/01 20:06:03 by hmimouni         ###   ########.fr       */
@@ -70,7 +70,6 @@ void	exec(t_list *list, char **env, t_list_env *env_list)
 	{
 		signal(SIGINT, SIG_IGN);
 		is_redir_start(data);
-		// printf("%s, %s,", data->args, data)
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			if (built_cmd_parent(data->word))
@@ -91,18 +90,11 @@ void	exec(t_list *list, char **env, t_list_env *env_list)
 				if (!is_redir_out(data) && cmds_numb > 1)
 				{
 					if (i == 0)
-					{
 						ft_first_cmd(pipefd, i);
-					}
 					else if (i == cmds_numb - 1)
-					{
 						ft_last_cmd(pipefd, i);
-					}
 					else
-					{
 						ft_middle_cmd(pipefd, i);
-					}
-
 					ft_close_all_pipes(pipefd, data, list);
 				}
 				if (built_cmd_child(data->word))
