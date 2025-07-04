@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "minishell.h"
 
 void	space_pars(t_list *list, t_data *data)
 {

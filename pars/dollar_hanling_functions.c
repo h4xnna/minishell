@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "minishell.h"
 
 void	dollar_pars_digit_quote(t_data *data, char *args)
 {

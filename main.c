@@ -12,9 +12,7 @@
 
 #include "minishell.h"
 
-int	g_r_code;
-
-void	print_exec(t_list *list, t_global global, char *args, char **env)
+void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 {
 	t_data	*data;
 
@@ -23,10 +21,16 @@ void	print_exec(t_list *list, t_global global, char *args, char **env)
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
-			exec(list, env, global);
-			break ;
+			exec(list, env, env_list);
+			data->here_doc_fd = 0;
+			return ;
 		}
 		data = data->next;
+	} 
+	if (list->begin && ft_strcmp(list->begin->type, "HERE_DOC") == 0)
+	{
+		data = list->begin;
+		here_doc(data);
 	}
 	if (!data)
 		print_error(list, args);
@@ -58,62 +62,79 @@ int	is_unclosed_quotes(char *args)
 	return (0);
 }
 
-void	tokenisation_and_exec(t_list *list, char *args,
-	t_global global, char **env)
+void	tokenisation_and_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 {
 	t_data	*data;
 
 	data = list->begin;
-	get_type(data, list);
+	get_type(data, list, env_list);
 	get_file(list);
 	if (wrong_token_error(data, list))
 	{
 		free_list(list);
 		free(args);
-		signal_handlers(global);
+		signal_handlers();
 		return ;
 	}
 	get_args_cmd(data, list);
-	print_exec(list, global, args, env);
+	print_exec(list, args, env, env_list);
 	rl_redisplay();
-	signal_handlers(global);
+	signal_handlers();
 }
 
-void	program_handler(t_list *list, char *args, t_global global, char **env)
+void	program_handler(t_list *list, char *args, t_global global, char **env, t_list_env *env_list)
 {
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
 	ft_memset(data, 0, sizeof(t_data));
-	initialisation(data, args, env);
+	initialisation(data, args);
 	if (is_unclosed_quotes(args))
 	{
 		free_list(list);
-		signal_handlers(global);
-		g_r_code = 0;
+		signal_handlers();
+		set_get_exit_status(0);
 		return ;
 	}
 	get_word(list, args, data, global);
-	tokenisation_and_exec(list, args, global, env);
+	tokenisation_and_exec(list, args, env, env_list);
 	free_list(list);
 	free(args);
 }
 
+void	initialisation_list(t_list **list)
+{
+	*list = malloc(sizeof(t_list));
+	if (!*list)
+		return ;
+	(*list)->begin = NULL;
+	(*list)->end = NULL;
+}
+
 int	main(int ac, char **av, char **env)
 {
-	t_list		*list;
 	t_global	global;
+	t_list		*list;
 	char		*args;
 
-	signal_handlers(global);
+	global.index = 0;
+	(void)av;
+	(void)ac;
+	print_splash_screen();
+	signal_handlers();
+	t_list_env	*env_list;
+
+	env_list = malloc(sizeof(t_list_env));
+	if (!env_list)
+		return (1);
+	(env_list)->begin = NULL;
+	(env_list)->end = NULL;
+	get_env_key(env, env_list);
+	env_value(env_list, env);
 	while (1)
 	{
-		list = malloc(sizeof(t_list));
-		if (!list)
-			return (0);
-		list->begin = NULL;
-		list->end = NULL;
-		args = readline("Minishell > ");
+		initialisation_list(&list);
+		args = readline("\033[1m\033[38;5;129mMinishell → \033[0m");
 		if (!args)
 		{
 			free_list(list);
@@ -122,8 +143,8 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(args);
 		global.index++;
-		program_handler(list, args, global, env);
+		program_handler(list, args, global, env, env_list);
 	}
-	rl_clear_history();
+	free_env_list(env_list);
 	return (0);
 }

@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   path_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/19 08:56:28 by acrusoe           #+#    #+#             */
-/*   Updated: 2025/06/19 08:56:28 by acrusoe          ###   ########.fr       */
+/*   Created: 2025/06/29 18:36:50 by hmimouni          #+#    #+#             */
+/*   Updated: 2025/06/29 18:36:50 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+
+#include "minishell.h"
+
 
 int	check_path_cmd(char *word)
 {
-	struct stat	check;
+	struct stat check;
 
 	if (access(word, X_OK) == 0)
 	{
@@ -29,8 +31,8 @@ int	check_path_cmd(char *word)
 
 char	*build_path(char *cmd, char *word)
 {
-	char	*slash;
-	char	*string;
+	char *slash;
+	char *string;
 
 	slash = ft_strjoin(cmd, "/");
 	string = ft_strjoin(slash, word);
@@ -38,14 +40,28 @@ char	*build_path(char *cmd, char *word)
 	return (string);
 }
 
-int	build_check_path_cmd(char *word, t_data *data, int i, int j)
+int	build_check_path_cmd(char *word, t_data *data, int i, int j,
+		t_list_env *env)
 {
-	char		*slash;
-	char		*str;
-	char		cmd[256];
-	char		*path;
+	char *str;
+	char cmd[256];
+	char *path;
+	t_env *current;
 
-	path = getenv("PATH");
+	path = NULL;
+	current = env->begin;
+	while (current)
+	{
+		if (ft_strcmp(current->key, "PATH") == 0)
+		{
+			path = current->value;
+			break ;
+		}
+		else
+			current = current->next;
+	}
+	if (!path)
+		return (1);
 	while (path[i])
 	{
 		j = 0;
@@ -69,67 +85,55 @@ int	is_chevrons(t_data *data)
 {
 	if (ft_strcmp(data->back->word, ">") == 0)
 		return (1);
-	if (ft_strcmp(data->back->word, ">>") == 0)
+	else if (ft_strcmp(data->back->word, ">>") == 0)
 		return (1);
-	if (ft_strcmp(data->back->word, "<") == 0)
+	else if (ft_strcmp(data->back->word, "<") == 0)
+		return (1);
+	else if (ft_strcmp(data->back->word, "<<") == 0)
 		return (1);
 	return (0);
 }
 
-int	is_cmd(char *word, t_data *data)
+int	built_cmd_child(char *str)
 {
-	int			i;
-	int			j;
+	if (strcmp(str, "echo") == 0)
+		return (1);
+	else if (strcmp(str, "pwd") == 0)
+		return (1);
+	else if (strcmp(str, "env") == 0)
+		return (1);
+	return (0);
+}
+
+int	built_cmd_parent(char *str)
+{
+	if (strcmp(str, "cd") == 0)
+		return (1);
+	else if (strcmp(str, "export") == 0)
+		return (1);
+	else if (strcmp(str, "unset") == 0)
+		return (1);
+	else if (strcmp(str, "exit") == 0)
+		return (1);
+	return (0);
+}
+
+int	is_cmd(char *word, t_data *data, t_list_env *env)
+{
+	int i;
+	int j;
 
 	i = 0;
 	j = 0;
 	if (data->back && is_chevrons(data))
 		return (0);
+	if (built_cmd_parent(word))
+		return (1);
+	if (built_cmd_child(word))
+		return (1);
 	if (check_path_cmd(word))
 		return (1);
-	if (build_check_path_cmd(word, data, i, j))
+	if (build_check_path_cmd(word, data, i, j, env))
 		return (1);
 	return (0);
 }
-
-// char	*find_path(char *cmd, char **envp)
-// {
-// 	char	**paths;
-// 	char	*full_path;
-// 	int		i;
-// 	char	*tmp;
-
-// 	i = 0;
-// 	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
-// 		i++;
-// 	if (!envp[i])
-// 		return (NULL);
-// 	paths = ft_split(envp[i] + 5, ':');
-// 	if (!paths)
-// 		return (NULL);
-// 	i = 0;
-// 	while (paths[i])
-// 	{
-// 		tmp = ft_strjoin(paths[i], "/");
-// 		full_path = ft_strjoin(tmp, cmd);
-// 		free(tmp);
-// 		if (access(full_path, F_OK | X_OK) == -1)
-// 		{
-// 			free(full_path);
-// 			free(paths[i]);
-// 			i++;
-// 		}
-// 		else
-// 		{
-// 			while (paths[i])
-// 			{
-// 				free(paths[i]);
-// 				i++;
-// 			}
-// 			free(paths);
-// 			return (full_path);
-// 		}
-// 	}
-// 	free(paths);
-// 	return (NULL);
-// }
