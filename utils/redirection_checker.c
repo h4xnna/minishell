@@ -12,14 +12,14 @@
 
 #include "../minishell.h"
 
-void	search_redir(t_data *data)
+void	search_redir(t_data *data, t_list_env *env)
 {
 	while (data && ft_strcmp(data->type, "PIPE"))
 	{
 		if (is_redir_in(data))
 			ft_redir_in(data);
 		else if (has_heredoc(data))
-			here_doc(data);
+			here_doc(data, env);
 		else if (is_redir_out(data))
 			ft_redir_out(data);
 		else if (is_redir_out_append(data))
@@ -28,13 +28,13 @@ void	search_redir(t_data *data)
 	}
 }
 
-void	is_redir_start(t_data *data)
+void	is_redir_start(t_data *data, t_list_env *env)
 {
 	if (ft_strcmp(data->type, "REDIR_IN") == 0)
 		ft_redir_in(data);
 	else if (ft_strcmp(data->type, "REDIR_OUT") == 0)
 		ft_redir_out(data);
 	else if(ft_strcmp(data->type, "HERE_DOC") == 0)
-		 here_doc(data);
+		 here_doc(data, env);
 
 }

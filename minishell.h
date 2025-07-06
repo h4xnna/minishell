@@ -197,8 +197,8 @@ void	*ft_memset(void *str, int c, size_t len);
 char	*ft_realloc(char *expanded, char *retour, t_data *data);
 
 // utils../redirection_checker
-void	search_redir(t_data *data);
-void	is_redir_start(t_data *data);
+void	search_redir(t_data *data, t_list_env *env);
+void	is_redir_start(t_data *data, t_list_env *env);
 
 // utils../syntax_error_token
 int		wrong_token_error(t_data *data, t_list *list);
@@ -230,9 +230,10 @@ char	ft_base(int number);
 int		ft_len(int n);
 int		built_cmd(char *str);
 
-void	here_doc(t_data *data);
+void	here_doc(t_data *data, t_list_env *env);
 int		has_heredoc(t_data *data);
 void here_doc_cmd(t_data *data);
+int	ft_isalnum(int c);
 
 
 

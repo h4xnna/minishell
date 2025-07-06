@@ -69,7 +69,7 @@ void	exec(t_list *list, char **env, t_list_env *env_list)
 	while (data && i < cmds_numb)
 	{
 		signal(SIGINT, SIG_IGN);
-		is_redir_start(data);
+		is_redir_start(data, env_list);
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			if (built_cmd_parent(data->word))
@@ -86,7 +86,7 @@ void	exec(t_list *list, char **env, t_list_env *env_list)
 			else if (pid[i] == 0)
 			{
 				signal(SIGINT, SIG_DFL);
-				search_redir(data);
+				search_redir(data, env_list);
 				if (!is_redir_out(data) && cmds_numb > 1)
 				{
 					if (i == 0)
