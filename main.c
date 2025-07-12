@@ -36,7 +36,7 @@ void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 	if (list->begin && ft_strcmp(list->begin->type, "HERE_DOC") == 0)
 	{
 		data = list->begin;
-		here_doc(data);
+		here_doc(data, env_list);
 	}
 	if (!data)
 		print_error(list, args);

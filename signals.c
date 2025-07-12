@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 void	signal_handler(int signum)
 {
 	if (signum == SIGINT)

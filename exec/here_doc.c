@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
+/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/06 18:17:15 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/12 15:11:51 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,39 +157,47 @@ char	*expand_line(char *line, t_list_env *env)
 void	here_doc(t_data *data, t_list_env *env)
 {
 	int		fd;
-	char	*line;
+	pid_t	pid;
+	int		status;
+	char *line;
 
-	(void)data;
 	line = NULL;
-	if (!data->next || !data)
+	if (!data || !data->next)
 		return ;
-	if (!data->here_doc_fd)
+	pid = fork();
+	if (pid == 0)
 	{
-		data->here_doc_fd = open("here_doc", O_TRUNC | O_CREAT | O_RDWR, 0677);
-		if (data->here_doc_fd < 0)
+		signal(SIGINT, SIG_DFL);
+		fd = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0666);
+		if (fd < 0)
+			exit(1);
+		while ((line = readline("\033[1m\033[31mheredoc → \033[0m")) != NULL
+			&& ft_strcmp(data->next->word, line) != 0)
+		{
+			line = expand_line(line, env);
+			write(fd, line, ft_strlen(line));
+			write(fd, "\n", 1);
+			free(line);
+		}
+		free(line);
+		close(fd);
+	}
+	else if (pid > 0)
+	{
+		signal(SIGINT, SIG_IGN); 
+		waitpid(pid, &status, 0);
+		signal(SIGINT, SIG_DFL);
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		{
+			unlink("here_doc");
+			write(1, "\n", 1);
 			return ;
-	}
-	fd = data->here_doc_fd;
-	while ((line = readline("\033[1m\033[31mheredoc → \033[0m")) != NULL
-		&& ft_strcmp(data->next->word, line) != 0)
-	{
-		line = expand_line(line, env);
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-	}
-	if (line)
-		free(line);
-	close(fd);
-	if (data->next->next && ft_strcmp(data->next->next->type, "CMD") == 0
-		&& ft_strcmp(data->next->word, line) != 0)
-	{
-		// printf("%s", data->next->next->type);
+		}
 		fd = open("here_doc", O_RDONLY);
 		if (fd < 0)
 			return ;
 		dup2(fd, STDIN_FILENO);
-		unlink("here_doc");
 		close(fd);
+		unlink("here_doc");
 	}
 }
