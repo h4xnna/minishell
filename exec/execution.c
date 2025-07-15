@@ -108,7 +108,6 @@ void	exec(t_list *list, char **env, t_list_env *env_list)
 		}
 		data = data->next;
 	}
-	dup2(save_stdout, STDOUT_FILENO);
 	dup2(save_stdin, STDIN_FILENO);
 	close(save_stdin);
 	close(save_stdout);
