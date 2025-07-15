@@ -6,7 +6,7 @@
 /*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/12 15:11:51 by acrusoe          ###   ########.fr       */
+/*   Updated: 2025/07/15 18:56:54 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,17 @@ char	*ft_substr(char const *s, int start, int len)
 char	*search_in_env(char *expand, t_list_env *env)
 {
 	char	*out;
+	t_env	*tmp;
 
-	while (env->begin != env->end)
+	tmp = env->begin;
+	while (tmp != env->end)
 	{
-		if (ft_strcmp(expand, env->begin->key) == 0)
+		if (ft_strcmp(expand, tmp->key) == 0)
 		{
-			out = env->begin->value;
+			out = tmp->value;
 			return (out);
 		}
-		env->begin = env->begin->next;
+		tmp = tmp->next;
 	}
 	return (NULL);
 }
@@ -120,27 +122,41 @@ char	*expand_line(char *line, t_list_env *env)
 	int		start;
 	int		len;
 	char	*out;
-
+	int exit_code;
+	
 	i = 0;
 	j = 0;
+
+
+	
 	len = ft_strlen(line);
-	expanded = malloc(sizeof(char) * (len + 1));
+	expanded = ft_calloc(1, sizeof(char) * (len + 1));
+	if (!expanded)
+	return (NULL);
 	expanded[len] = '\0';
 	while (line[i])
 	{
 		if (line[i] == '$')
 		{
+			if(line[i + 1] == '?')
+			{
+				exit_code = set_get_exit_status(-1);
+				line[i] = exit_code;
+				
+			}
+			
 			i++;
 			start = i;
 			while (ft_isalnum(line[i]))
+			{
 				i++;
+			}
 			key = ft_substr(line, start, i - start);
 			out = search_in_env(key, env);
 			if (out)
 			{
 				expanded = ft_realloc2(out, expanded);
 				j += ft_strlen(out);
-				i += ft_strlen(key);
 			}
 			free(key);
 		}

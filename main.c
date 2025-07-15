@@ -36,7 +36,11 @@ void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 	if (list->begin && ft_strcmp(list->begin->type, "HERE_DOC") == 0)
 	{
 		data = list->begin;
+<<<<<<< HEAD
 		here_doc(data, env_list);
+=======
+		here_doc(data,env_list);
+>>>>>>> b54537fcdf3a768776729d581780f2ced4e7fdac
 	}
 	if (!data)
 		print_error(list, args);
