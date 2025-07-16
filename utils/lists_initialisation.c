@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_return_code.c                                  :+:      :+:    :+:   */
+/*   lists_initialisation.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/19 17:25:53 by acrusoe           #+#    #+#             */
-/*   Updated: 2025/06/19 17:25:53 by acrusoe          ###   ########.fr       */
+/*   Created: 2025/07/16 17:06:24 by acrusoe           #+#    #+#             */
+/*   Updated: 2025/07/16 17:06:24 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	return_code(t_data *data, char *args)
+void	initialisation_env_list(t_list_env **env_list)
 {
-	int		i;
-	char	*code;
+	*env_list = malloc(sizeof(t_list_env));
+	if (!*env_list)
+		return ;
+	(*env_list)->begin = NULL;
+	(*env_list)->end = NULL;
+}
 
-	i = 0;
-	if (flag == 1)
-		data->retour[data->j++] = '0';
-	else
-	{
-		code = ft_itoa(set_get_exit_status(-1));
-		while (code[i])
-			data->retour[data->j++] = code[i++];
-		free(code);
-	}
-	(void)args;
+void	initialisation_list(t_list **list)
+{
+	*list = malloc(sizeof(t_list));
+	if (!*list)
+		return ;
+	(*list)->begin = NULL;
+	(*list)->end = NULL;
 }

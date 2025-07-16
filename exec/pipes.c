@@ -39,11 +39,25 @@ void	ft_close_all_pipes(int **pipefd, t_data *data, t_list *list)
 
 	i = 0;
 	data = list->begin;
-	j = get_cmd_nb(data);
+	j = get_cmd_nb(data, list);
 	while (i < (j - 1))
 	{
 		close(pipefd[i][0]);
 		close(pipefd[i][1]);
 		i++;
 	}
+}
+
+void	free_pipes_and_pid(int cmds_numb, t_list *list, pid_t *pid)
+{
+	int	i;
+
+	i = 0;
+	if (cmds_numb > 1)
+	{
+		while (i < cmds_numb - 1)
+			free(list->begin->pipefd[i++]);
+		free(list->begin->pipefd);
+	}
+	free(pid);
 }

@@ -15,17 +15,16 @@
 
 #include "minishell.h"
 
-
-void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
+void	print_exec(t_list *list, char *args, t_list_env *env_list)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = list->begin;
 	while (data)
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
-			exec(list, env, env_list);
+			exec(list, env_list);
 			if (data->here_doc_fd > 0)
 				unlink("here_doc");
 			data->here_doc_fd = 0;
@@ -42,36 +41,10 @@ void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list)
 		print_error(list, args);
 }
 
-int	is_unclosed_quotes(char *args)
-{
-	int i;
-	int count;
-	int count2;
-
-	i = 0;
-	count = 0;
-	count2 = 0;
-	while (args[i])
-	{
-		if (args[i] == '\'')
-			count += 1;
-		if (args[i] == '\"')
-			count2 += 1;
-		if (count == 2)
-			count = 0;
-		if (count2 == 2)
-			count2 = 0;
-		i++;
-	}
-	if (count != 0 || count2 != 0)
-		return (1);
-	return (0);
-}
-
-int	tokenisation_and_exec(t_list *list, char *args, char **env,
+int	tokenisation_and_exec(t_list *list, char *args,
 		t_list_env *env_list)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = list->begin;
 	get_type(data, list, env_list);
@@ -79,20 +52,21 @@ int	tokenisation_and_exec(t_list *list, char *args, char **env,
 	if (wrong_token_error(data, list))
 		return (0);
 	get_args_cmd(data, list);
-	print_exec(list, args, env, env_list);
+	initialisation_cmd_numb(data, list);
+	print_exec(list, args, env_list);
 	rl_redisplay();
 	signal_handlers();
 	return (1);
 }
 
-void	program_handler(t_list *list, char *args, t_global global, char **env,
+void	program_handler(t_list *list, char *args, char **env,
 		t_list_env *env_list)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = malloc(sizeof(t_data));
 	ft_memset(data, 0, sizeof(t_data));
-	initialisation(data, args);
+	initialisation(data, args, env);
 	if (is_unclosed_quotes(args))
 	{
 		free_list(list);
@@ -100,48 +74,22 @@ void	program_handler(t_list *list, char *args, t_global global, char **env,
 		set_get_exit_status(0);
 		return ;
 	}
-	get_word(list, args, data, global);
-	if (!tokenisation_and_exec(list, args, env, env_list))
+	get_word(list, args, data);
+	if (!tokenisation_and_exec(list, args, env_list))
 	{
 		free_list(list);
 		free(args);
 		signal_handlers();
 		return ;
 	}
-	if(list)
+	if (list)
 		free_list(list);
 	free(args);
 }
 
-void	initialisation_list(t_list **list)
+void	main_loop_function(t_list *list, char *args, char **env,
+	t_list_env *env_list)
 {
-	*list = malloc(sizeof(t_list));
-	if (!*list)
-		return ;
-	(*list)->begin = NULL;
-	(*list)->end = NULL;
-}
-
-int	main(int ac, char **av, char **env)
-{
-	t_global global;
-	t_list *list;
-	char *args;
-
-	global.index = 0;
-	(void)av;
-	(void)ac;
-	print_splash_screen();
-	signal_handlers();
-	t_list_env *env_list;
-
-	env_list = malloc(sizeof(t_list_env));
-	if (!env_list)
-		return (1);
-	(env_list)->begin = NULL;
-	(env_list)->end = NULL;
-	get_env_key(env, env_list);
-	env_value(env_list, env);
 	while (1)
 	{
 		initialisation_list(&list);
@@ -153,9 +101,28 @@ int	main(int ac, char **av, char **env)
 			break ;
 		}
 		add_history(args);
-		global.index++;
-		program_handler(list, args, global, env, env_list);
+		flag++;
+		program_handler(list, args, env, env_list);
 	}
+}
+
+int	main(int ac, char **av, char **env)
+{
+	t_list		*list;
+	char		*args;
+	t_list_env	*env_list;
+
+	(void)av;
+	(void)ac;
+	flag = 0;
+	args = NULL;
+	list = NULL;
+	print_splash_screen();
+	signal_handlers();
+	initialisation_env_list(&env_list);
+	get_env_key(env, env_list);
+	env_value(env_list, env);
+	main_loop_function(list, args, env, env_list);
 	free_env_list(env_list);
 	return (0);
 }

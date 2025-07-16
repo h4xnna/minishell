@@ -31,7 +31,7 @@ void	dollar_pars_digit_quote(t_data *data, char *args)
 		data->i++;
 }
 
-void	dollar_pars(t_data *data, char *args, t_global global)
+void	dollar_pars(t_data *data, char *args)
 {
 	data->i++;
 	if (is_digit(args[data->i]) || is_quote(args[data->i]))
@@ -42,7 +42,7 @@ void	dollar_pars(t_data *data, char *args, t_global global)
 		data->retour[data->j++] = '$';
 	else if (args[data->i] == '?')
 	{
-		return_code(data, args, global);
+		return_code(data, args);
 		data->i++;
 	}
 	else

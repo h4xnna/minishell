@@ -85,12 +85,12 @@ void	get_args_cmd(t_data *data, t_list *list)
 	}
 }
 
-int	get_cmd_nb(t_data *data)
+int	get_cmd_nb(t_data *data, t_list *list)
 {
 	int cmds_numb;
 
 	cmds_numb = 0;
-	
+	data = list->begin;
 	while (data)
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)

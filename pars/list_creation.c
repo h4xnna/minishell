@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	get_word(t_list *list, char *args, t_data *data, t_global global)
+void	get_word(t_list *list, char *args, t_data *data)
 {
 	while (args[data->i] == ' ')
 		data->i++;
@@ -27,7 +27,7 @@ void	get_word(t_list *list, char *args, t_data *data, t_global global)
 		else if (is_operator(args[data->i]))
 			operator_pars(list, data, args);
 		else if (args[data->i] == '$')
-			dollar_pars(data, args, global);
+			dollar_pars(data, args);
 		else
 			data->retour[data->j++] = args[data->i++];
 	}
@@ -68,13 +68,19 @@ void	node_creation(t_list *list, char *retour)
 	}
 }
 
-void	initialisation(t_data *data, char *args)
+void	initialisation(t_data *data, char *args, char **env)
 {
 	data->i = 0;
+	data->ind = 0;
 	data->j = 0;
 	data->k = 0;
 	data->here_doc_fd = 0;
 	data->args = NULL;
 	data->len = ft_strlen(args);
 	data->retour = malloc(sizeof(char) * (data->len + 1));
+	data->env_child_process = env;
+}
+void	initialisation_cmd_numb(t_data *data, t_list *list)
+{
+	data->cmds_numb = get_cmd_nb(data, list);
 }

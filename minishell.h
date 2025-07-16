@@ -26,24 +26,23 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
-typedef struct s_global
-{
-	int		index;
-}		t_global;
-
+int	flag;
 typedef struct s_data
 {
 	char			*word;
 	char			*type;
 	int				index;
+	int				ind;
 	char			**args;
 	int				i;
 	int				j;
 	int				k;
 	int				len;
+	char			**env_child_process;
+	int				cmds_numb;
 	int				here_doc_fd;
 	char			*retour;
+	int				**pipefd;
 	struct s_data	*next;
 	struct s_data	*back;
 }		t_data;
@@ -71,7 +70,9 @@ typedef struct s_List_env
 // exec..execution
 void	get_file(t_list *list);
 int		is_redirections(t_data *data);
-void	exec(t_list *list, char **env, t_list_env *env_list);
+void	exec(t_list *list, t_list_env *env_list);
+void	pids_handler(pid_t *pid, int cmds_numb);
+void	last_pid_handler(int status);
 
 // exec ../expansion
 char	*get_var_name(char *retour);
@@ -83,7 +84,7 @@ void	double_quotes_expansion(t_data *data, char *args);
 
 // exec../path_cmd
 int		check_path_cmd(char *word);
-int	build_check_path_cmd(char *word, t_data *data, int i, int j, t_list_env *env);
+int		build_check_path_cmd(char *word, t_data *data, int i, int j, t_list_env *env);
 char	*build_path(char *cmd, char *word);
 int		is_chevrons(t_data *data);
 int		is_cmd(char *word, t_data *data, t_list_env *env);
@@ -95,6 +96,9 @@ void	ft_first_cmd(int **pipefd, int i);
 void	ft_middle_cmd(int **pipefd, int i);
 void	ft_last_cmd(int **pipefd, int i);
 void	ft_close_all_pipes(int **pipefd, t_data *data, t_list *list);
+void	pipe_creation(t_data *data, int cmds_numb);
+void	child_process_pipe(t_data *data, t_list *list, t_list_env *env_list, int i);
+void	free_pipes_and_pid(int cmds_numb, t_list *list, pid_t *pid);
 
 // exec../builtin../echo
 void	ft_echo(char **av);
@@ -120,9 +124,10 @@ void	ft_env(t_list_env *envp, t_data *data);
 int		ft_exit(char **args);
 
 // pars../list_creation
-void	get_word(t_list *list, char *args, t_data *data, t_global global);
+void	get_word(t_list *list, char *args, t_data *data);
 void	node_creation(t_list *list, char *retour);
-void	initialisation(t_data *data, char *args);
+void	initialisation(t_data *data, char *args, char **env);
+void	initialisation_cmd_numb(t_data *data, t_list *list);
 
 // pars../list_creation
 void	node_creation_env_variables(t_list_env *env_list, char *str);
@@ -140,14 +145,14 @@ void	double_quotes_pars(t_data *data, char *args);
 int		is_operator2(char *word);
 void	fill_args_cmd(t_data *data, int k);
 void	get_args_cmd(t_data *data, t_list *list);
-int		get_cmd_nb(t_data *data);
+int		get_cmd_nb(t_data *data, t_list *list);
 
 // pars../dollar_hanling_functions
-void	dollar_pars(t_data *data, char *args, t_global global);
+void	dollar_pars(t_data *data, char *args);
 void	dollar_pars_digit_quote(t_data *data, char *args);
 
 // pars../get_return_code
-void	return_code(t_data *data, char *args, t_global global);
+void	return_code(t_data *data, char *args);
 void	print_splash_screen(void);
 void	test_builtins_child(t_data *data, t_list_env *env);
 void	test_builtins_parents(t_data *data, t_list_env *env);
@@ -218,13 +223,16 @@ int		signal_handlers(void);
 void	signal_handler(int signum);
 
 // main
+void	main_loop_function(t_list *list, char *args, char **env,
+	t_list_env *env_list);
 int		is_unclosed_quotes(char *args);
 void	initialisation_list(t_list **list);
-void	print_exec(t_list *list, char *args, char **env, t_list_env *env_list);
-int		tokenisation_and_exec(t_list *list, char *args, char **env,
+void	print_exec(t_list *list, char *args, t_list_env *env_list);
+int		tokenisation_and_exec(t_list *list, char *args,
 			t_list_env *env_list);
-void	program_handler(t_list *list, char *args, t_global global, char **env,
+void	program_handler(t_list *list, char *args, char **env,
 			t_list_env *env_list);
+void	initialisation_env_list(t_list_env **env_list);
 
 char	ft_base(int number);
 int		ft_len(int n);
@@ -232,10 +240,6 @@ int		built_cmd(char *str);
 
 void	here_doc(t_data *data, t_list_env *env);
 int		has_heredoc(t_data *data);
-void here_doc_cmd(t_data *data);
-int	ft_isalnum(int c);
-
-
-
-
+void	here_doc_cmd(t_data *data);
+int		ft_isalnum(int c);
 #endif

@@ -23,6 +23,7 @@ CC		= cc
 CFLAGS	= -Wall -Werror -Wextra -g3 
 
 SRCS 	=  exec/execution.c\
+		    exec/child_process_exec.c\
 			exec/expansion.c\
 			exec/path_cmd.c\
 			exec/pipes.c\
@@ -52,6 +53,7 @@ SRCS 	=  exec/execution.c\
 			utils/redirection_checker.c\
 			utils/syntax_error_token.c\
 			utils/builtin_utils.c\
+			utils/lists_initialisation.c\
 			main.c\
 			signals.c
 
