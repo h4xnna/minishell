@@ -35,6 +35,7 @@ SRCS 	=  exec/execution.c\
 			exec/builtin/pwd.c\
 			exec/builtin/unset.c\
 			exec/here_doc.c \
+			exec/expand_heredoc.c\
 			pars/list_creation.c\
 			pars/parsing_functions.c\
 			pars/args_cmds.c\
@@ -50,6 +51,9 @@ SRCS 	=  exec/execution.c\
 			utils/ft_itoa.c\
 			utils/minishell_utils.c\
 			utils/minishell_utils2.c\
+			utils/utils_heredoc.c\
+			utils/utils_heredoc2.c\
+			utils/utils_execution.c\
 			utils/redirection_checker.c\
 			utils/syntax_error_token.c\
 			utils/builtin_utils.c\

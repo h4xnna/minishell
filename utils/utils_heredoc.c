@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc_utils.c                                   :+:      :+:    :+:   */
+/*   utils_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/15 15:06:04 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/15 15:13:14 by hmimouni         ###   ########.fr       */
+/*   Created: 2025/07/18 18:41:55 by hmimouni          #+#    #+#             */
+/*   Updated: 2025/07/18 18:58:48 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_bzero(void *s, int n)
 {
@@ -23,6 +23,15 @@ void	ft_bzero(void *s, int n)
 		i++;
 	}
 }
+
+int	get_allocation(char const *s, int start, int len)
+{
+	if (start >= ft_strlen(s))
+		return (0);
+	if (len < ft_strlen(s + start))
+		return (len);
+	return (ft_strlen(s + start));
+}
 void	*ft_calloc(int nmemb, int size)
 {
 	void	*out;
@@ -33,7 +42,6 @@ void	*ft_calloc(int nmemb, int size)
 	ft_bzero(out, nmemb * size);
 	return (out);
 }
-
 
 char	*ft_substr(char const *s, int start, int len)
 {
@@ -56,8 +64,6 @@ char	*ft_substr(char const *s, int start, int len)
 	out[i] = '\0';
 	return (out);
 }
-
-
 char	*ft_realloc2(char *expanded, char *retour)
 {
 	int		length;
@@ -81,13 +87,4 @@ char	*ft_realloc2(char *expanded, char *retour)
 	str[i] = '\0';
 	free(retour);
 	return (str);
-}
-
-int	get_allocation(char const *s, int start, int len)
-{
-	if (start >= ft_strlen(s))
-		return (0);
-	if (len < ft_strlen(s + start))
-		return (len);
-	return (ft_strlen(s + start));
 }

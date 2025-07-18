@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 19:07:09 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/06/28 18:06:04 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/18 22:25:41 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,42 +71,53 @@ t_env	*new_env_node(char *str)
 	return (node);
 }
 
+void	update_existing_env(t_env *existing_node, char *key, char *value)
+{
+	free(existing_node->value);
+	existing_node->value = value;
+	free(key);
+}
+
+void	add_new_env(t_list_env *envp, char *arg, char *key, char *value)
+{
+	t_env *new_node;
+
+	new_node = new_env_node(arg);
+	if (new_node)
+		env_list_add_back(envp, new_node);
+	free(key);
+	free(value);
+}
+
+void	handle_export_argument(t_list_env *envp, char *arg)
+{
+	t_env *existing_node;
+	char *key;
+	char *value;
+
+	if (!is_valid_identifier(arg))
+	{
+		dprintf(2, "export: invalid identifier: %s\n", arg);
+		return ;
+	}
+	split_key_value(arg, &key, &value);
+	existing_node = env_list_find(envp, key);
+	if (existing_node)
+		update_existing_env(existing_node, key, value);
+	else
+		add_new_env(envp, arg, key, value);
+}
+
 void	ft_export(t_list_env *envp, char **args)
 {
-	int		i;
-	t_env	*existing_node;
-	t_env	*new_node;
-	char	*key;
-	char	*value;
+	int i;
 
-	i = 1;
 	if (!args || !args[0])
 		return ;
+	i = 1;
 	while (args[i])
 	{
-		if (is_valid_identifier(args[i]))
-		{
-			split_key_value(args[i], &key, &value);
-			existing_node = env_list_find(envp, key);
-			if (existing_node)
-			{
-				free(existing_node->value);
-				existing_node->value = value;
-				free(key);
-			}
-			else
-			{
-				new_node = new_env_node(args[i]);
-				if (new_node)
-					env_list_add_back(envp, new_node);
-				free(key);
-				free(value);
-			}
-		}
-		else
-		{
-			dprintf(2, "export: invalid identifier: %s\n", args[i]);
-		}
+		handle_export_argument(envp, args[i]);
 		i++;
 	}
 }

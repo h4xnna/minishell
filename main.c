@@ -18,7 +18,7 @@
 void	print_exec(t_list *list, char *args, t_list_env *env_list)
 {
 	t_data	*data;
-	int saved_stdin = dup(STDIN_FILENO); 
+	int		saved_stdin = dup(STDIN_FILENO); 
 
 	data = list->begin;
 	while (data)

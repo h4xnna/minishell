@@ -26,7 +26,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-#include <stdbool.h>
+# include <stdbool.h>
 
 typedef struct s_data
 {
@@ -42,7 +42,7 @@ typedef struct s_data
 	char			**env_child_process;
 	int				cmds_numb;
 	int				here_doc_fd;
-	int 			heredoc_exit;
+	int				heredoc_exit;
 	char			*retour;
 	int				**pipefd;
 	struct s_data	*next;
@@ -86,7 +86,8 @@ void	double_quotes_expansion(t_data *data, char *args);
 
 // exec../path_cmd
 int		check_path_cmd(char *word);
-int		build_check_path_cmd(char *word, t_data *data, int i, int j, t_list_env *env);
+int		build_check_path_cmd(char *word, t_data *data,
+			int i, int j, t_list_env *env);
 char	*build_path(char *cmd, char *word);
 int		is_chevrons(t_data *data);
 int		is_cmd(char *word, t_data *data, t_list_env *env);
@@ -99,7 +100,8 @@ void	ft_middle_cmd(int **pipefd, int i);
 void	ft_last_cmd(int **pipefd, int i);
 void	ft_close_all_pipes(int **pipefd, t_data *data, t_list *list);
 void	pipe_creation(t_data *data, int cmds_numb);
-int	child_process_pipe(t_data *data, t_list *list, t_list_env *env_list, int i);
+int		child_process_pipe(t_data *data, t_list *list, t_list_env *env_list,
+			int i);
 void	free_pipes_and_pid(int cmds_numb, t_list *list, pid_t *pid);
 
 // exec../builtin../echo
@@ -124,6 +126,10 @@ void	ft_env(t_list_env *envp, t_data *data);
 
 // exec../builtin../exit
 int		ft_exit(char **args);
+
+//exec../here_doc.c
+int		here_doc(t_data *data, t_list_env *env);
+int		has_heredoc(t_data *data);
 
 // pars../list_creation
 void	get_word(t_list *list, char *args, t_data *data);
@@ -203,8 +209,31 @@ int		ft_strlen_cmd(t_data *data);
 void	*ft_memset(void *str, int c, size_t len);
 char	*ft_realloc(char *expanded, char *retour, t_data *data);
 
+
+//utils../utils_execution
+void	get_file(t_list *list);
+int		is_redirections(t_data *data);
+
+//utils../utils_here_doc
+void	ft_bzero(void *s, int n);
+int		get_allocation(char const *s, int start, int len);
+void	*ft_calloc(int nmemb, int size);
+char	*ft_substr(char const *s, int start, int len);
+char	*ft_substr(char const *s, int start, int len);
+char	*ft_realloc2(char *expanded, char *retour);
+
+//utils../utils_here_doc2
+char	*search_in_env(char *expand, t_list_env *env);
+
+//utils../expand_heredoc
+void	append_to_expanded(char **expanded, char *text, int *j);
+void	handle_dollar(char *line, int *i, int *j,
+			char **expanded, t_list_env *env);
+void	handle_expansion(char *line, int *i, int *j, char **expanded, t_list_env *env);
+char	*expand_line(char *line, t_list_env *env);
+
 // utils../redirection_checker
-int	search_redir(t_data *data, t_list_env *env);
+int		search_redir(t_data *data, t_list_env *env);
 int		is_redir_start(t_data *data, t_list_env *env);
 
 // utils../syntax_error_token
@@ -216,9 +245,14 @@ int		check_file_after_redirout(t_data *data);
 // util../builtin_utils
 int		is_valid_identifier(char *str);
 char	*ft_strndup(char *s, int n);
+int		ft_isalnum(int c);
 
 // util../return_code
 int		set_get_exit_status(int exit_code);
+
+//utils../utils_execution 
+int		is_redirections(t_data *data);
+void	get_file(t_list *list);
 
 // signal
 int		signal_handlers(void);
@@ -226,7 +260,7 @@ void	signal_handler(int signum);
 
 // main
 void	main_loop_function(t_list *list, char *args, char **env,
-	t_list_env *env_list);
+			t_list_env *env_list);
 int		is_unclosed_quotes(char *args);
 void	initialisation_list(t_list **list);
 void	print_exec(t_list *list, char *args, t_list_env *env_list);
@@ -236,12 +270,8 @@ void	program_handler(t_list *list, char *args, char **env,
 			t_list_env *env_list);
 void	initialisation_env_list(t_list_env **env_list);
 
-char	ft_base(int number);
-int		ft_len(int n);
-int		built_cmd(char *str);
-
-int		here_doc(t_data *data, t_list_env *env);
-int		has_heredoc(t_data *data);
 void	here_doc_cmd(t_data *data);
-int		ft_isalnum(int c);
+void	update_existing_env(t_env *existing_node, char *key, char *value);
+void	add_new_env(t_list_env *envp, char *arg, char *key, char *value);
+void	handle_export_argument(t_list_env *envp, char *arg);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 22:41:33 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/06/28 18:09:53 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/18 21:58:42 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	is_numeric(const char *str)
 	}
 	return (1);
 }
+
 static long	ft_atol(const char *str)
 {
 	int		sign;
@@ -44,6 +45,7 @@ static long	ft_atol(const char *str)
 		result = result * 10 + (*str++ - '0');
 	return (sign * result);
 }
+
 static int	is_overflow(const char *str)
 {
 	long long	res;
@@ -62,8 +64,8 @@ static int	is_overflow(const char *str)
 	while (str[i])
 	{
 		res = res * 10 + (str[i] - '0');
-		if ((sign == 1 && res > 2147483647) || (sign == -1 && -res <
-				-2147483648))
+		if ((sign == 1 && res > 2147483647) || (sign == -1 && - res
+				< -2147483648))
 			return (1);
 		i++;
 	}
