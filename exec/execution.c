@@ -38,6 +38,11 @@ void	get_file(t_list *list)
 			if (data->next)
 				data->next->type = "FILE";
 		}
+		else if (ft_strcmp(data->type, "HERE_DOC") == 0)
+		{
+			if (data->next)
+				data->next->type = "DELIM";
+		}
 		data = data->next;
 	}
 }
