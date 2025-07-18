@@ -18,6 +18,7 @@
 void	print_exec(t_list *list, char *args, t_list_env *env_list)
 {
 	t_data	*data;
+	int saved_stdin = dup(STDIN_FILENO); 
 
 	data = list->begin;
 	while (data)
@@ -28,6 +29,7 @@ void	print_exec(t_list *list, char *args, t_list_env *env_list)
 			if (data->here_doc_fd > 0)
 				unlink("here_doc");
 			data->here_doc_fd = 0;
+			dup2(saved_stdin, STDIN_FILENO);
 			return ;
 		}
 		data = data->next;
@@ -36,6 +38,7 @@ void	print_exec(t_list *list, char *args, t_list_env *env_list)
 	{
 		data = list->begin;
 		here_doc(data, env_list);
+		dup2(saved_stdin, STDIN_FILENO);
 	}
 	if (!data)
 		print_error(list, args);
