@@ -27,14 +27,15 @@ void	pipe_creation(t_data *data, int cmds_numb)
 	}
 }
 
-void	child_process_pipe(t_data *data, t_list *list,
+int	child_process_pipe(t_data *data, t_list *list,
 	t_list_env *env_list, int i)
 {
 	int	cmds_numb;
 
 	cmds_numb = get_cmd_nb(data, list);
 	signal(SIGINT, SIG_DFL);
-	search_redir(data, env_list);
+	if (!search_redir(data, env_list))
+		return (0);
 	if (!is_redir_out(data) && cmds_numb > 1)
 	{
 		if (i == 0)
@@ -51,6 +52,7 @@ void	child_process_pipe(t_data *data, t_list *list,
 		execve(data->word, data->args, data->env_child_process);
 	perror("execve");
 	exit(EXIT_FAILURE);
+	return (1);
 }
 
 void	last_pid_handler(int status)

@@ -26,6 +26,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+#include <stdbool.h>
 int	flag;
 typedef struct s_data
 {
@@ -41,6 +42,7 @@ typedef struct s_data
 	char			**env_child_process;
 	int				cmds_numb;
 	int				here_doc_fd;
+	int 			heredoc_exit;
 	char			*retour;
 	int				**pipefd;
 	struct s_data	*next;
@@ -97,7 +99,7 @@ void	ft_middle_cmd(int **pipefd, int i);
 void	ft_last_cmd(int **pipefd, int i);
 void	ft_close_all_pipes(int **pipefd, t_data *data, t_list *list);
 void	pipe_creation(t_data *data, int cmds_numb);
-void	child_process_pipe(t_data *data, t_list *list, t_list_env *env_list, int i);
+int	child_process_pipe(t_data *data, t_list *list, t_list_env *env_list, int i);
 void	free_pipes_and_pid(int cmds_numb, t_list *list, pid_t *pid);
 
 // exec../builtin../echo
@@ -202,8 +204,8 @@ void	*ft_memset(void *str, int c, size_t len);
 char	*ft_realloc(char *expanded, char *retour, t_data *data);
 
 // utils../redirection_checker
-void	search_redir(t_data *data, t_list_env *env);
-void	is_redir_start(t_data *data, t_list_env *env);
+int	search_redir(t_data *data, t_list_env *env);
+int		is_redir_start(t_data *data, t_list_env *env);
 
 // utils../syntax_error_token
 int		wrong_token_error(t_data *data, t_list *list);
@@ -238,7 +240,7 @@ char	ft_base(int number);
 int		ft_len(int n);
 int		built_cmd(char *str);
 
-void	here_doc(t_data *data, t_list_env *env);
+int		here_doc(t_data *data, t_list_env *env);
 int		has_heredoc(t_data *data);
 void	here_doc_cmd(t_data *data);
 int		ft_isalnum(int c);

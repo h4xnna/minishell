@@ -48,7 +48,11 @@ void	exec_main_function(t_data *data, t_list *list, t_list_env *env_list,
 	while (data && list->begin->ind < list->begin->cmds_numb)
 	{
 		signal(SIGINT, SIG_IGN);
-		is_redir_start(data, env_list);
+		if (!is_redir_start(data, env_list))
+		{
+			data->heredoc_exit = 1;
+			return ;
+		}
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			if (built_cmd_parent(data->word))
@@ -63,7 +67,13 @@ void	exec_main_function(t_data *data, t_list *list, t_list_env *env_list,
 				exit(EXIT_FAILURE);
 			}
 			else if (pid[list->begin->ind] == 0)
-				child_process_pipe(data, list, env_list, list->begin->ind);
+			{
+				if (!child_process_pipe(data, list, env_list, list->begin->ind))
+				{
+					data->heredoc_exit = 1;
+					break;
+				}
+			}
 			list->begin->ind++;
 		}
 		data = data->next;
@@ -82,9 +92,10 @@ void	exec(t_list *list, t_list_env *env_list)
 	data = list->begin;
 	pipe_creation(data, cmds_numb);
 	exec_main_function(data, list, env_list, pid);
-	signal(SIGINT, SIG_DFL);
+	// signal(SIGINT, SIG_DFL);
 	if (cmds_numb > 1)
 		ft_close_all_pipes(list->begin->pipefd, data, list);
-	pids_handler(pid, cmds_numb);
+	if (!data->heredoc_exit)
+		pids_handler(pid, cmds_numb);
 	free_pipes_and_pid(cmds_numb, list, pid);
 }

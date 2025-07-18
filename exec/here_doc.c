@@ -6,7 +6,7 @@
 /*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/15 18:56:54 by acrusoe          ###   ########.fr       */
+/*   Updated: 2025/07/18 13:22:33 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ char	*expand_line(char *line, t_list_env *env)
 	return (expanded);
 }
 
-void	here_doc(t_data *data, t_list_env *env)
+int	here_doc(t_data *data, t_list_env *env)
 {
 	int		fd;
 	pid_t	pid;
@@ -179,7 +179,7 @@ void	here_doc(t_data *data, t_list_env *env)
 
 	line = NULL;
 	if (!data || !data->next)
-		return ;
+		return (0);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -197,6 +197,7 @@ void	here_doc(t_data *data, t_list_env *env)
 		}
 		free(line);
 		close(fd);
+		exit (0);
 	}
 	else if (pid > 0)
 	{
@@ -207,13 +208,14 @@ void	here_doc(t_data *data, t_list_env *env)
 		{
 			unlink("here_doc");
 			write(1, "\n", 1);
-			return ;
+			return (0);
 		}
 		fd = open("here_doc", O_RDONLY);
 		if (fd < 0)
-			return ;
+			return (0);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 		unlink("here_doc");
 	}
+	return (1);
 }
