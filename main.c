@@ -101,7 +101,7 @@ void	main_loop_function(t_list *list, char *args, char **env,
 		{
 			free_list(list);
 			write(1, "exit\n", 5);
-			break ;
+			return ;
 		}
 		add_history(args);
 		flag++;

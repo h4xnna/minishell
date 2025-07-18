@@ -35,7 +35,7 @@ int	child_process_pipe(t_data *data, t_list *list,
 	cmds_numb = get_cmd_nb(data, list);
 	signal(SIGINT, SIG_DFL);
 	if (!search_redir(data, env_list))
-		return (0);
+		exit (0);
 	if (!is_redir_out(data) && cmds_numb > 1)
 	{
 		if (i == 0)
