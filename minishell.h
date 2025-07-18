@@ -27,7 +27,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 #include <stdbool.h>
-int	flag;
+
 typedef struct s_data
 {
 	char			*word;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/18 13:22:33 by acrusoe          ###   ########.fr       */
+/*   Updated: 2025/07/18 18:36:21 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,19 +138,18 @@ char	*expand_line(char *line, t_list_env *env)
 	{
 		if (line[i] == '$')
 		{
-			if(line[i + 1] == '?')
+			i++;
+			if(line[i] == '?')
 			{
 				exit_code = set_get_exit_status(-1);
-				line[i] = exit_code;
-				
+				expanded = ft_realloc2(ft_itoa(exit_code), expanded);
+				j += ft_strlen(ft_itoa(exit_code));
+				i++;
+				continue;
 			}
-			
-			i++;
 			start = i;
 			while (ft_isalnum(line[i]))
-			{
 				i++;
-			}
 			key = ft_substr(line, start, i - start);
 			out = search_in_env(key, env);
 			if (out)

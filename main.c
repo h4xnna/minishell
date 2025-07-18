@@ -103,8 +103,12 @@ void	main_loop_function(t_list *list, char *args, char **env,
 			write(1, "exit\n", 5);
 			return ;
 		}
+		if (!args[0])
+		{
+			free_list(list);
+			continue;
+		}
 		add_history(args);
-		flag++;
 		program_handler(list, args, env, env_list);
 	}
 }
@@ -117,7 +121,6 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
-	flag = 0;
 	args = NULL;
 	list = NULL;
 	print_splash_screen();

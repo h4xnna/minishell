@@ -18,14 +18,9 @@ void	return_code(t_data *data, char *args)
 	char	*code;
 
 	i = 0;
-	if (flag == 1)
-		data->retour[data->j++] = '0';
-	else
-	{
-		code = ft_itoa(set_get_exit_status(-1));
-		while (code[i])
-			data->retour[data->j++] = code[i++];
-		free(code);
-	}
+	code = ft_itoa(set_get_exit_status(-1));
+	while (code[i])
+		data->retour[data->j++] = code[i++];
+	free(code);
 	(void)args;
 }
