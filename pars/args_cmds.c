@@ -15,12 +15,16 @@
 
 #include "minishell.h"
 
-
 int	is_operator2(char *word)
 {
-	char *operators[] = {"|", ">", "<", ">>", NULL};
-	int i;
+	int		i;
+	char	*operators[5];
 
+	operators[0] = "|";
+	operators[1] = ">";
+	operators[2] = "<";
+	operators[3] = ">>";
+	operators[4] = NULL;
 	i = 0;
 	while (operators[i])
 	{
@@ -33,9 +37,11 @@ int	is_operator2(char *word)
 
 int	ends_with(const char *str, const char *suffix)
 {
-	size_t len_str = strlen(str);
-	size_t len_suffix = strlen(suffix);
+	size_t	len_str;
+	size_t	len_suffix;
 
+	len_str = strlen(str);
+	len_suffix = strlen(suffix);
 	if (len_str < len_suffix)
 		return (0);
 	return (strcmp(str + len_str - len_suffix, suffix) == 0);
@@ -43,18 +49,17 @@ int	ends_with(const char *str, const char *suffix)
 
 void	fill_args_cmd(t_data *data, int k)
 {
-	t_data *cmd;
-	int len;
+	t_data		*cmd;
+	int			len;
+
 	cmd = data;
 	len = ft_strlen_cmd(data);
 	cmd->args = malloc(sizeof(char *) * (len + 2));
-
 	while (data && !is_operator2(data->word))
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			cmd->args[k++] = data->word;
-
 			if (ends_with(data->word, "/grep") || ft_strcmp(data->word,
 					"grep") == 0)
 				cmd->args[k++] = ft_strdup("--color=always");
@@ -68,7 +73,7 @@ void	fill_args_cmd(t_data *data, int k)
 
 void	get_args_cmd(t_data *data, t_list *list)
 {
-	int k;
+	int	k;
 
 	k = 0;
 	data = list->begin;
@@ -87,7 +92,7 @@ void	get_args_cmd(t_data *data, t_list *list)
 
 int	get_cmd_nb(t_data *data, t_list *list)
 {
-	int cmds_numb;
+	int	cmds_numb;
 
 	cmds_numb = 0;
 	data = list->begin;

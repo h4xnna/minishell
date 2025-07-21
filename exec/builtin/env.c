@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 21:26:01 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/14 18:10:15 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:12:50 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@ void	ft_env(t_list_env *envp, t_data *data)
 		printf("%s=%s\n", envp->begin->key, envp->begin->value);
 		envp->begin = envp->begin->next;
 	}
-
 	exit(0);
 }

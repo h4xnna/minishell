@@ -86,13 +86,9 @@ void	double_quotes_expansion(t_data *data, char *args);
 
 // exec../path_cmd
 int		check_path_cmd(char *word);
-int		build_check_path_cmd(char *word, t_data *data,
-			int i, int j, t_list_env *env);
 char	*build_path(char *cmd, char *word);
-int		is_chevrons(t_data *data);
+int		build_check_path_cmd(char *word, t_data *data, t_list_env *env);
 int		is_cmd(char *word, t_data *data, t_list_env *env);
-int		built_cmd_child(char *str);
-int		built_cmd_parent(char *str);
 
 // exec../pipes
 void	ft_first_cmd(int **pipefd, int i);
@@ -130,6 +126,12 @@ int		ft_exit(char **args);
 //exec../here_doc.c
 int		here_doc(t_data *data, t_list_env *env);
 int		has_heredoc(t_data *data);
+
+//exec../expand_heredoc
+char	*append_char(char c);
+char	*append_str(char *base, char *to_add);
+char	*check_dollar(char *line, int *i, t_list_env *env);
+char	*expand_line(char *line, t_list_env *env);
 
 // pars../list_creation
 void	get_word(t_list *list, char *args, t_data *data);
@@ -188,6 +190,18 @@ void	free_args_cmd(t_data *temp, int i);
 void	free_list(t_list *list);
 void	free_env_list(t_list_env *env_list);
 
+//utils../builtins_utils2
+void	env_list_add_back(t_list_env *env_list, t_env *new_node);
+t_env	*env_list_find(t_list_env *env_list, char *key);
+void	split_key_value(char *str, char **key, char **value);
+void	add_new_env(t_list_env *envp, char *arg, char *key, char *value);
+t_env	*new_env_node(char *str);
+
+//utils../path_cmd_utils
+int		is_chevrons(t_data *data);
+int		built_cmd_child(char *str);
+int		built_cmd_parent(char *str);
+
 // utils../ft_itoa
 char	*ft_itoa(int n);
 void	ft_char(char number, long i, long nbr, char *str);
@@ -199,16 +213,17 @@ char	*ft_strdup(char *s1);
 char	*ft_strcat(char const *s1, char const *s2);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strlen(char const *args);
-int		ft_strcmp(char *s1, char *s2);
 
 // utils../minishell_utils2
-int		is_quote(char c);
-int		is_digit(char c);
 int		is_operator(char c);
 int		ft_strlen_cmd(t_data *data);
 void	*ft_memset(void *str, int c, size_t len);
 char	*ft_realloc(char *expanded, char *retour, t_data *data);
 
+//utils../minishell_utils3
+int		is_quote(char c);
+int		is_digit(char c);
+int		ft_strcmp(char *s1, char *s2);
 
 //utils../utils_execution
 void	get_file(t_list *list);
@@ -224,13 +239,6 @@ char	*ft_realloc2(char *expanded, char *retour);
 
 //utils../utils_here_doc2
 char	*search_in_env(char *expand, t_list_env *env);
-
-//utils../expand_heredoc
-void	append_to_expanded(char **expanded, char *text, int *j);
-void	handle_dollar(char *line, int *i, int *j,
-			char **expanded, t_list_env *env);
-void	handle_expansion(char *line, int *i, int *j, char **expanded, t_list_env *env);
-char	*expand_line(char *line, t_list_env *env);
 
 // utils../redirection_checker
 int		search_redir(t_data *data, t_list_env *env);

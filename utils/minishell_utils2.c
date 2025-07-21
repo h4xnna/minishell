@@ -12,20 +12,6 @@
 
 #include "../minishell.h"
 
-int	is_quote(char c)
-{
-	if (c == '"' || c == '\'')
-		return (1);
-	return (0);
-}
-
-int	is_digit(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
 int	is_operator(char c)
 {
 	if (c == '>' || c == '<' || c == ' ' || c == '|')

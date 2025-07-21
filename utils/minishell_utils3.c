@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_heredoc2.c                                   :+:      :+:    :+:   */
+/*   minishell_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/18 19:41:42 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/21 23:06:01 by hmimouni         ###   ########.fr       */
+/*   Created: 2025/07/21 22:56:33 by hmimouni          #+#    #+#             */
+/*   Updated: 2025/07/21 23:01:04 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*search_in_env(char *expand, t_list_env *env)
+int	is_quote(char c)
 {
-	char	*out;
-	t_env	*tmp;
+	if (c == '"' || c == '\'')
+		return (1);
+	return (0);
+}
 
-	tmp = env->begin;
-	while (tmp != env->end)
-	{
-		if (ft_strcmp(expand, tmp->key) == 0)
-		{
-			out = tmp->value;
-			return (out);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
+int	is_digit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && (s1[i] != '\0' && s2[i] != '\0'))
+		i++;
+	return (s1[i] - s2[i]);
 }

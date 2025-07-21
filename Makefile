@@ -46,11 +46,14 @@ SRCS 	=  exec/execution.c\
 			pars/tokenisation.c\
 			pars/print_command_error.c\
 			pars/chained_list_env_variables.c\
+			utils/path_cmd_utils.c\
+			utils/builtin_utils2.c\
 			utils/free_memory.c\
 			utils/return_code.c\
 			utils/ft_itoa.c\
 			utils/minishell_utils.c\
 			utils/minishell_utils2.c\
+			utils/minishell_utils3.c\
 			utils/utils_heredoc.c\
 			utils/utils_heredoc2.c\
 			utils/utils_execution.c\

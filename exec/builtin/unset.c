@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 19:10:08 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/02 21:02:18 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:12:34 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	find_and_remove(t_list_env *envp, char *key)
 {
-	t_env	*tmp = envp->begin;
+	t_env	*tmp;
 
+	tmp = envp->begin;
 	while (tmp)
 	{
 		if (strcmp(tmp->key, key) == 0)

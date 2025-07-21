@@ -80,6 +80,7 @@ void	initialisation(t_data *data, char *args, char **env)
 	data->retour = malloc(sizeof(char) * (data->len + 1));
 	data->env_child_process = env;
 }
+
 void	initialisation_cmd_numb(t_data *data, t_list *list)
 {
 	data->cmds_numb = get_cmd_nb(data, list);

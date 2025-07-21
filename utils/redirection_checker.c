@@ -38,7 +38,7 @@ int	is_redir_start(t_data *data, t_list_env *env)
 		ft_redir_in(data);
 	else if (ft_strcmp(data->type, "REDIR_OUT") == 0)
 		ft_redir_out(data);
-	else if(ft_strcmp(data->type, "HERE_DOC") == 0)
+	else if (ft_strcmp(data->type, "HERE_DOC") == 0)
 	{
 		if (!here_doc(data, env))
 			return (0);

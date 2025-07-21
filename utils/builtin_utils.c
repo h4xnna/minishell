@@ -6,10 +6,9 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 18:04:41 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/06/28 18:06:19 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/21 22:55:20 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../minishell.h"
 
@@ -23,7 +22,7 @@ int	ft_isalnum(int c)
 
 int	is_valid_identifier(char *str)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!str || !str[0])

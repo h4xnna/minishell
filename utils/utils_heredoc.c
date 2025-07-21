@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 18:41:55 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/18 18:58:48 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/21 23:07:04 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	get_allocation(char const *s, int start, int len)
 		return (len);
 	return (ft_strlen(s + start));
 }
+
 void	*ft_calloc(int nmemb, int size)
 {
 	void	*out;
@@ -64,6 +65,7 @@ char	*ft_substr(char const *s, int start, int len)
 	out[i] = '\0';
 	return (out);
 }
+
 char	*ft_realloc2(char *expanded, char *retour)
 {
 	int		length;
