@@ -247,7 +247,7 @@ int		is_redir_start(t_data *data, t_list_env *env);
 // utils../syntax_error_token
 int		wrong_token_error(t_data *data, t_list *list);
 int		check_delim_after_heredoc(t_data *data);
-int		pipe_not_followed_by_cmd(t_data *data);
+void		pipe_not_followed_by_cmd(t_data *data);
 int		check_file_after_redirout(t_data *data);
 
 // util../builtin_utils

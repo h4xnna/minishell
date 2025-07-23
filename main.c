@@ -57,6 +57,7 @@ int	tokenisation_and_exec(t_list *list, char *args,
 	get_args_cmd(data, list);
 	initialisation_cmd_numb(data, list);
 	print_exec(list, args, env_list);
+	pipe_not_followed_by_cmd(data);
 	rl_redisplay();
 	signal_handlers();
 	return (1);

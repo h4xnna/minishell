@@ -48,16 +48,22 @@ int	check_file_after_redirout(t_data *data)
 	return (0);
 }
 
-int	pipe_not_followed_by_cmd(t_data *data)
+void	pipe_not_followed_by_cmd(t_data *data)
 {
-	if (ft_strcmp(data->type, "PIPE") == 0)
+	int flag = 0;
+	while (data->next != NULL)
 	{
-		if (data->next && ft_strcmp(data->next->type, "CMD") == 0)
-			return (0);
-		printf("bash: syntax error near unexpected token\n");
-		return (1);
+		if (ft_strcmp(data->type, "CMD") == 0)
+			flag = 1;
+		if (ft_strcmp(data->type, "PIPE") == 0)
+		{
+			if (flag == 0)
+				printf("bash: command not found\n");
+			else
+				flag = 0;
+		}
+		data = data->next;
 	}
-	return (0);
 }
 
 int	check_delim_after_heredoc(t_data *data)
@@ -84,8 +90,8 @@ int	wrong_token_error(t_data *data, t_list *list)
 	}
 	while (data)
 	{
-		if (pipe_not_followed_by_cmd(data))
-			return (1);
+		// if (pipe_not_followed_by_cmd(data))
+		// 	return (1);
 		if (check_file_after_redirout(data))
 			return (1);
 		if (check_file_after_redirin(data))
