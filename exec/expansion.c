@@ -36,7 +36,7 @@ char	*get_var_name(char *retour)
 	return (str);
 }
 
-char	*get_expand(char *retour)
+char	*get_expand(char *retour, t_list_env *env)
 {
 	char	*env_value;
 	char	*var;
@@ -48,12 +48,12 @@ char	*get_expand(char *retour)
 		return ("$");
 	}
 	else
-		env_value = getenv(var);
+		env_value = search_in_env(var, env);
 	free(var);
 	return (env_value);
 }
 
-void	expansion(t_data *data, char *args)
+void	expansion(t_data *data, char *args, t_list_env *env)
 {
 	int		k;
 	char	*var;
@@ -68,13 +68,13 @@ void	expansion(t_data *data, char *args)
 		&& !is_quote(args[data->i]) && args[data->i] != '$')
 		var[k++] = args[data->i++];
 	var[k] = '\0';
-	expand = get_expand(var);
+	expand = get_expand(var, env);
 	data->retour[data->j] = '\0';
 	data->retour = ft_realloc(expand, data->retour, data);
 	free(var);
 }
 
-void	double_quotes_expansion(t_data *data, char *args)
+void	double_quotes_expansion(t_data *data, char *args, t_list_env *env)
 {
 	char	*expanded;
 	char	*temp;
@@ -90,7 +90,7 @@ void	double_quotes_expansion(t_data *data, char *args)
 		&& args[data->i] != '$' && args[data->i] != ' ')
 		temp[k++] = args[data->i++];
 	temp[k] = '\0';
-	expanded = get_expand(temp);
+	expanded = get_expand(temp, env);
 	data->retour[data->j] = '\0';
 	data->retour = ft_realloc(expanded, data->retour, data);
 	free(temp);

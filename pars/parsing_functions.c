@@ -62,13 +62,13 @@ void	single_quote_pars(t_data *data, char *args)
 		return ;
 }
 
-void	double_quotes_pars(t_data *data, char *args)
+void	double_quotes_pars(t_data *data, char *args, t_list_env *env)
 {
 	data->i++;
 	while (args[data->i] && args[data->i] != '"')
 	{
 		if (args[data->i] == '$')
-			double_quotes_expansion(data, args);
+			double_quotes_expansion(data, args, env);
 		else
 			data->retour[data->j++] = args[data->i++];
 	}

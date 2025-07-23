@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	get_word(t_list *list, char *args, t_data *data)
+void	get_word(t_list *list, char *args, t_data *data, t_list_env *env)
 {
 	while (args[data->i] == ' ')
 		data->i++;
@@ -21,13 +21,13 @@ void	get_word(t_list *list, char *args, t_data *data)
 		if (args[data->i] == ' ')
 			space_pars(list, data);
 		else if (args[data->i] == '"')
-			double_quotes_pars(data, args);
+			double_quotes_pars(data, args, env);
 		else if (args[data->i] == '\'')
 			single_quote_pars(data, args);
 		else if (is_operator(args[data->i]))
 			operator_pars(list, data, args);
 		else if (args[data->i] == '$')
-			dollar_pars(data, args);
+			dollar_pars(data, args, env);
 		else
 			data->retour[data->j++] = args[data->i++];
 	}

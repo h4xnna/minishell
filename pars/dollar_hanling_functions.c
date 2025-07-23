@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	dollar_pars_digit_quote(t_data *data, char *args)
+void	dollar_pars_digit_quote(t_data *data, char *args, t_list_env *env)
 {
 	char	c;
 
@@ -21,22 +21,23 @@ void	dollar_pars_digit_quote(t_data *data, char *args)
 	if (is_quote(args[data->i - 1]))
 	{
 		while (args[data->i] && !is_quote(args[data->i]))
-			data->retour[data->j++] = args[data->i++];
+		data->retour[data->j++] = args[data->i++];
 		if (args[data->i] == c)
-			data->i++;
+		data->i++;
 		else
 			exit (1);
 	}
 	while (is_digit(args[data->i]))
-		data->i++;
+	data->i++;
+	(void)env;
 }
 
-void	dollar_pars(t_data *data, char *args)
+void	dollar_pars(t_data *data, char *args, t_list_env *env)
 {
 	data->i++;
 	if (is_digit(args[data->i]) || is_quote(args[data->i]))
 	{
-		dollar_pars_digit_quote(data, args);
+		dollar_pars_digit_quote(data, args, env);
 	}
 	else if (args[data->i] == '=' || args[data->i] == '%')
 		data->retour[data->j++] = '$';
@@ -46,5 +47,5 @@ void	dollar_pars(t_data *data, char *args)
 		data->i++;
 	}
 	else
-		expansion(data, args);
+		expansion(data, args, env);
 }

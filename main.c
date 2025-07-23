@@ -77,7 +77,7 @@ void	program_handler(t_list *list, char *args, char **env,
 		set_get_exit_status(0);
 		return ;
 	}
-	get_word(list, args, data);
+	get_word(list, args, data, env_list);
 	if (!tokenisation_and_exec(list, args, env_list))
 	{
 		free_list(list);

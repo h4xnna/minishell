@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 21:40:34 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/18 21:57:07 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:25:24 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ int	ft_strncmp(char *s1, char *s2, int n)
 
 	i = 0;
 	while ((s1[i] || s2[i]) && i < n)
-	{
 		i++;
-	}
 	return (s1[i] - s2[i]);
 }
 
@@ -58,9 +56,7 @@ void	ft_echo(char **av)
 		{
 			printf("%s", av[i]);
 			if (av[i + 1])
-			{
 				printf("%s", " ");
-			}
 			i++;
 		}
 	}

@@ -19,7 +19,7 @@ int	is_error(char *args)
 	i = 0;
 	while (args[i])
 	{
-		if ((args[0] == '!' || args[0] == ':') && args[1] == '\0')
+		if ((args[0] == '!' || args[0] == ':') && args[1] == '\0' )
 			return (1);
 		i++;
 	}

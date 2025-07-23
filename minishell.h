@@ -78,11 +78,11 @@ void	last_pid_handler(int status);
 
 // exec ../expansion
 char	*get_var_name(char *retour);
-char	*get_expand(char *retour);
+char	*get_expand(char *retour, t_list_env *env);
 void	operator_pars(t_list *list, t_data *data, char *args);
 void	single_quote_pars(t_data *data, char *args);
-void	expansion(t_data *data, char *args);
-void	double_quotes_expansion(t_data *data, char *args);
+void	expansion(t_data *data, char *args, t_list_env *env);
+void	double_quotes_expansion(t_data *data, char *args, t_list_env *env);
 
 // exec../path_cmd
 int		check_path_cmd(char *word);
@@ -134,7 +134,7 @@ char	*check_dollar(char *line, int *i, t_list_env *env);
 char	*expand_line(char *line, t_list_env *env);
 
 // pars../list_creation
-void	get_word(t_list *list, char *args, t_data *data);
+void	get_word(t_list *list, char *args, t_data *data, t_list_env *env);
 void	node_creation(t_list *list, char *retour);
 void	initialisation(t_data *data, char *args, char **env);
 void	initialisation_cmd_numb(t_data *data, t_list *list);
@@ -149,7 +149,7 @@ char	*ft_value(char *str);
 void	space_pars(t_list *list, t_data *data);
 void	operator_pars(t_list *list, t_data *data, char *args);
 void	single_quote_pars(t_data *data, char *args);
-void	double_quotes_pars(t_data *data, char *args);
+void	double_quotes_pars(t_data *data, char *args, t_list_env *env);
 
 // pars../args_cmd
 int		is_operator2(char *word);
@@ -158,8 +158,8 @@ void	get_args_cmd(t_data *data, t_list *list);
 int		get_cmd_nb(t_data *data, t_list *list);
 
 // pars../dollar_hanling_functions
-void	dollar_pars(t_data *data, char *args);
-void	dollar_pars_digit_quote(t_data *data, char *args);
+void	dollar_pars(t_data *data, char *args, t_list_env *env);
+void	dollar_pars_digit_quote(t_data *data, char *args, t_list_env *env);
 
 // pars../get_return_code
 void	return_code(t_data *data, char *args);
