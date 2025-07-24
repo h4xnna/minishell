@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:41:42 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/21 23:06:01 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/24 19:02:09 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*search_in_env(char *expand, t_list_env *env)
 	t_env	*tmp;
 
 	tmp = env->begin;
-	while (tmp != env->end)
+	while (tmp) 
 	{
 		if (ft_strcmp(expand, tmp->key) == 0)
 		{

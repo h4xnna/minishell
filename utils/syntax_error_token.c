@@ -78,7 +78,7 @@ void	pipe_not_followed_by_cmd(t_data *data)
 	int flag;
 
 	flag = 0;
-	while (data->next != NULL)
+	while (data != NULL)
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
 			flag = 1;

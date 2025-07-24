@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 22:41:33 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/18 21:58:42 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/24 15:58:53 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_exit(char **args)
 
 	printf("exit\n");
 	if (!args[1])
-		exit(0);
+		exit(set_get_exit_status(-1));
 	if (!is_numeric(args[1]) || is_overflow(args[1]))
 	{
 		dprintf(2, "exit: %s: numeric argument required\n", args[1]);

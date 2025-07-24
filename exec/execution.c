@@ -119,6 +119,8 @@ void	exec(t_list *list, t_list_env *env_list)
 	data = NULL;
 	cmds_numb = get_cmd_nb(data, list);
 	pid = malloc(sizeof(pid_t) * cmds_numb);
+	if(!pid)
+		return ;
 	data = list->begin;
 	pipe_creation(data, cmds_numb);
 	if (exec_main_function(data, list, env_list, pid) == 1)
