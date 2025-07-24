@@ -51,20 +51,18 @@ int	check_file_after_redirout(t_data *data)
 int	last_pipe_not_followed_by_cmd(t_data *data)
 {
 	int	flag;
-	
+
 	while (data)
 	{
 		flag = 0;
-		if (ft_strcmp(data->type, "PIPE") == 0)
+		if (data->next && ft_strcmp(data->type, "PIPE") == 0)
 		{
-			if (data->next && ft_strcmp(data->next->type, "CMD") == 0)
-			{
+			if (ft_strcmp(data->next->type, "CMD") == 0)
 				flag = 1;
-				data = data->next;
-			}
+			data = data->next;
 		}
 		else
-			flag = 0;
+			flag = 1;
 		data = data->next;
 	}
 	if (flag == 0)
@@ -72,8 +70,7 @@ int	last_pipe_not_followed_by_cmd(t_data *data)
 		printf("bash: command not found\n");
 		return (0);
 	}
-	else
-		return (1);
+	return (1);
 }
 
 void	pipe_not_followed_by_cmd(t_data *data)
