@@ -78,6 +78,8 @@ void	initialisation(t_data *data, char *args, char **env)
 	data->args = NULL;
 	data->len = ft_strlen(args);
 	data->retour = malloc(sizeof(char) * (data->len + 1));
+	if (!data->retour)
+		return ;
 	data->env_child_process = env;
 }
 

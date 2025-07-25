@@ -166,6 +166,7 @@ void	return_code(t_data *data, char *args);
 void	print_splash_screen(void);
 void	test_builtins_child(t_data *data, t_list_env *env);
 void	test_builtins_parents(t_data *data, t_list_env *env);
+int		check_delim_after_heredoc(t_data *data);
 
 // pars../print_command_error
 int		is_error(char *args);
@@ -247,9 +248,9 @@ int		is_redir_start(t_data *data, t_list_env *env);
 // utils../syntax_error_token
 int		wrong_token_error(t_data *data, t_list *list);
 int		check_delim_after_heredoc(t_data *data);
-void		pipe_not_followed_by_cmd(t_data *data);
+void	pipe_not_followed_by_cmd(t_data *data);
 int		check_file_after_redirout(t_data *data);
-int	last_pipe_not_followed_by_cmd(t_data *data);
+int		last_pipe_not_followed_by_cmd(t_data *data);
 
 // util../builtin_utils
 int		is_valid_identifier(char *str);

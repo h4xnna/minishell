@@ -18,10 +18,16 @@ void	pipe_creation(t_data *data, int cmds_numb)
 
 	i = 0;
 	if (cmds_numb > 1)
+	{
 		data->pipefd = malloc(sizeof(int *) * (cmds_numb - 1));
+		if (!data->pipefd)
+			return ;
+	}
 	while (i < (cmds_numb - 1))
 	{
 		data->pipefd[i] = malloc(sizeof(int) * 2);
+		if (data->pipefd)
+			return ;
 		pipe(data->pipefd[i]);
 		i++;
 	}

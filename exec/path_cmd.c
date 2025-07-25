@@ -133,11 +133,6 @@ int	build_check_path_cmd(char *word, t_data *data, t_list_env *env)
 
 int	is_cmd(char *word, t_data *data, t_list_env *env)
 {
-	// int	i;
-	// int	j;
-
-	// i = 0;
-	// j = 0;
 	if (data->back && is_chevrons(data))
 		return (0);
 	if (built_cmd_parent(word))

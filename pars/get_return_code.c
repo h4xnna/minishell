@@ -24,3 +24,15 @@ void	return_code(t_data *data, char *args)
 	free(code);
 	(void)args;
 }
+
+int	check_delim_after_heredoc(t_data *data)
+{
+	if (ft_strcmp(data->type, "HEREDOC") == 0)
+	{
+		if (data->next && ft_strcmp(data->next->type, "FILE") == 0)
+			return (0);
+		printf("bash: syntax error near unexpected token\n");
+		return (1);
+	}
+	return (0);
+}

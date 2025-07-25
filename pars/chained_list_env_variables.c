@@ -21,6 +21,8 @@ char	*ft_value(char *str)
 
 	len = ft_strlen(str);
 	env_value = malloc(sizeof(char) * (len + 1));
+	if (!env_value)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (str[i] != '=')

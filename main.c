@@ -57,7 +57,7 @@ int	tokenisation_and_exec(t_list *list, char *args,
 	get_args_cmd(data, list);
 	initialisation_cmd_numb(data, list);
 	if (!last_pipe_not_followed_by_cmd(data))
-	 	return (0);
+		return (0);
 	print_exec(list, args, env_list);
 	pipe_not_followed_by_cmd(data);
 	rl_redisplay();
@@ -71,6 +71,8 @@ void	program_handler(t_list *list, char *args, char **env,
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
+	if (!data)
+		return ;
 	ft_memset(data, 0, sizeof(t_data));
 	initialisation(data, args, env);
 	if (is_unclosed_quotes(args))

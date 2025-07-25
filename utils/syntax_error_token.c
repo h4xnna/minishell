@@ -75,7 +75,7 @@ int	last_pipe_not_followed_by_cmd(t_data *data)
 
 void	pipe_not_followed_by_cmd(t_data *data)
 {
-	int flag;
+	int	flag;
 
 	flag = 0;
 	while (data != NULL)
@@ -93,18 +93,6 @@ void	pipe_not_followed_by_cmd(t_data *data)
 	}
 }
 
-int	check_delim_after_heredoc(t_data *data)
-{
-	if (ft_strcmp(data->type, "HEREDOC") == 0)
-	{
-		if (data->next && ft_strcmp(data->next->type, "FILE") == 0)
-			return (0);
-		printf("bash: syntax error near unexpected token\n");
-		return (1);
-	}
-	return (0);
-}
-
 int	wrong_token_error(t_data *data, t_list *list)
 {
 	if (!list->begin)
@@ -117,8 +105,6 @@ int	wrong_token_error(t_data *data, t_list *list)
 	}
 	while (data)
 	{
-		// if (pipe_not_followed_by_cmd(data))
-		// 	return (1);
 		if (check_file_after_redirout(data))
 			return (1);
 		if (check_file_after_redirin(data))
