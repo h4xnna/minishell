@@ -86,7 +86,12 @@ fclean: clean
 	@rm -f ${NAME}
 	@echo $(BROWN)fclean reussi
 
-	
+child: all
+	valgrind --suppressions=minishell.supp --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes ./minishell
+
+nochild: all
+	valgrind --suppressions=minishell.supp --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=yes ./minishell
+
 
 re: fclean all
 
