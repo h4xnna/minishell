@@ -22,7 +22,7 @@ char	*get_var_name(char *retour)
 	i = 0;
 	j = 0;
 	len = ft_strlen(retour);
-	str = malloc(sizeof(char) * (len + 1));
+	str = ft_malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
 	while (retour[i] != '$')
@@ -64,7 +64,7 @@ void	expansion(t_data *data, char *args, t_list_env *env)
 
 	k = 0;
 	len = ft_strlen(args);
-	var = malloc(sizeof(char) * (len + 1));
+	var = ft_malloc(sizeof(char) * (len + 1));
 	if (!var)
 		return ;
 	var[k++] = '$';
@@ -75,6 +75,8 @@ void	expansion(t_data *data, char *args, t_list_env *env)
 	expand = get_expand(var, env);
 	data->retour[data->j] = '\0';
 	data->retour = ft_realloc(expand, data->retour, data);
+	if(!data->retour)
+		return ;
 	free(var);
 }
 
@@ -86,7 +88,7 @@ void	double_quotes_expansion(t_data *data, char *args, t_list_env *env)
 	int		len;
 
 	len = ft_strlen(args);
-	temp = malloc(sizeof(char) * (len + 1));
+	temp = ft_malloc(sizeof(char) * (len + 1));
 	if (!temp)
 		return ;
 	data->i++;
@@ -99,5 +101,7 @@ void	double_quotes_expansion(t_data *data, char *args, t_list_env *env)
 	expanded = get_expand(temp, env);
 	data->retour[data->j] = '\0';
 	data->retour = ft_realloc(expanded, data->retour, data);
+	if(!data->retour)
+		return ;
 	free(temp);
 }

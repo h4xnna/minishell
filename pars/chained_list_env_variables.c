@@ -103,3 +103,4 @@ void	get_env_key(char **env, t_list_env *env_list)
 		i++;
 	}
 }
+

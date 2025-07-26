@@ -63,7 +63,7 @@ char	*ft_itoa(int n)
 	len = ft_length(nbr);
 	i = len - 1;
 	number = 0;
-	str = malloc((len + 1) * sizeof(char));
+	str = ft_malloc((len + 1) * sizeof(char));
 	if (!str)
 		return (0);
 	if (nbr == 0)

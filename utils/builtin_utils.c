@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 18:04:41 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/21 22:55:20 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/26 14:58:23 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*ft_strndup(char *s, int n)
 	j = 0;
 	while (s[i] && i < n)
 		i++;
-	dup = malloc(i + 1);
+	dup = ft_malloc(i + 1);
 	if (!dup)
 		return (NULL);
 	while (j < i)

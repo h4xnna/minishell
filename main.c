@@ -2,14 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2025/06/19 08:38:35 by acrusoe           #+#    #+#             */
-/*   Updated: 2025/06/19 08:38:35 by acrusoe          ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/25 15:32:34 by hmimouni          #+#    #+#             */
+/*   Updated: 2025/07/25 15:32:34 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +24,11 @@ void	print_exec(t_list *list, char *args, t_list_env *env_list)
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			exec(list, env_list);
-			if (data->here_doc_fd > 0)
+			if (data->here_doc_fd >= 0)
 				unlink("here_doc");
 			data->here_doc_fd = 0;
 			dup2(saved_stdin, STDIN_FILENO);
+			close (saved_stdin);
 			return ;
 		}
 		data = data->next;
@@ -39,6 +37,7 @@ void	print_exec(t_list *list, char *args, t_list_env *env_list)
 	{
 		here_doc(list->begin, env_list);
 		dup2(saved_stdin, STDIN_FILENO);
+		close(saved_stdin);
 	}
 	if (!data)
 		print_error(list, args);
@@ -70,14 +69,14 @@ void	program_handler(t_list *list, char *args, char **env,
 {
 	t_data	*data;
 
-	data = malloc(sizeof(t_data));
+	data = ft_malloc(sizeof(t_data));
 	if (!data)
 		return ;
 	ft_memset(data, 0, sizeof(t_data));
 	initialisation(data, args, env);
 	if (is_unclosed_quotes(args))
 	{
-		free_list(list);
+		ft_malloc(-1);
 		signal_handlers();
 		set_get_exit_status(0);
 		return ;
@@ -85,14 +84,11 @@ void	program_handler(t_list *list, char *args, char **env,
 	get_word(list, args, data, env_list);
 	if (!tokenisation_and_exec(list, args, env_list))
 	{
-		free_list(list);
-		free(args);
+		ft_malloc(-1);
 		signal_handlers();
 		return ;
 	}
-	if (list)
-		free_list(list);
-	free(args);
+	ft_malloc(-1);
 }
 
 void	main_loop_function(t_list *list, char *args, char **env,
@@ -104,13 +100,12 @@ void	main_loop_function(t_list *list, char *args, char **env,
 		args = readline("\033[1m\033[38;5;129mMinishell → \033[0m");
 		if (!args)
 		{
-			free_list(list);
 			write(1, "exit\n", 5);
 			return ;
 		}
 		if (!args[0])
 		{
-			free_list(list);
+			ft_malloc(-1);	
 			continue ;
 		}
 		add_history(args);
@@ -135,5 +130,6 @@ int	main(int ac, char **av, char **env)
 	env_value(env_list, env);
 	main_loop_function(list, args, env, env_list);
 	free_env_list(env_list);
+	ft_malloc(-1);
 	return (0);
 }

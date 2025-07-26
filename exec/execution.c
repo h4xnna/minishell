@@ -116,18 +116,21 @@ void	exec(t_list *list, t_list_env *env_list)
 	int		cmds_numb;
 	pid_t	*pid;
 
-	data = NULL;
+	data = list->begin;
 	cmds_numb = get_cmd_nb(data, list);
-	pid = malloc(sizeof(pid_t) * cmds_numb);
+	pid = ft_malloc(sizeof(pid_t) * cmds_numb);
 	if (!pid)
 		return ;
-	data = list->begin;
 	pipe_creation(data, cmds_numb);
+	if (!data->pipefd && cmds_numb > 1)
+	{
+		free(pid);
+		return ;
+	}
 	if (exec_main_function(data, list, env_list, pid) == 1)
 		return ;
 	if (cmds_numb > 1)
 		ft_close_all_pipes(list->begin->pipefd, data, list);
 	if (!data->heredoc_exit)
 		pids_handler(pid, cmds_numb);
-	free_pipes_and_pid(cmds_numb, list, pid);
 }

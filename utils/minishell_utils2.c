@@ -60,7 +60,7 @@ char	*ft_realloc(char *expanded, char *retour, t_data *data)
 	int		k;
 
 	length = ft_strlen(retour) + ft_strlen(expanded);
-	str = malloc(sizeof(char) * (length + 2));
+	str = ft_malloc(sizeof(char) * (length + 2));
 	k = 0;
 	if (!str)
 		return (NULL);

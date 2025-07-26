@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 18:41:55 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/21 23:07:04 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/26 14:59:19 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*ft_calloc(int nmemb, int size)
 {
 	void	*out;
 
-	out = malloc(nmemb * size);
+	out = ft_malloc(nmemb * size);
 	if (!out)
 		return (NULL);
 	ft_bzero(out, nmemb * size);
@@ -74,10 +74,10 @@ char	*ft_realloc2(char *expanded, char *retour)
 	int		k;
 
 	length = ft_strlen(retour) + ft_strlen(expanded);
-	str = malloc(sizeof(char) * (length + 2));
-	k = 0;
+	str = ft_malloc(sizeof(char) * (length + 2));
 	if (!str)
 		return (NULL);
+	k = 0;
 	i = 0;
 	while (retour[i])
 	{

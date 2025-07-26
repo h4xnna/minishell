@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 19:44:03 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/14 18:49:20 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/26 16:05:43 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,15 @@ void	print_splash_screen(void)
 
 void	test_builtins_child(t_data *data, t_list_env *envp)
 {
-	(void)envp;
 	if (ft_strcmp(data->word, "echo") == 0)
 		ft_echo(data->args);
 	else if (ft_strcmp(data->word, "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(data->word, "env") == 0)
 		ft_env(envp, data);
+	free_env_list(envp);
+	ft_malloc(-1);
+	exit(0);
 }
 
 void	test_builtins_parents(t_data *data, t_list_env *env)

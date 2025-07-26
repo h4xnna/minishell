@@ -12,6 +12,21 @@
 
 #include "../minishell.h"
 
+void	ft_free_pipes(int **pipefd, int n)
+{
+	int	i;
+
+	if (!pipefd)
+		return ;
+	i = 0;
+	while (i < n)
+	{
+		if (pipefd[i])
+			free(pipefd[i]);
+		i++;
+	}
+	free(pipefd);
+}
 void	pipe_creation(t_data *data, int cmds_numb)
 {
 	int	i;
@@ -19,19 +34,24 @@ void	pipe_creation(t_data *data, int cmds_numb)
 	i = 0;
 	if (cmds_numb > 1)
 	{
-		data->pipefd = malloc(sizeof(int *) * (cmds_numb - 1));
+		data->pipefd = ft_malloc(sizeof(int *) * (cmds_numb - 1));
 		if (!data->pipefd)
 			return ;
 	}
 	while (i < (cmds_numb - 1))
 	{
-		data->pipefd[i] = malloc(sizeof(int) * 2);
-		if (data->pipefd)
+		data->pipefd[i] = ft_malloc(sizeof(int) * 2);
+		if (!data->pipefd[i])
+		{
+			ft_free_pipes(data->pipefd, i);
 			return ;
+		}
 		pipe(data->pipefd[i]);
 		i++;
 	}
 }
+
+
 
 int	child_process_pipe(t_data *data, t_list *list,
 	t_list_env *env_list, int i)

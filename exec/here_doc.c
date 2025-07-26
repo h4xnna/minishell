@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/24 19:24:58 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:22:25 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,27 @@ void	process_heredoc_line(int fd, char *line, t_list_env *env)
 	expanded = expand_line(line, env);
 	write(fd, expanded, ft_strlen(expanded));
 	write(fd, "\n", 1);
-	free(line);
-	free(expanded);
+	free(line);	
+}
+
+t_list_env *set_get_env(t_list_env *env)
+{
+	static	t_list_env *saved_envp;
+	if (env == NULL)
+		return (saved_envp);
+	saved_envp = env;
+	return (NULL);
+}
+
+
+void handle_signel(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_malloc(-1);
+		free_env_list(set_get_env(NULL));
+	}
+	exit(130);
 }
 
 void	handle_heredoc_child(t_data *data, t_list_env *env)
@@ -160,10 +179,15 @@ void	handle_heredoc_child(t_data *data, t_list_env *env)
 	int		fd;
 	char	*line;
 
-	signal(SIGINT, SIG_DFL);
+	set_get_env(env);
+	signal(SIGINT, handle_signel);
 	fd = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0666);
 	if (fd < 0)
+	{
+		ft_malloc(-1);
+		free_env_list(env);
 		exit(1);
+	}
 	while (1)
 	{
 		line = readline("\033[1m\033[31mheredoc → \033[0m");
@@ -171,8 +195,9 @@ void	handle_heredoc_child(t_data *data, t_list_env *env)
 			break ;
 		process_heredoc_line(fd, line, env);
 	}
-	free(line);
 	close(fd);
+	ft_malloc(-1);
+	free_env_list(env);
 	exit(0);
 }
 

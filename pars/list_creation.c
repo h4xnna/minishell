@@ -35,9 +35,6 @@ void	get_word(t_list *list, char *args, t_data *data, t_list_env *env)
 	{
 		data->retour[data->j] = '\0';
 		node_creation(list, data->retour);
-		free(data->retour);
-		free(data);
-		data = NULL;
 	}
 }
 
@@ -45,14 +42,14 @@ void	node_creation(t_list *list, char *retour)
 {
 	t_data	*data;
 
-	data = malloc(sizeof(t_data));
+	data = ft_malloc(sizeof(t_data));
 	if (!data)
 		exit (1);
 	ft_memset(data, 0, sizeof(t_data));
 	if (retour[0] != '\0')
-		data->word = ft_strdup(retour);
+		data->word = ft_gc_strdup(retour);
 	else
-		data->word = ft_strdup(" ");
+		data->word = ft_gc_strdup(" ");
 	data->next = NULL;
 	data->back = NULL;
 	if (list->end == NULL)
@@ -77,7 +74,7 @@ void	initialisation(t_data *data, char *args, char **env)
 	data->here_doc_fd = 0;
 	data->args = NULL;
 	data->len = ft_strlen(args);
-	data->retour = malloc(sizeof(char) * (data->len + 1));
+	data->retour = ft_malloc(sizeof(char) * (data->len + 1));
 	if (!data->retour)
 		return ;
 	data->env_child_process = env;

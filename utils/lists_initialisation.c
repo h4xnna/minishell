@@ -23,7 +23,7 @@ void	initialisation_env_list(t_list_env **env_list)
 
 void	initialisation_list(t_list **list)
 {
-	*list = malloc(sizeof(t_list));
+	*list = ft_malloc(sizeof(t_list));
 	if (!*list)
 		return ;
 	(*list)->begin = NULL;

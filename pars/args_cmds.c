@@ -54,7 +54,7 @@ void	fill_args_cmd(t_data *data, int k)
 
 	cmd = data;
 	len = ft_strlen_cmd(data);
-	cmd->args = malloc(sizeof(char *) * (len + 2));
+	cmd->args = ft_malloc(sizeof(char *) * (len + 2));
 	if (!cmd->args)
 		return ;
 	while (data && !is_operator2(data->word))
@@ -64,14 +64,17 @@ void	fill_args_cmd(t_data *data, int k)
 			cmd->args[k++] = data->word;
 			if (ends_with(data->word, "/grep") || ft_strcmp(data->word,
 					"grep") == 0)
-				cmd->args[k++] = ft_strdup("--color=always");
+				cmd->args[k++] = ft_gc_strdup("--color=always");
 		}
 		else if (ft_strcmp(data->type, "ARG") == 0)
+		{
 			cmd->args[k++] = data->word;
+		}
 		data = data->next;
 	}
 	cmd->args[k] = NULL;
 }
+
 
 void	get_args_cmd(t_data *data, t_list *list)
 {

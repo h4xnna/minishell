@@ -61,6 +61,7 @@ SRCS 	=  exec/execution.c\
 			utils/syntax_error_token.c\
 			utils/builtin_utils.c\
 			utils/lists_initialisation.c\
+			utils/gc.c\
 			main.c\
 			signals.c
 
@@ -91,7 +92,6 @@ child: all
 
 nochild: all
 	valgrind --suppressions=minishell.supp --leak-check=full --show-leak-kinds=all --trace-children=no --track-fds=yes ./minishell
-
 
 re: fclean all
 

@@ -30,23 +30,29 @@ int	ft_strchr(char *left_char, char c)
 
 char	*ft_strdup(char *s1)
 {
-	char	*str;
-	size_t	i;
-	size_t	len;
+    char    *str;
+    size_t  i;
+    size_t  len;
 
-	len = ft_strlen(s1);
-	str = malloc((len + 1) * sizeof(char));
-	i = 0;
-	if (!str)
-		return (NULL);
-	while (i < len)
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
+    if (!s1)
+        return (NULL);
+
+    len = ft_strlen(s1);
+    str = malloc(len + 1);
+    if (!str)
+        return (NULL);
+
+    i = 0;
+    while (i < len)
+    {
+        str[i] = s1[i];
+        i++;
+    }
+    str[i] = '\0';
+
+    return (str);
 }
+
 
 char	*ft_strcat(char const *s1, char const *s2)
 {
@@ -60,7 +66,7 @@ char	*ft_strcat(char const *s1, char const *s2)
 	j = 0;
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	str1 = malloc((len1 + len2 + 1) * sizeof(char));
+	str1 = ft_malloc((len1 + len2 + 1) * sizeof(char));
 	if (!str1 || !s1 || !s2)
 		return (NULL);
 	while (s1[i] != '\0')

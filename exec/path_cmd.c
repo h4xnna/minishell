@@ -37,7 +37,6 @@ char	*build_path(char *cmd, char *word)
 
 	slash = ft_strjoin(cmd, "/");
 	string = ft_strjoin(slash, word);
-	free(slash);
 	return (string);
 }
 
@@ -99,11 +98,9 @@ int	search_cmd_in_path(char *path, char *word, t_data *data)
 		str = build_path(cmd, word);
 		if (check_path_cmd(str))
 		{
-			free(data->word);
 			data->word = str;
 			return (1);
 		}
-		free(str);
 		if (path[i])
 			i++;
 	}

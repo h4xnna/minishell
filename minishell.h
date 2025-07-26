@@ -25,8 +25,8 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <unistd.h>
 # include <stdbool.h>
+# include <unistd.h>
 
 typedef struct s_data
 {
@@ -48,6 +48,12 @@ typedef struct s_data
 	struct s_data	*next;
 	struct s_data	*back;
 }		t_data;
+
+typedef struct s_gc
+{
+	void			*ptdr;
+	struct s_gc 	*next;
+}		t_gc;
 
 typedef struct s_List
 {
@@ -138,6 +144,7 @@ void	get_word(t_list *list, char *args, t_data *data, t_list_env *env);
 void	node_creation(t_list *list, char *retour);
 void	initialisation(t_data *data, char *args, char **env);
 void	initialisation_cmd_numb(t_data *data, t_list *list);
+
 
 // pars../list_creation
 void	node_creation_env_variables(t_list_env *env_list, char *str);
@@ -256,6 +263,10 @@ int		last_pipe_not_followed_by_cmd(t_data *data);
 int		is_valid_identifier(char *str);
 char	*ft_strndup(char *s, int n);
 int		ft_isalnum(int c);
+
+// util../gc
+void	*ft_malloc(long long size);
+char	*ft_gc_strdup(char *s1);
 
 // util../return_code
 int		set_get_exit_status(int exit_code);

@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 15:02:35 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/25 15:02:45 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/26 16:48:28 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*append_char(char c)
 {
 	char	*str;
 
-	str = malloc(2);
+	str = ft_malloc(2);
 	if (!str)
 		return (NULL);
 	str[0] = c;
@@ -29,7 +29,6 @@ char	*append_str(char *base, char *to_add)
 	char	*new;
 
 	new = ft_strjoin(base, to_add);
-	free(base);
 	return (new);
 }
 
@@ -50,10 +49,9 @@ char	*check_dollar(char *line, int *i, t_list_env *env)
 		(*i)++;
 	key = ft_substr(line, start, *i - start);
 	out = search_in_env(key, env);
-	free(key);
 	if (!out)
-		return (ft_strdup(""));
-	return (ft_strdup(out));
+		return (ft_gc_strdup(""));
+	return (ft_gc_strdup(out));
 }
 
 char	*expand_line(char *line, t_list_env *env)
@@ -62,22 +60,15 @@ char	*expand_line(char *line, t_list_env *env)
 	char	*tmp;
 	int		i;
 
-	result = ft_strdup("");
+	result = ft_gc_strdup("");
 	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '$')
-		{
 			tmp = check_dollar(line, &i, env);
-			result = append_str(result, tmp);
-			free(tmp);
-		}
 		else
-		{
 			tmp = append_char(line[i++]);
-			result = append_str(result, tmp);
-			free(tmp);
-		}
+		result = append_str(result, tmp);
 	}
 	return (result);
 }
