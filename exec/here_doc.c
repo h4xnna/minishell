@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/26 19:22:25 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:13:04 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void	process_heredoc_line(int fd, char *line, t_list_env *env)
 	free(line);	
 }
 
-t_list_env *set_get_env(t_list_env *env)
+t_list_env	*set_get_env(t_list_env *env)
 {
 	static	t_list_env *saved_envp;
 	if (env == NULL)
@@ -162,7 +162,6 @@ t_list_env *set_get_env(t_list_env *env)
 	saved_envp = env;
 	return (NULL);
 }
-
 
 void handle_signel(int sig)
 {

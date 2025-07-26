@@ -60,6 +60,8 @@ int	handle_fork_and_exec(t_data *data, t_list *list,
 	if (pid[index] < 0)
 	{
 		perror("fork failed");
+		ft_malloc(-1);
+		free_env_list(env_list);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid[index] == 0)

@@ -46,12 +46,10 @@ char	*get_expand(char *retour, t_list_env *env)
 	var = get_var_name(retour);
 	if (!var[0])
 	{
-		free(var);
 		return ("$");
 	}
 	else
 		env_value = search_in_env(var, env);
-	free(var);
 	return (env_value);
 }
 
@@ -75,9 +73,8 @@ void	expansion(t_data *data, char *args, t_list_env *env)
 	expand = get_expand(var, env);
 	data->retour[data->j] = '\0';
 	data->retour = ft_realloc(expand, data->retour, data);
-	if(!data->retour)
+	if (!data->retour)
 		return ;
-	free(var);
 }
 
 void	double_quotes_expansion(t_data *data, char *args, t_list_env *env)
@@ -101,7 +98,6 @@ void	double_quotes_expansion(t_data *data, char *args, t_list_env *env)
 	expanded = get_expand(temp, env);
 	data->retour[data->j] = '\0';
 	data->retour = ft_realloc(expanded, data->retour, data);
-	if(!data->retour)
+	if (!data->retour)
 		return ;
-	free(temp);
 }

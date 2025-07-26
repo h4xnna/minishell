@@ -73,7 +73,6 @@ char	*ft_realloc(char *expanded, char *retour, t_data *data)
 	while (expanded && expanded[k])
 		str[i++] = expanded[k++];
 	str[i] = '\0';
-	free (retour);
 	data->j = i;
 	return (str);
 }

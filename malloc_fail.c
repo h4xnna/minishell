@@ -1,4 +1,26 @@
-#include <stdlib.h>
-void* malloc(size_t s) { return 0; }
-void* calloc(size_t n, size_t s) { return 0; }
-void* realloc(void* p, size_t s) { return 0; }
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   malloc_fail.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 22:07:52 by hmimouni          #+#    #+#             */
+/*   Updated: 2025/07/26 22:07:58 by hmimouni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+// #include <stdlib.h>
+
+// void	*malloc(size_t s)
+// {
+// 	return (0);
+// }
+// void	*calloc(size_t n, size_t s)
+// {
+// 	return (0);
+// }
+// void	*realloc(void *p, size_t s)
+// {
+// 	return (0);
+// }

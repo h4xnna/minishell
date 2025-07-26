@@ -27,6 +27,7 @@ void	ft_free_pipes(int **pipefd, int n)
 	}
 	free(pipefd);
 }
+
 void	pipe_creation(t_data *data, int cmds_numb)
 {
 	int	i;
@@ -50,8 +51,6 @@ void	pipe_creation(t_data *data, int cmds_numb)
 		i++;
 	}
 }
-
-
 
 int	child_process_pipe(t_data *data, t_list *list,
 	t_list_env *env_list, int i)

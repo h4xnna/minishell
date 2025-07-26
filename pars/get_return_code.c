@@ -19,9 +19,10 @@ void	return_code(t_data *data, char *args)
 
 	i = 0;
 	code = ft_itoa(set_get_exit_status(-1));
+	if (!code)
+		return ;
 	while (code[i])
 		data->retour[data->j++] = code[i++];
-	free(code);
 	(void)args;
 }
 

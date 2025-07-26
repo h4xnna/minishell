@@ -51,8 +51,8 @@ typedef struct s_data
 
 typedef struct s_gc
 {
-	void			*ptdr;
-	struct s_gc 	*next;
+	void				*ptdr;
+	struct s_gc			*next;
 }		t_gc;
 
 typedef struct s_List
@@ -144,7 +144,6 @@ void	get_word(t_list *list, char *args, t_data *data, t_list_env *env);
 void	node_creation(t_list *list, char *retour);
 void	initialisation(t_data *data, char *args, char **env);
 void	initialisation_cmd_numb(t_data *data, t_list *list);
-
 
 // pars../list_creation
 void	node_creation_env_variables(t_list_env *env_list, char *str);
