@@ -37,3 +37,23 @@ int	check_delim_after_heredoc(t_data *data)
 	}
 	return (0);
 }
+
+t_list_env	*set_get_env(t_list_env *env)
+{
+	static t_list_env	*saved_envp;
+
+	if (env == NULL)
+		return (saved_envp);
+	saved_envp = env;
+	return (NULL);
+}
+
+void	handle_signel(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_malloc(-1);
+		free_env_list(set_get_env(NULL));
+	}
+	exit(130);
+}

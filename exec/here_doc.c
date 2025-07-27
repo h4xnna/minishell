@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/26 22:13:04 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/27 02:23:42 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,26 +151,7 @@ void	process_heredoc_line(int fd, char *line, t_list_env *env)
 	expanded = expand_line(line, env);
 	write(fd, expanded, ft_strlen(expanded));
 	write(fd, "\n", 1);
-	free(line);	
-}
-
-t_list_env	*set_get_env(t_list_env *env)
-{
-	static	t_list_env *saved_envp;
-	if (env == NULL)
-		return (saved_envp);
-	saved_envp = env;
-	return (NULL);
-}
-
-void handle_signel(int sig)
-{
-	if (sig == SIGINT)
-	{
-		ft_malloc(-1);
-		free_env_list(set_get_env(NULL));
-	}
-	exit(130);
+	free(line);
 }
 
 void	handle_heredoc_child(t_data *data, t_list_env *env)

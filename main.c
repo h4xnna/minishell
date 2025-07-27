@@ -105,7 +105,7 @@ void	main_loop_function(t_list *list, char *args, char **env,
 		}
 		if (!args[0])
 		{
-			ft_malloc(-1);	
+			ft_malloc(-1);
 			continue ;
 		}
 		add_history(args);
