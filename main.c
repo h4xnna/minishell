@@ -179,6 +179,7 @@ void	program_handler(t_list *list, char *args, char **env,
 	}
 	if (parse_error_operators(args))
 	{
+		ft_malloc(-1);
 		free_list(list);
 		signal_handlers();
 		set_get_exit_status(0);
