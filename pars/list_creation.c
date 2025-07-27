@@ -47,7 +47,14 @@ void	node_creation(t_list *list, char *retour)
 		exit (1);
 	ft_memset(data, 0, sizeof(t_data));
 	if (retour[0] != '\0')
-		data->word = ft_gc_strdup(retour);
+	{
+		data->word = ft_strdup(retour);
+		if (flag == 1)
+		{
+			data->flag = 1;
+			flag = 0;
+		}
+	}
 	else
 		data->word = ft_gc_strdup(" ");
 	data->next = NULL;
@@ -68,6 +75,7 @@ void	node_creation(t_list *list, char *retour)
 void	initialisation(t_data *data, char *args, char **env)
 {
 	data->i = 0;
+	data->flag = 0;
 	data->ind = 0;
 	data->j = 0;
 	data->k = 0;

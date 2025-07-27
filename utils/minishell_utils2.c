@@ -19,6 +19,13 @@ int	is_operator(char c)
 	return (0);
 }
 
+int	is_operator3(char c)
+{
+	if (c == '>' || c == '<' || c == ';' || c == '|')
+		return (1);
+	return (0);
+}
+
 int	ft_strlen_cmd(t_data *data)
 {
 	int	i;

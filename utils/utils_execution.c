@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_execution.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
+/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:55:57 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/21 23:06:44 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:39:13 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	get_file(t_list *list)
 	{
 		if (is_redirections(data))
 		{
-			if (data->next)
+			if (data->next && ft_strcmp(data->type, "PIPE"))
 				data->next->type = "FILE";
 		}
 		else if (ft_strcmp(data->type, "HERE_DOC") == 0)

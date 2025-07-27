@@ -12,6 +12,27 @@
 
 #include "../minishell.h"
 
+char	*ft_strstr(char *str, char *to_find)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (!to_find || to_find[0] == '\0')
+		return (str);
+	while (str[i])
+	{
+		j = 0;
+		while (str[i + j] && (str[i + j] == to_find[j]))
+			j++;
+		if (to_find[j] == '\0')
+			return (&str[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 int	check_file_after_redirin(t_data *data)
 {
 	struct stat	sb;
@@ -50,22 +71,19 @@ int	check_file_after_redirout(t_data *data)
 
 int	last_pipe_not_followed_by_cmd(t_data *data)
 {
-	int	flag;
+	int	flags;
 
+	flags = 1;
 	while (data)
 	{
-		flag = 0;
-		if (data->next && ft_strcmp(data->type, "PIPE") == 0)
+		if (ft_strcmp(data->type, "PIPE") == 0)
 		{
-			if (ft_strcmp(data->next->type, "CMD") == 0)
-				flag = 1;
-			data = data->next;
+			if (!data->next || ft_strcmp(data->next->type, "CMD"))
+				flags = 0;
 		}
-		else
-			flag = 1;
 		data = data->next;
 	}
-	if (flag == 0)
+	if (flags == 0)
 	{
 		printf("bash: command not found\n");
 		return (0);
@@ -75,19 +93,19 @@ int	last_pipe_not_followed_by_cmd(t_data *data)
 
 void	pipe_not_followed_by_cmd(t_data *data)
 {
-	int	flag;
+	int	flags;
 
-	flag = 0;
+	flags = 0;
 	while (data != NULL)
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
-			flag = 1;
+			flags = 1;
 		if (ft_strcmp(data->type, "PIPE") == 0)
 		{
-			if (flag == 0)
+			if (flags == 0)
 				printf("bash: command not found\n");
 			else
-				flag = 0;
+				flags = 0;
 		}
 		data = data->next;
 	}
@@ -105,11 +123,11 @@ int	wrong_token_error(t_data *data, t_list *list)
 	}
 	while (data)
 	{
-		if (check_file_after_redirout(data))
-			return (1);
 		if (check_file_after_redirin(data))
 			return (1);
-		if (check_delim_after_heredoc(data))
+		else if (check_file_after_redirout(data))
+			return (1);
+		else if (check_delim_after_heredoc(data))
 			return (1);
 		data = data->next;
 	}

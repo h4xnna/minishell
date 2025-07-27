@@ -19,15 +19,15 @@ char	*get_token_type(t_data *data, int *cmd_nb, t_list_env *env)
 		(*cmd_nb)++;
 		return ("CMD");
 	}
-	else if (ft_strcmp(data->word, ">") == 0)
+	else if (!data->flag && ft_strcmp(data->word, ">") == 0)
 		return ("REDIR_OUT");
-	else if (ft_strcmp(data->word, ">>") == 0)
+	else if (!data->flag && ft_strcmp(data->word, ">>") == 0)
 		return ("REDIR_OUT_APPEND");
-	else if (ft_strcmp(data->word, "<") == 0)
+	else if (!data->flag && ft_strcmp(data->word, "<") == 0)
 		return ("REDIR_IN");
-	else if (ft_strcmp(data->word, "<<") == 0)
+	else if (!data->flag && ft_strcmp(data->word, "<<") == 0)
 		return ("HERE_DOC");
-	else if (ft_strcmp(data->word, "|") == 0)
+	else if (!data->flag && ft_strcmp(data->word, "|") == 0)
 	{
 		*cmd_nb = 0;
 		return ("PIPE");

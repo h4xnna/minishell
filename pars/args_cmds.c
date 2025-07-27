@@ -18,13 +18,14 @@
 int	is_operator2(char *word)
 {
 	int		i;
-	char	*operators[5];
+	char	*operators[6];
 
-	operators[0] = "|";
-	operators[1] = ">";
-	operators[2] = "<";
-	operators[3] = ">>";
-	operators[4] = NULL;
+	operators[0] = "PIPE";
+	operators[1] = "REDIROUT";
+	operators[2] = "REDIR_IN";
+	operators[3] = "REDIR_OUT_APPEND";
+	operators[4] = "HERE_DOC";
+	operators[5] = NULL;
 	i = 0;
 	while (operators[i])
 	{
@@ -57,7 +58,7 @@ void	fill_args_cmd(t_data *data, int k)
 	cmd->args = ft_malloc(sizeof(char *) * (len + 2));
 	if (!cmd->args)
 		return ;
-	while (data && !is_operator2(data->word))
+	while (data && !is_operator2(data->type))
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
@@ -86,7 +87,7 @@ void	get_args_cmd(t_data *data, t_list *list)
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			fill_args_cmd(data, k);
-			while (data && !is_operator2(data->word))
+			while (data && !is_operator2(data->type))
 				data = data->next;
 		}
 		else

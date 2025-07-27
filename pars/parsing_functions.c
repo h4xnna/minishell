@@ -41,6 +41,11 @@ void	operator_pars(t_list *list, t_data *data, char *args)
 		node_creation(list, "<<");
 		data->i += 2;
 	}
+	else if (args[data->i] == '<' && args[data->i + 1] == '>')
+	{
+		node_creation(list, "<>");
+		data->i += 2;
+	}
 	else
 	{
 		data->retour[0] = args[data->i++];
@@ -52,6 +57,7 @@ void	operator_pars(t_list *list, t_data *data, char *args)
 void	single_quote_pars(t_data *data, char *args)
 {
 	data->i++;
+	flag = 1;
 	while (args[data->i] && args[data->i] != '\'')
 		data->retour[data->j++] = args[data->i++];
 	if (args[data->i == 1] == '\'')
@@ -65,6 +71,7 @@ void	single_quote_pars(t_data *data, char *args)
 void	double_quotes_pars(t_data *data, char *args, t_list_env *env)
 {
 	data->i++;
+	flag = 1;
 	while (args[data->i] && args[data->i] != '"')
 	{
 		if (args[data->i] == '$')

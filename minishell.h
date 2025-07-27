@@ -28,6 +28,7 @@
 # include <stdbool.h>
 # include <unistd.h>
 
+int flag;
 typedef struct s_data
 {
 	char			*word;
@@ -35,6 +36,7 @@ typedef struct s_data
 	int				index;
 	int				ind;
 	char			**args;
+	int				flag;
 	int				i;
 	int				j;
 	int				k;
@@ -221,12 +223,14 @@ char	*ft_strdup(char *s1);
 char	*ft_strcat(char const *s1, char const *s2);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strlen(char const *args);
+char	*ft_strstr(char *str, char *to_find);
 
 // utils../minishell_utils2
 int		is_operator(char c);
 int		ft_strlen_cmd(t_data *data);
 void	*ft_memset(void *str, int c, size_t len);
 char	*ft_realloc(char *expanded, char *retour, t_data *data);
+int	is_operator3(char c);
 
 //utils../minishell_utils3
 int		is_quote(char c);
@@ -298,4 +302,5 @@ void	here_doc_cmd(t_data *data);
 void	update_existing_env(t_env *existing_node, char *key, char *value);
 void	add_new_env(t_list_env *envp, char *arg, char *key, char *value);
 void	handle_export_argument(t_list_env *envp, char *arg);
+int		parse_error_operators(char *args);
 #endif
