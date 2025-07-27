@@ -168,10 +168,12 @@ void	dollar_pars(t_data *data, char *args, t_list_env *env);
 void	dollar_pars_digit_quote(t_data *data, char *args, t_list_env *env);
 
 // pars../get_return_code
-void		return_code(t_data *data, char *args);
-int			check_delim_after_heredoc(t_data *data);
-t_list_env			*set_get_env(t_list_env *env);
-void		handle_signel(int sig);
+void	return_code(t_data *data, char *args);
+int		check_delim_after_heredoc(t_data *data);
+void	process_heredoc_line(int fd, char *line, t_list_env *env);
+void	handle_signel(int sig);
+int		handle_cmd_execution(t_data *data, t_list *list, t_list_env *env_list,
+			int saved_stdin);
 
 // pars../print_command_error
 int		is_error(char *args);
@@ -268,6 +270,9 @@ char	*ft_gc_strdup(char *s1);
 
 // util../return_code
 int		set_get_exit_status(int exit_code);
+void	print_splash_screen(void);
+void	test_builtins_child(t_data *data, t_list_env *envp);
+void	test_builtins_parents(t_data *data, t_list_env *env);
 
 //utils../utils_execution 
 int		is_redirections(t_data *data);

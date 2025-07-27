@@ -12,35 +12,69 @@
 
 #include "minishell.h"
 
+// void	print_exec(t_list *list, char *args, t_list_env *env_list)
+// {
+// 	t_data	*data;
+// 	int		saved_stdin;
+
+// 	saved_stdin = dup(STDIN_FILENO);
+// 	if(saved_stdin < 0)
+// 	{
+// 		perror("dup");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	data = list->begin;
+// 	while (data)
+// 	{
+// 		if (ft_strcmp(data->type, "CMD") == 0)
+// 		{
+// 			exec(list, env_list);
+// 			if (data->here_doc_fd >= 0)
+// 				unlink("here_doc");
+// 			data->here_doc_fd = 0;
+// 			dup2(saved_stdin, STDIN_FILENO);
+// 			close (saved_stdin);
+// 			return ;
+// 		}
+// 		data = data->next;
+// 	}
+// 	if (list->begin && ft_strcmp(list->begin->type, "HERE_DOC") == 0)
+// 	{
+// 		here_doc(list->begin, env_list);
+// 		dup2(saved_stdin, STDIN_FILENO);
+// 		close(saved_stdin);
+// 	}
+// 	if (!data)
+// 		print_error(list, args);
+// }
+
 void	print_exec(t_list *list, char *args, t_list_env *env_list)
 {
 	t_data	*data;
 	int		saved_stdin;
 
 	saved_stdin = dup(STDIN_FILENO);
-	data = list->begin;
-	while (data)
+	if (saved_stdin < 0)
 	{
-		if (ft_strcmp(data->type, "CMD") == 0)
-		{
-			exec(list, env_list);
-			if (data->here_doc_fd >= 0)
-				unlink("here_doc");
-			data->here_doc_fd = 0;
-			dup2(saved_stdin, STDIN_FILENO);
-			close (saved_stdin);
-			return ;
-		}
-		data = data->next;
+		perror("dup");
+		exit(EXIT_FAILURE);
 	}
-	if (list->begin && ft_strcmp(list->begin->type, "HERE_DOC") == 0)
+	if (!list || !list->begin)
+	{
+		close(saved_stdin);
+		print_error(list, args);
+		return ;
+	}
+	data = list->begin;
+	if (handle_cmd_execution(data, list, env_list, saved_stdin))
+		return ;
+	if (ft_strcmp(list->begin->type, "HERE_DOC") == 0)
 	{
 		here_doc(list->begin, env_list);
 		dup2(saved_stdin, STDIN_FILENO);
 		close(saved_stdin);
 	}
-	if (!data)
-		print_error(list, args);
+	print_error(list, args);
 }
 
 int	tokenisation_and_exec(t_list *list, char *args,

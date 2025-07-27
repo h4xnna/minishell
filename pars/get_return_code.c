@@ -38,22 +38,39 @@ int	check_delim_after_heredoc(t_data *data)
 	return (0);
 }
 
-t_list_env	*set_get_env(t_list_env *env)
+void	process_heredoc_line(int fd, char *line, t_list_env *env)
 {
-	static t_list_env	*saved_envp;
+	char	*expanded;
 
-	if (env == NULL)
-		return (saved_envp);
-	saved_envp = env;
-	return (NULL);
+	expanded = expand_line(line, env);
+	write(fd, expanded, ft_strlen(expanded));
+	write(fd, "\n", 1);
+	free(line);
 }
 
-void	handle_signel(int sig)
+int	handle_cmd_execution(t_data *data, t_list *list,
+							t_list_env *env_list, int saved_stdin)
 {
-	if (sig == SIGINT)
+	while (data)
 	{
-		ft_malloc(-1);
-		free_env_list(set_get_env(NULL));
+		if (ft_strcmp(data->type, "CMD") == 0)
+		{
+			exec(list, env_list);
+			if (data->here_doc_fd >= 0)
+				unlink("here_doc");
+			data->here_doc_fd = 0;
+			dup2(saved_stdin, STDIN_FILENO);
+			close(saved_stdin);
+			return (1);
+		}
+		data = data->next;
 	}
-	exit(130);
+	return (0);
+}
+
+int	has_heredoc(t_data *data)
+{
+	if (data->type && !ft_strcmp(data->type, "HERE_DOC"))
+		return (1);
+	return (0);
 }

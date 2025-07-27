@@ -6,18 +6,12 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/27 02:23:42 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/27 03:11:29 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	has_heredoc(t_data *data)
-{
-	if (data->type && !ft_strcmp(data->type, "HERE_DOC"))
-		return (1);
-	return (0);
-}
 // char	*expand_line(char *line, t_list_env *env)
 // {
 // 	int		i;
@@ -144,14 +138,24 @@ int	handle_heredoc_parent(int *status)
 	return (1);
 }
 
-void	process_heredoc_line(int fd, char *line, t_list_env *env)
+t_list_env	*set_get_env(t_list_env *env)
 {
-	char	*expanded;
+	static t_list_env	*saved_envp;
 
-	expanded = expand_line(line, env);
-	write(fd, expanded, ft_strlen(expanded));
-	write(fd, "\n", 1);
-	free(line);
+	if (env == NULL)
+		return (saved_envp);
+	saved_envp = env;
+	return (NULL);
+}
+
+void	handle_signel(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_malloc(-1);
+		free_env_list(set_get_env(NULL));
+	}
+	exit(130);
 }
 
 void	handle_heredoc_child(t_data *data, t_list_env *env)

@@ -62,13 +62,14 @@ void	fill_args_cmd(t_data *data, int k)
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			cmd->args[k++] = data->word;
-			if (ends_with(data->word, "/grep") || ft_strcmp(data->word, "grep") == 0)
+			if (
+				ends_with(data->word, "/grep")
+				|| ft_strcmp(data->word, "grep") == 0
+			)
 				cmd->args[k++] = ft_gc_strdup("--color=always");
 		}
 		else if (ft_strcmp(data->type, "ARG") == 0)
-		{
 			cmd->args[k++] = data->word;
-		}
 		data = data->next;
 	}
 	cmd->args[k] = NULL;
