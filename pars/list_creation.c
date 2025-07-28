@@ -49,10 +49,10 @@ void	node_creation(t_list *list, char *retour)
 	if (retour[0] != '\0')
 	{
 		data->word = ft_strdup(retour);
-		if (flag == 1)
+		if (g_flag == 1)
 		{
 			data->flag = 1;
-			flag = 0;
+			g_flag = 0;
 		}
 	}
 	else
