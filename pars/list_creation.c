@@ -62,7 +62,7 @@ void node_creation(t_list *list, char *retour, int *is_quote)
 
 	data = ft_malloc(sizeof(t_data));
 	if (!data)
-		exit_clean();
+		exit_clean(1);
 	ft_memset(data, 0, sizeof(t_data));
 	does_word_exist(data, retour, is_quote);
 	data->next = NULL;

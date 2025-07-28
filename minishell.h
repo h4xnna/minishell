@@ -30,6 +30,7 @@
 
 typedef struct s_data
 {
+	int				saved_stdin;
 	char			*word;
 	char			*type;
 	int				index;
@@ -132,7 +133,7 @@ void		ft_export(t_list_env *envp, char **args);
 void		ft_env(t_list_env *envp, t_data *data);
 
 // exec../builtin../exit
-int			ft_exit(char **args);
+void		ft_exit(char **args);
 
 //exec../here_doc.c
 int			here_doc(t_data *data, t_list_env *env);
@@ -187,7 +188,7 @@ int			check_delim_after_heredoc(t_data *data);
 void		process_heredoc_line(int fd, char *line, t_list_env *env);
 void		handle_signel(int sig);
 int			handle_cmd_execution(t_data *data, t_list *list,
-				t_list_env *env_list, int saved_stdin);
+				t_list_env *env_list);
 
 // pars../print_command_error
 int			is_error(char *args);
@@ -263,7 +264,7 @@ char		*ft_realloc2(char *expanded, char *retour);
 
 //utils../utils_here_doc2
 char		*search_in_env(char *expand, t_list_env *env);
-void		exit_clean();
+void		exit_clean(int exit_code);
 
 // utils../redirection_checker
 int			search_redir(t_data *data, t_list_env *env);

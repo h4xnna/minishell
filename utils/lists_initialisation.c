@@ -25,7 +25,7 @@ void initialisation_list(t_list **list)
 {
 	*list = ft_malloc(sizeof(t_list));
 	if (!*list)
-		exit_clean();
+		exit_clean(1);
 	(*list)->begin = NULL;
 	(*list)->end = NULL;
 }

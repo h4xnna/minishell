@@ -24,7 +24,7 @@ char *get_var_name(char *retour)
 	len = ft_strlen(retour);
 	str = ft_malloc(sizeof(char) * (len + 1));
 	if (!str)
-		exit_clean();
+		exit_clean(1);
 	while (retour[i] != '$')
 		i++;
 	i++;
@@ -64,7 +64,7 @@ void expansion(t_data *data, char *args, t_list_env *env)
 	len = ft_strlen(args);
 	var = ft_malloc(sizeof(char) * (len + 1));
 	if (!var)
-		exit_clean();
+		exit_clean(1);
 	var[k++] = '$';
 	while (args[data->i] && !is_operator(args[data->i]) && !is_quote(args[data->i]) && args[data->i] != '$')
 		var[k++] = args[data->i++];
@@ -86,7 +86,7 @@ void double_quotes_expansion(t_data *data, char *args, t_list_env *env)
 	len = ft_strlen(args);
 	temp = ft_malloc(sizeof(char) * (len + 1));
 	if (!temp)
-		exit_clean();
+		exit_clean(1);
 	data->i++;
 	k = 0;
 	temp[k++] = '$';

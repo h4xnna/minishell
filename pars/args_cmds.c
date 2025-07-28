@@ -57,7 +57,7 @@ void fill_args_cmd(t_data *data, int k)
 	len = ft_strlen_cmd(data);
 	cmd->args = ft_malloc(sizeof(char *) * (len + 2));
 	if (!cmd->args)
-		exit_clean();
+		exit_clean(1);
 	while (data && !is_operator2(data->type))
 	{
 		if (ft_strcmp(data->type, "CMD") == 0)

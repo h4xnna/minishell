@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 15:02:35 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/28 17:34:52 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/28 23:50:32 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char *append_char(char c)
 
 	str = ft_malloc(2);
 	if (!str)
-		exit_clean();
+		exit_clean(1);
 	str[0] = c;
 	str[1] = '\0';
 	return (str);

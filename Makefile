@@ -16,11 +16,11 @@ DEEP_ORANGE     = "\033[38;5;208m"
 PURPLE_RAVE     = "\033[38;5;129m"
 CYAN_SHOCK      = "\033[38;5;51m"
 
-
-
 NAME	= minishell
 CC		= cc 
-CFLAGS	= -Wall -Werror -Wextra -g3 
+CFLAGS	= -Wall -Werror -Wextra -g3
+
+INCS	= minishell.h
 
 SRCS 	=  exec/execution.c\
 		    exec/child_process_exec.c\
@@ -74,7 +74,7 @@ all: ${NAME}
 %.o: %.c 
 	@$(CC) $(CFLAGS) -I. -c $< -o $@
 
-${NAME}: ${OBJS}
+${NAME}: ${OBJS} ${INCS}
 
 	@echo $(LIGHT_GREEN) "Compilation..."$(BOLD)
 	@${CC} ${CFLAGS} ${OBJS} -lreadline  -lhistory -o  ${NAME}

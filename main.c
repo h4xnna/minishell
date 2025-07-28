@@ -51,28 +51,26 @@
 void print_exec(t_list *list, char *args, t_list_env *env_list)
 {
 	t_data *data;
-	int saved_stdin;
 
-	saved_stdin = dup(STDIN_FILENO);
-	if (saved_stdin < 0)
-	{
-		perror("dup");
-		exit(EXIT_FAILURE);
-	}
 	if (!list || !list->begin)
 	{
-		close(saved_stdin);
 		print_error(list, args);
 		return;
 	}
 	data = list->begin;
-	if (handle_cmd_execution(data, list, env_list, saved_stdin))
+	data->saved_stdin = dup(STDIN_FILENO);
+	if (data->saved_stdin < 0)
+	{
+		perror("dup");
+		exit(EXIT_FAILURE);
+	}
+	if (handle_cmd_execution(data, list, env_list))
 		return;
 	if (ft_strcmp(list->begin->type, "HERE_DOC") == 0)
 	{
 		here_doc(list->begin, env_list);
-		dup2(saved_stdin, STDIN_FILENO);
-		close(saved_stdin);
+		dup2(list->begin->saved_stdin, STDIN_FILENO);
+		close(list->begin->saved_stdin);
 	}
 	print_error(list, args);
 }
@@ -103,9 +101,9 @@ void program_handler(t_list *list, char *args, char **env,
 {
 	t_data *data;
 
-	data = ft_malloc(sizeof(t_data));
+	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
-		exit_clean();
+		exit_clean(1);
 	ft_memset(data, 0, sizeof(t_data));
 	initialisation(data, args, env);
 	if (check_args_error(args))

@@ -37,7 +37,7 @@ void pipe_creation(t_data *data, int cmds_numb)
 	{
 		data->pipefd = ft_malloc(sizeof(int *) * (cmds_numb - 1));
 		if (!data->pipefd)
-			exit_clean();
+			exit_clean(1);
 	}
 	while (i < (cmds_numb - 1))
 	{
@@ -45,7 +45,7 @@ void pipe_creation(t_data *data, int cmds_numb)
 		if (!data->pipefd[i])
 		{
 			ft_free_pipes(data->pipefd, i);
-			exit_clean();
+			exit_clean(1);
 			return;
 		}
 		pipe(data->pipefd[i]);

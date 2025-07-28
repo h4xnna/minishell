@@ -66,6 +66,7 @@ int handle_fork_and_exec(t_data *data, t_list *list,
 	}
 	else if (pid[index] == 0)
 	{
+		close(list->begin->saved_stdin);
 		if (!child_process_pipe(data, list, env_list, index))
 		{
 			data->heredoc_exit = 1;
@@ -127,7 +128,7 @@ void exec(t_list *list, t_list_env *env_list)
 	cmds_numb = get_cmd_nb(data, list);
 	pid = ft_malloc(sizeof(pid_t) * cmds_numb);
 	if (!pid)
-		exit_clean();
+		exit_clean(1);
 	pipe_creation(data, cmds_numb);
 	if (!data->pipefd && cmds_numb > 1)
 	{

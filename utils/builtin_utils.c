@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 18:04:41 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/28 17:34:52 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/28 23:50:32 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char *ft_strndup(char *s, int n)
 		i++;
 	dup = ft_malloc(i + 1);
 	if (!dup)
-		exit_clean();
+		exit_clean(1);
 	while (j < i)
 	{
 		dup[j] = s[j];
