@@ -104,5 +104,7 @@ void initialisation(t_data *data, char *args, char **env)
 
 void	initialisation_cmd_numb(t_data *data, t_list *list)
 {
+	if (!data)
+		return ;
 	data->cmds_numb = get_cmd_nb(data, list);
 }
