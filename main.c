@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-int	g_flag = 0;
 // void	print_exec(t_list *list, char *args, t_list_env *env_list)
 // {
 // 	t_data	*data;
@@ -126,7 +125,6 @@ void	main_loop_function(t_list *list, char *args, char **env,
 {
 	while (1)
 	{
-		g_flag = 0;
 		initialisation_list(&list);
 		args = readline("\033[1m\033[38;5;129mMinishell → \033[0m");
 		if (!args)

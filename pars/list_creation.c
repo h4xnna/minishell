@@ -14,18 +14,21 @@
 
 void	get_word(t_list *list, char *args, t_data *data, t_list_env *env)
 {
+	int	is_quote;
+
+	is_quote = 0;
 	while (args[data->i] == ' ')
 		data->i++;
 	while (args[data->i])
 	{
 		if (args[data->i] == ' ')
-			space_pars(list, data);
+			space_pars(list, data, &is_quote);
 		else if (args[data->i] == '"')
-			double_quotes_pars(data, args, env);
+			double_quotes_pars(data, args, env, &is_quote);
 		else if (args[data->i] == '\'')
-			single_quote_pars(data, args);
+			single_quote_pars(data, args, &is_quote);
 		else if (is_operator(args[data->i]))
-			operator_pars(list, data, args);
+			operator_pars(list, data, args, &is_quote);
 		else if (args[data->i] == '$')
 			dollar_pars(data, args, env);
 		else
@@ -34,26 +37,26 @@ void	get_word(t_list *list, char *args, t_data *data, t_list_env *env)
 	if (data->j > 0)
 	{
 		data->retour[data->j] = '\0';
-		node_creation(list, data->retour);
+		node_creation(list, data->retour, &is_quote);
 	}
 }
 
-void	does_word_exist(t_data *data, char *retour)
+void	does_word_exist(t_data *data, char *retour, int *is_quote)
 {
 	if (retour[0] != '\0')
 	{
 		data->word = ft_strdup(retour);
-		if (g_flag == 1)
+		if (*is_quote == 1)
 		{
 			data->flag = 1;
-			g_flag = 0;
+			*is_quote = 0;
 		}
 	}
 	else
 		data->word = ft_gc_strdup(" ");
 }
 
-void	node_creation(t_list *list, char *retour)
+void	node_creation(t_list *list, char *retour, int *is_quote)
 {
 	t_data	*data;
 
@@ -61,7 +64,7 @@ void	node_creation(t_list *list, char *retour)
 	if (!data)
 		exit (1);
 	ft_memset(data, 0, sizeof(t_data));
-	does_word_exist(data, retour);
+	does_word_exist(data, retour, is_quote);
 	data->next = NULL;
 	data->back = NULL;
 	if (list->end == NULL)
@@ -81,6 +84,7 @@ void	initialisation(t_data *data, char *args, char **env)
 {
 	data->i = 0;
 	data->flag = 0;
+	data->is_quote = 0;
 	data->ind = 0;
 	data->j = 0;
 	data->k = 0;
