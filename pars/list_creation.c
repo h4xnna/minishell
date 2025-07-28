@@ -37,15 +37,8 @@ void	get_word(t_list *list, char *args, t_data *data, t_list_env *env)
 		node_creation(list, data->retour);
 	}
 }
-
-void	node_creation(t_list *list, char *retour)
+void	does_word_exist(t_data *data, char *retour)
 {
-	t_data	*data;
-
-	data = ft_malloc(sizeof(t_data));
-	if (!data)
-		exit (1);
-	ft_memset(data, 0, sizeof(t_data));
 	if (retour[0] != '\0')
 	{
 		data->word = ft_strdup(retour);
@@ -57,6 +50,17 @@ void	node_creation(t_list *list, char *retour)
 	}
 	else
 		data->word = ft_gc_strdup(" ");
+}
+
+void	node_creation(t_list *list, char *retour)
+{
+	t_data	*data;
+
+	data = ft_malloc(sizeof(t_data));
+	if (!data)
+		exit (1);
+	ft_memset(data, 0, sizeof(t_data));
+	does_word_exist(data, retour);
 	data->next = NULL;
 	data->back = NULL;
 	if (list->end == NULL)
