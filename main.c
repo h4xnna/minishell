@@ -125,6 +125,7 @@ void	main_loop_function(t_list *list, char *args, char **env,
 {
 	while (1)
 	{
+		set_get_env(env_list);
 		initialisation_list(&list);
 		args = readline("\033[1m\033[38;5;129mMinishell → \033[0m");
 		if (!args)

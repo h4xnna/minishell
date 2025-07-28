@@ -45,7 +45,7 @@ void	does_word_exist(t_data *data, char *retour, int *is_quote)
 {
 	if (retour[0] != '\0')
 	{
-		data->word = ft_strdup(retour);
+		data->word = ft_gc_strdup(retour);
 		if (*is_quote == 1)
 		{
 			data->flag = 1;
@@ -93,7 +93,11 @@ void	initialisation(t_data *data, char *args, char **env)
 	data->len = ft_strlen(args);
 	data->retour = ft_malloc(sizeof(char) * (data->len + 1));
 	if (!data->retour)
-		return ;
+	{
+		ft_malloc(-1);
+		free_env_list(set_get_env(NULL));
+		exit(1);
+	}
 	data->env_child_process = env;
 }
 

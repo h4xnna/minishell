@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/27 03:11:29 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:12:18 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,6 @@ void	handle_heredoc_child(t_data *data, t_list_env *env)
 	int		fd;
 	char	*line;
 
-	set_get_env(env);
 	signal(SIGINT, handle_signel);
 	fd = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0666);
 	if (fd < 0)
