@@ -28,7 +28,7 @@
 # include <stdbool.h>
 # include <unistd.h>
 
-extern int g_flag;
+extern int	g_flag;
 typedef struct s_data
 {
 	char			*word;

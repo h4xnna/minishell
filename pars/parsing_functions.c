@@ -41,11 +41,6 @@ void	operator_pars(t_list *list, t_data *data, char *args)
 		node_creation(list, "<<");
 		data->i += 2;
 	}
-	else if (args[data->i] == '<' && args[data->i + 1] == '>')
-	{
-		node_creation(list, "<>");
-		data->i += 2;
-	}
 	else
 	{
 		data->retour[0] = args[data->i++];

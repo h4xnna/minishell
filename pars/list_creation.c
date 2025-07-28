@@ -37,6 +37,7 @@ void	get_word(t_list *list, char *args, t_data *data, t_list_env *env)
 		node_creation(list, data->retour);
 	}
 }
+
 void	does_word_exist(t_data *data, char *retour)
 {
 	if (retour[0] != '\0')

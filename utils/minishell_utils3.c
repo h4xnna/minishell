@@ -6,7 +6,7 @@
 /*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 22:56:33 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/28 13:37:05 by acrusoe          ###   ########.fr       */
+/*   Updated: 2025/07/28 14:05:41 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,3 @@ char	*ft_strstr(char *str, char *to_find)
 	}
 	return (NULL);
 }
-
