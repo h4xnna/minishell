@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 int	g_flag = 0;
 // void	print_exec(t_list *list, char *args, t_list_env *env_list)
 // {
@@ -96,68 +97,6 @@ int	tokenisation_and_exec(t_list *list, char *args,
 	rl_redisplay();
 	signal_handlers();
 	return (1);
-}
-
-int	skip_whitespace(char *str, int start)
-{
-	while (str[start] && str[start] == ' ')
-		start++;
-	return (start);
-}
-
-int	check_after_operator(char *args, int pos)
-{
-	pos = skip_whitespace(args, pos);
-	return (args[pos] == '\0' || is_operator3(args[pos]));
-}
-
-int	parse_error_operators(char *args) 
-{
-	int i;
-    
-	if (!args)
-		return (1);
-	i = 0;
-	while (args[i])
-	{
-		if (args[i] == '>' && args[i + 1] == '>')
-		{
-			if (check_after_operator(args, i + 2))
-			{
-				printf("bash: parse error\n");
-				return (1);
-			}
-			i++;
-        }
-        else if (args[i] == '<' && args[i + 1] == '<')
-        {
-            if (check_after_operator(args, i + 2))
-            {
-                printf("bash: parse error\n");
-                return (1);
-            }
-            i++;
-        }
-        else if (args[i] == '<' && args[i + 1] == '>')
-        {
-            if (check_after_operator(args, i + 2))
-            {
-                printf("bash: parse error\n");
-                return (1);
-            }
-            i++;
-        }
-        else if (is_operator3(args[i]))
-        {
-            if (check_after_operator(args, i + 1))
-            {
-                printf("bash: parse error\n");
-                return (1);
-            }
-        }
-        i++;
-    }
-    return (0);
 }
 
 void	program_handler(t_list *list, char *args, char **env,

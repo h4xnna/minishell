@@ -164,6 +164,11 @@ int		is_operator2(char *word);
 void	fill_args_cmd(t_data *data, int k);
 void	get_args_cmd(t_data *data, t_list *list);
 int		get_cmd_nb(t_data *data, t_list *list);
+int		parse_error_operators(char *args);
+int		is_double_operator(const char *s);
+int		check_after(char *args, int *i);
+int		check_after_operator(char *args, int pos);
+int		skip_whitespace(char *str, int start);
 
 // pars../dollar_hanling_functions
 void	dollar_pars(t_data *data, char *args, t_list_env *env);
@@ -230,7 +235,7 @@ int		is_operator(char c);
 int		ft_strlen_cmd(t_data *data);
 void	*ft_memset(void *str, int c, size_t len);
 char	*ft_realloc(char *expanded, char *retour, t_data *data);
-int	is_operator3(char c);
+int		is_operator3(char c);
 
 //utils../minishell_utils3
 int		is_quote(char c);
