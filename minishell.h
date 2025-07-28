@@ -169,6 +169,7 @@ int		is_double_operator(const char *s);
 int		check_after(char *args, int *i);
 int		check_after_operator(char *args, int pos);
 int		skip_whitespace(char *str, int start);
+int		check_args_error(char *args);
 
 // pars../dollar_hanling_functions
 void	dollar_pars(t_data *data, char *args, t_list_env *env);

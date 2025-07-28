@@ -86,3 +86,22 @@ void	double_quotes_pars(t_data *data, char *args, t_list_env *env)
 	else
 		return ;
 }
+
+int	check_args_error(char *args)
+{
+	if (is_unclosed_quotes(args))
+	{
+		ft_malloc(-1);
+		signal_handlers();
+		set_get_exit_status(0);
+		return (1);
+	}
+	if (parse_error_operators(args))
+	{
+		ft_malloc(-1);
+		signal_handlers();
+		set_get_exit_status(0);
+		return (1);
+	}
+	return (0);
+}

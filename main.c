@@ -109,20 +109,8 @@ void	program_handler(t_list *list, char *args, char **env,
 		return ;
 	ft_memset(data, 0, sizeof(t_data));
 	initialisation(data, args, env);
-	if (is_unclosed_quotes(args))
-	{
-		ft_malloc(-1);
-		signal_handlers();
-		set_get_exit_status(0);
+	if (check_args_error(args))
 		return ;
-	}
-	if (parse_error_operators(args))
-	{
-		ft_malloc(-1);
-		signal_handlers();
-		set_get_exit_status(0);
-		return ;
-	}
 	get_word(list, args, data, env_list);
 	if (!tokenisation_and_exec(list, args, env_list))
 	{
