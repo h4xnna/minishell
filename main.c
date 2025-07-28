@@ -48,10 +48,10 @@
 // 		print_error(list, args);
 // }
 
-void	print_exec(t_list *list, char *args, t_list_env *env_list)
+void print_exec(t_list *list, char *args, t_list_env *env_list)
 {
-	t_data	*data;
-	int		saved_stdin;
+	t_data *data;
+	int saved_stdin;
 
 	saved_stdin = dup(STDIN_FILENO);
 	if (saved_stdin < 0)
@@ -63,11 +63,11 @@ void	print_exec(t_list *list, char *args, t_list_env *env_list)
 	{
 		close(saved_stdin);
 		print_error(list, args);
-		return ;
+		return;
 	}
 	data = list->begin;
 	if (handle_cmd_execution(data, list, env_list, saved_stdin))
-		return ;
+		return;
 	if (ft_strcmp(list->begin->type, "HERE_DOC") == 0)
 	{
 		here_doc(list->begin, env_list);
@@ -77,10 +77,10 @@ void	print_exec(t_list *list, char *args, t_list_env *env_list)
 	print_error(list, args);
 }
 
-int	tokenisation_and_exec(t_list *list, char *args,
-		t_list_env *env_list)
+int tokenisation_and_exec(t_list *list, char *args,
+						  t_list_env *env_list)
 {
-	t_data	*data;
+	t_data *data;
 
 	data = list->begin;
 	get_type(data, list, env_list);
@@ -98,30 +98,30 @@ int	tokenisation_and_exec(t_list *list, char *args,
 	return (1);
 }
 
-void	program_handler(t_list *list, char *args, char **env,
-		t_list_env *env_list)
+void program_handler(t_list *list, char *args, char **env,
+					 t_list_env *env_list)
 {
-	t_data	*data;
+	t_data *data;
 
 	data = ft_malloc(sizeof(t_data));
 	if (!data)
-		return ;
+		exit_clean();
 	ft_memset(data, 0, sizeof(t_data));
 	initialisation(data, args, env);
 	if (check_args_error(args))
-		return ;
+		return;
 	get_word(list, args, data, env_list);
 	if (!tokenisation_and_exec(list, args, env_list))
 	{
 		ft_malloc(-1);
 		signal_handlers();
-		return ;
+		return;
 	}
 	ft_malloc(-1);
 }
 
-void	main_loop_function(t_list *list, char *args, char **env,
-	t_list_env *env_list)
+void main_loop_function(t_list *list, char *args, char **env,
+						t_list_env *env_list)
 {
 	while (1)
 	{
@@ -131,23 +131,23 @@ void	main_loop_function(t_list *list, char *args, char **env,
 		if (!args)
 		{
 			write(1, "exit\n", 5);
-			return ;
+			return;
 		}
 		if (!args[0])
 		{
 			ft_malloc(-1);
-			continue ;
+			continue;
 		}
 		add_history(args);
 		program_handler(list, args, env, env_list);
 	}
 }
 
-int	main(int ac, char **av, char **env)
+int main(int ac, char **av, char **env)
 {
-	t_list		*list;
-	char		*args;
-	t_list_env	*env_list;
+	t_list *list;
+	char *args;
+	t_list_env *env_list;
 
 	(void)av;
 	(void)ac;

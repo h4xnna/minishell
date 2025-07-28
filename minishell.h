@@ -263,6 +263,7 @@ char		*ft_realloc2(char *expanded, char *retour);
 
 //utils../utils_here_doc2
 char		*search_in_env(char *expand, t_list_env *env);
+void		exit_clean();
 
 // utils../redirection_checker
 int			search_redir(t_data *data, t_list_env *env);

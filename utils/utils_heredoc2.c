@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_heredoc2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:41:42 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/25 15:17:33 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:22:05 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,11 @@ char	*search_in_env(char *expand, t_list_env *env)
 		tmp = tmp->next;
 	}
 	return (NULL);
+}
+
+void exit_clean()
+{
+	ft_malloc(-1);
+	free_env_list(set_get_env(NULL));
+	exit(1);
 }

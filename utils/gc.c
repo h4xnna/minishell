@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 14:28:44 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/27 02:29:17 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:34:52 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_gc_strdup(char *s1)
+char *ft_gc_strdup(char *s1)
 {
-	char		*str;
-	size_t		i;
-	size_t		len;
+	char *str;
+	size_t i;
+	size_t len;
 
 	if (!s1)
 		return (NULL);
 	len = ft_strlen(s1);
 	str = ft_malloc(len + 1);
 	if (!str)
-		return (NULL);
+		exit_clean();
 	i = 0;
 	while (i < len)
 	{
@@ -34,23 +34,23 @@ char	*ft_gc_strdup(char *s1)
 	return (str);
 }
 
-void	gc_add_front(t_gc **gc, t_gc *node)
+void gc_add_front(t_gc **gc, t_gc *node)
 {
-	t_gc	*temp;
+	t_gc *temp;
 
 	if (!(*gc))
 	{
 		*gc = node;
-		return ;
+		return;
 	}
 	temp = *gc;
 	node->next = temp;
 	*gc = node;
 }
 
-t_gc	*new_gc_node(void *ptdr)
+t_gc *new_gc_node(void *ptdr)
 {
-	t_gc	*node;
+	t_gc *node;
 
 	node = malloc(sizeof(t_gc));
 	if (!node)
@@ -60,9 +60,9 @@ t_gc	*new_gc_node(void *ptdr)
 	return (node);
 }
 
-void	free_gc(t_gc *gc)
+void free_gc(t_gc *gc)
 {
-	t_gc	*temp;
+	t_gc *temp;
 
 	while (gc)
 	{
@@ -78,11 +78,11 @@ void	free_gc(t_gc *gc)
 	}
 }
 
-void	*ft_malloc(long long size)
+void *ft_malloc(long long size)
 {
-	static t_gc	*gc = NULL;
-	void		*ptdr;
-	t_gc		*node;
+	static t_gc *gc = NULL;
+	void *ptdr;
+	t_gc *node;
 
 	if (size == -1)
 	{

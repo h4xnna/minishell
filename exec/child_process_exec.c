@@ -12,12 +12,12 @@
 
 #include "../minishell.h"
 
-void	ft_free_pipes(int **pipefd, int n)
+void ft_free_pipes(int **pipefd, int n)
 {
-	int	i;
+	int i;
 
 	if (!pipefd)
-		return ;
+		return;
 	i = 0;
 	while (i < n)
 	{
@@ -28,16 +28,16 @@ void	ft_free_pipes(int **pipefd, int n)
 	free(pipefd);
 }
 
-void	pipe_creation(t_data *data, int cmds_numb)
+void pipe_creation(t_data *data, int cmds_numb)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (cmds_numb > 1)
 	{
 		data->pipefd = ft_malloc(sizeof(int *) * (cmds_numb - 1));
 		if (!data->pipefd)
-			return ;
+			exit_clean();
 	}
 	while (i < (cmds_numb - 1))
 	{
@@ -45,22 +45,23 @@ void	pipe_creation(t_data *data, int cmds_numb)
 		if (!data->pipefd[i])
 		{
 			ft_free_pipes(data->pipefd, i);
-			return ;
+			exit_clean();
+			return;
 		}
 		pipe(data->pipefd[i]);
 		i++;
 	}
 }
 
-int	child_process_pipe(t_data *data, t_list *list,
-	t_list_env *env_list, int i)
+int child_process_pipe(t_data *data, t_list *list,
+					   t_list_env *env_list, int i)
 {
-	int	cmds_numb;
+	int cmds_numb;
 
 	cmds_numb = get_cmd_nb(data, list);
 	signal(SIGINT, SIG_DFL);
 	if (!search_redir(data, env_list))
-		exit (0);
+		exit(0);
 	if (!is_redir_out(data) && cmds_numb > 1)
 	{
 		if (i == 0)
@@ -80,7 +81,7 @@ int	child_process_pipe(t_data *data, t_list *list,
 	return (1);
 }
 
-void	last_pid_handler(int status)
+void last_pid_handler(int status)
 {
 	if (WIFEXITED(status))
 		set_get_exit_status(WEXITSTATUS(status));
@@ -99,10 +100,10 @@ void	last_pid_handler(int status)
 	}
 }
 
-void	pids_handler(pid_t *pid, int cmds_numb)
+void pids_handler(pid_t *pid, int cmds_numb)
 {
-	int	status;
-	int	k;
+	int status;
+	int k;
 
 	k = 0;
 	while (k < cmds_numb)
@@ -110,7 +111,7 @@ void	pids_handler(pid_t *pid, int cmds_numb)
 		if (waitpid(pid[k], &status, 0) == -1)
 		{
 			perror("waitpid");
-			return ;
+			return;
 		}
 		if (k == cmds_numb - 1)
 			last_pid_handler(status);

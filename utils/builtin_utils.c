@@ -3,32 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 18:04:41 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/26 14:58:23 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:34:52 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_isalnum(int c)
+int ft_isalnum(int c)
 {
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0'
-			&& c <= '9'))
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'))
 		return (1);
 	return (0);
 }
 
-int	is_valid_identifier(char *str)
+int is_valid_identifier(char *str)
 {
-	int	i;
+	int i;
 
 	i = 1;
 	if (!str || !str[0])
 		return (0);
-	if (!((str[0] >= 'A' && str[0] <= 'Z') || (str[0] >= 'a' && str[0] <= 'z')
-			|| str[0] == '_'))
+	if (!((str[0] >= 'A' && str[0] <= 'Z') || (str[0] >= 'a' && str[0] <= 'z') || str[0] == '_'))
 		return (0);
 	while (str[i] && str[i] != '=')
 	{
@@ -39,11 +37,11 @@ int	is_valid_identifier(char *str)
 	return (1);
 }
 
-char	*ft_strndup(char *s, int n)
+char *ft_strndup(char *s, int n)
 {
-	int		i;
-	char	*dup;
-	int		j;
+	int i;
+	char *dup;
+	int j;
 
 	i = 0;
 	j = 0;
@@ -51,7 +49,7 @@ char	*ft_strndup(char *s, int n)
 		i++;
 	dup = ft_malloc(i + 1);
 	if (!dup)
-		return (NULL);
+		exit_clean();
 	while (j < i)
 	{
 		dup[j] = s[j];

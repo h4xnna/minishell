@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-void	get_word(t_list *list, char *args, t_data *data, t_list_env *env)
+void get_word(t_list *list, char *args, t_data *data, t_list_env *env)
 {
-	int	is_quote;
+	int is_quote;
 
 	is_quote = 0;
 	while (args[data->i] == ' ')
@@ -41,7 +41,7 @@ void	get_word(t_list *list, char *args, t_data *data, t_list_env *env)
 	}
 }
 
-void	does_word_exist(t_data *data, char *retour, int *is_quote)
+void does_word_exist(t_data *data, char *retour, int *is_quote)
 {
 	if (retour[0] != '\0')
 	{
@@ -56,13 +56,13 @@ void	does_word_exist(t_data *data, char *retour, int *is_quote)
 		data->word = ft_gc_strdup(" ");
 }
 
-void	node_creation(t_list *list, char *retour, int *is_quote)
+void node_creation(t_list *list, char *retour, int *is_quote)
 {
-	t_data	*data;
+	t_data *data;
 
 	data = ft_malloc(sizeof(t_data));
 	if (!data)
-		exit (1);
+		exit_clean();
 	ft_memset(data, 0, sizeof(t_data));
 	does_word_exist(data, retour, is_quote);
 	data->next = NULL;
@@ -80,7 +80,7 @@ void	node_creation(t_list *list, char *retour, int *is_quote)
 	}
 }
 
-void	initialisation(t_data *data, char *args, char **env)
+void initialisation(t_data *data, char *args, char **env)
 {
 	data->i = 0;
 	data->flag = 0;
@@ -101,7 +101,7 @@ void	initialisation(t_data *data, char *args, char **env)
 	data->env_child_process = env;
 }
 
-void	initialisation_cmd_numb(t_data *data, t_list *list)
+void initialisation_cmd_numb(t_data *data, t_list *list)
 {
 	data->cmds_numb = get_cmd_nb(data, list);
 }

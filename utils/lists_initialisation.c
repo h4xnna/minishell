@@ -12,20 +12,20 @@
 
 #include "../minishell.h"
 
-void	initialisation_env_list(t_list_env **env_list)
+void initialisation_env_list(t_list_env **env_list)
 {
 	*env_list = malloc(sizeof(t_list_env));
 	if (!*env_list)
-		return ;
+		return;
 	(*env_list)->begin = NULL;
 	(*env_list)->end = NULL;
 }
 
-void	initialisation_list(t_list **list)
+void initialisation_list(t_list **list)
 {
 	*list = ft_malloc(sizeof(t_list));
 	if (!*list)
-		return ;
+		exit_clean();
 	(*list)->begin = NULL;
 	(*list)->end = NULL;
 }
