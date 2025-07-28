@@ -90,6 +90,7 @@ void initialisation(t_data *data, char *args, char **env)
 	data->k = 0;
 	data->here_doc_fd = 0;
 	data->args = NULL;
+	data->cmds_numb = 0;
 	data->len = ft_strlen(args);
 	data->retour = ft_malloc(sizeof(char) * (data->len + 1));
 	if (!data->retour)
@@ -99,9 +100,4 @@ void initialisation(t_data *data, char *args, char **env)
 		exit(1);
 	}
 	data->env_child_process = env;
-}
-
-void initialisation_cmd_numb(t_data *data, t_list *list)
-{
-	data->cmds_numb = get_cmd_nb(data, list);
 }
