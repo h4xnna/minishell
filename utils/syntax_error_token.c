@@ -20,18 +20,20 @@ int	check_file_after_redirin(t_data *data)
 	{
 		if (data->next && ft_strcmp(data->next->type, "FILE") == 0)
 		{
-			if (stat(data->next->word, &sb) != 0
-				&& !S_ISREG(sb.st_mode)
-				&& (access(data->next->word, R_OK) != 0))
+			if (stat(data->next->word, &sb) != 0 || !S_ISREG(sb.st_mode))
 			{
-				printf("bash: %s: No such file or directory \n",
-					data->next->word);
+				printf("bash: No such file or directory \n");
+				return (1);
+			}
+			else if ((access(data->next->word, R_OK) != 0))
+			{
+				printf("bash: permission denied\n");
 				return (1);
 			}
 			return (0);
 		}
-		printf("bash: syntax error near unexpected token\n");
-		return (1);
+		// printf("bash: syntax error near unexpected token\n");
+		// return (1);
 	}
 	return (0);
 }
@@ -104,7 +106,7 @@ int	wrong_token_error(t_data *data, t_list *list)
 	{
 		if (check_file_after_redirin(data))
 			return (1);
-		else if (check_file_after_redirout(data))
+		if (check_file_after_redirout(data))
 			return (1);
 		else if (check_delim_after_heredoc(data))
 			return (1);

@@ -102,6 +102,11 @@ int exec_main_function(t_data *data, t_list *list,
 			return (handle_heredoc_failure(data));
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
+			// if (is_file_readable(data, list))
+			// {
+			// 	data = data->next;
+			// 	continue;
+			// }
 			if (handle_builtin_if_needed(data, env_list))
 				return (1);
 			if (!handle_fork_and_exec(data, list, env_list, pid))
