@@ -291,8 +291,8 @@ char		*ft_gc_strdup(char *s1);
 // util../return_code
 int			set_get_exit_status(int exit_code);
 void		print_splash_screen(void);
-void		test_builtins_child(t_data *data, t_list_env *envp);
-void		test_builtins_parents(t_data *data, t_list_env *env);
+void		test_builtins_child(t_data *data, t_list_env *envp, t_list *list);
+void		test_builtins_parents(t_data *data, t_list_env *env, t_list *list);
 
 //utils../utils_execution 
 int			is_redirections(t_data *data);

@@ -73,7 +73,7 @@ int	child_process_pipe(t_data *data, t_list *list,
 		ft_close_all_pipes(list->begin->pipefd, data, list);
 	}
 	if (built_cmd_child(data->word))
-		test_builtins_child(data, env_list);
+		test_builtins_child(data, env_list, list);
 	else
 		execve(data->word, data->args, data->env_child_process);
 	perror("execve");

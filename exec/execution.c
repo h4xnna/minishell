@@ -83,11 +83,11 @@ int	handle_heredoc_failure(t_data *data)
 	return (1);
 }
 
-int	handle_builtin_if_needed(t_data *data, t_list_env *env_list)
+int	handle_builtin_if_needed(t_data *data, t_list_env *env_list, t_list *list)
 {
 	if (built_cmd_parent(data->word))
 	{
-		test_builtins_parents(data, env_list);
+		test_builtins_parents(data, env_list, list);
 		return (1);
 	}
 	return (0);
@@ -103,7 +103,7 @@ int	exec_main_function(t_data *data, t_list *list,
 			return (handle_heredoc_failure(data));
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
-			if (handle_builtin_if_needed(data, env_list))
+			if (handle_builtin_if_needed(data, env_list, list))
 				return (1);
 			if (!handle_fork_and_exec(data, list, env_list, pid))
 				break ;
