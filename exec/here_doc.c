@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/28 17:12:18 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/29 14:57:42 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ void	handle_heredoc_child(t_data *data, t_list_env *env)
 		process_heredoc_line(fd, line, env);
 	}
 	close(fd);
+	close(data->saved_stdin);
 	ft_malloc(-1);
 	free_env_list(env);
 	exit(0);

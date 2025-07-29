@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 20:50:12 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/26 15:30:02 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/29 23:39:05 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ft_cd(char **args, t_list_env *envp)
 	if (chdir(args[1]) != 0)
 	{
 		perror("cd");
+		set_get_exit_status(1);
 		return ;
 	}
 	pwd_value(envp, "PWD");
