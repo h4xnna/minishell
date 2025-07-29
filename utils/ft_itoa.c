@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-void ft_char(char number, long i, long nbr, char *str)
+void	ft_char(char number, long i, long nbr, char *str)
 {
 	while (nbr > 0)
 	{
@@ -23,9 +23,9 @@ void ft_char(char number, long i, long nbr, char *str)
 	}
 }
 
-int ft_length(long n)
+int	ft_length(long n)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (n == 0)
@@ -51,13 +51,13 @@ int ft_length(long n)
 	return (len);
 }
 
-char *ft_itoa(int n)
+char	*ft_itoa(int n)
 {
-	char *str;
-	long i;
-	long len;
-	long nbr;
-	char number;
+	char	*str;
+	long	i;
+	long	len;
+	long	nbr;
+	char	number;
 
 	nbr = n;
 	len = ft_length(nbr);

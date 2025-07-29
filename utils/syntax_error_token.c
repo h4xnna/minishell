@@ -32,8 +32,6 @@ int	check_file_after_redirin(t_data *data)
 			}
 			return (0);
 		}
-		// printf("bash: syntax error near unexpected token\n");
-		// return (1);
 	}
 	return (0);
 }

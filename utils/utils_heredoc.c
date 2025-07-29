@@ -6,15 +6,15 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 18:41:55 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/28 23:50:32 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/29 13:28:59 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_bzero(void *s, int n)
+void	ft_bzero(void *s, int n)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < n)
@@ -24,7 +24,7 @@ void ft_bzero(void *s, int n)
 	}
 }
 
-int get_allocation(char const *s, int start, int len)
+int	get_allocation(char const *s, int start, int len)
 {
 	if (start >= ft_strlen(s))
 		return (0);
@@ -33,9 +33,9 @@ int get_allocation(char const *s, int start, int len)
 	return (ft_strlen(s + start));
 }
 
-void *ft_calloc(int nmemb, int size)
+void	*ft_calloc(int nmemb, int size)
 {
-	void *out;
+	void	*out;
 
 	out = ft_malloc(nmemb * size);
 	if (!out)
@@ -44,10 +44,10 @@ void *ft_calloc(int nmemb, int size)
 	return (out);
 }
 
-char *ft_substr(char const *s, int start, int len)
+char	*ft_substr(char const *s, int start, int len)
 {
-	char *out;
-	int i;
+	char	*out;
+	int		i;
 
 	i = 0;
 	if (len > ft_strlen(s))
@@ -66,12 +66,12 @@ char *ft_substr(char const *s, int start, int len)
 	return (out);
 }
 
-char *ft_realloc2(char *expanded, char *retour)
+char	*ft_realloc2(char *expanded, char *retour)
 {
-	int length;
-	int i;
-	char *str;
-	int k;
+	int		length;
+	int		i;
+	char	*str;
+	int		k;
 
 	length = ft_strlen(retour) + ft_strlen(expanded);
 	str = ft_malloc(sizeof(char) * (length + 2));

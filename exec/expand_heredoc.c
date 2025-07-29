@@ -6,15 +6,15 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 15:02:35 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/28 23:50:32 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/29 13:18:23 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *append_char(char c)
+char	*append_char(char c)
 {
-	char *str;
+	char	*str;
 
 	str = ft_malloc(2);
 	if (!str)
@@ -24,19 +24,19 @@ char *append_char(char c)
 	return (str);
 }
 
-char *append_str(char *base, char *to_add)
+char	*append_str(char *base, char *to_add)
 {
-	char *new;
+	char	*new;
 
 	new = ft_strjoin(base, to_add);
 	return (new);
 }
 
-char *check_dollar(char *line, int *i, t_list_env *env)
+char	*check_dollar(char *line, int *i, t_list_env *env)
 {
-	char *key;
-	char *out;
-	int start;
+	char	*key;
+	char	*out;
+	int		start;
 
 	(*i)++;
 	if (line[*i] == '?')
@@ -54,11 +54,11 @@ char *check_dollar(char *line, int *i, t_list_env *env)
 	return (ft_gc_strdup(out));
 }
 
-char *expand_line(char *line, t_list_env *env)
+char	*expand_line(char *line, t_list_env *env)
 {
-	char *result;
-	char *tmp;
-	int i;
+	char	*result;
+	char	*tmp;
+	int		i;
 
 	result = ft_gc_strdup("");
 	i = 0;

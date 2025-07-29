@@ -50,10 +50,10 @@
 // 	}
 // 	return(0);
 // }
-int handle_fork_and_exec(t_data *data, t_list *list,
-						 t_list_env *env_list, pid_t *pid)
+int	handle_fork_and_exec(t_data *data, t_list *list,
+						t_list_env *env_list, pid_t *pid)
 {
-	int index;
+	int	index;
 
 	index = list->begin->ind;
 	pid[index] = fork();
@@ -77,13 +77,13 @@ int handle_fork_and_exec(t_data *data, t_list *list,
 	return (1);
 }
 
-int handle_heredoc_failure(t_data *data)
+int	handle_heredoc_failure(t_data *data)
 {
 	data->heredoc_exit = 1;
 	return (1);
 }
 
-int handle_builtin_if_needed(t_data *data, t_list_env *env_list)
+int	handle_builtin_if_needed(t_data *data, t_list_env *env_list)
 {
 	if (built_cmd_parent(data->word))
 	{
@@ -93,8 +93,8 @@ int handle_builtin_if_needed(t_data *data, t_list_env *env_list)
 	return (0);
 }
 
-int exec_main_function(t_data *data, t_list *list,
-					   t_list_env *env_list, pid_t *pid)
+int	exec_main_function(t_data *data, t_list *list,
+					t_list_env *env_list, pid_t *pid)
 {
 	while (data && list->begin->ind < list->begin->cmds_numb)
 	{
@@ -103,26 +103,21 @@ int exec_main_function(t_data *data, t_list *list,
 			return (handle_heredoc_failure(data));
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
-			// if (is_file_readable(data, list))
-			// {
-			// 	data = data->next;
-			// 	continue;
-			// }
 			if (handle_builtin_if_needed(data, env_list))
 				return (1);
 			if (!handle_fork_and_exec(data, list, env_list, pid))
-				break;
+				break ;
 		}
 		data = data->next;
 	}
 	return (0);
 }
 
-void exec(t_list *list, t_list_env *env_list)
+void	exec(t_list *list, t_list_env *env_list)
 {
-	t_data *data;
-	int cmds_numb;
-	pid_t *pid;
+	t_data	*data;
+	int		cmds_numb;
+	pid_t	*pid;
 
 	data = list->begin;
 	cmds_numb = get_cmd_nb(data, list);
@@ -133,10 +128,10 @@ void exec(t_list *list, t_list_env *env_list)
 	if (!data->pipefd && cmds_numb > 1)
 	{
 		free(pid);
-		return;
+		return ;
 	}
 	if (exec_main_function(data, list, env_list, pid) == 1)
-		return;
+		return ;
 	if (cmds_numb > 1)
 		ft_close_all_pipes(list->begin->pipefd, data, list);
 	if (!data->heredoc_exit)

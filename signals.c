@@ -34,12 +34,10 @@ int	signal_handlers(void)
 	sigemptyset(&action_int.sa_mask);
 	action_int.sa_flags = 0;
 	sigaction(SIGINT, &action_int, NULL);
-
 	action_quit = (struct sigaction){};
 	action_quit.sa_handler = SIG_IGN;
 	sigemptyset(&action_quit.sa_mask);
 	action_quit.sa_flags = 0;
 	sigaction(SIGQUIT, &action_quit, NULL);
-
 	return (0);
 }

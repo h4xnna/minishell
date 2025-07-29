@@ -12,23 +12,23 @@
 
 #include "../minishell.h"
 
-int is_operator(char c)
+int	is_operator(char c)
 {
 	if (c == '>' || c == '<' || c == ' ' || c == '|')
 		return (1);
 	return (0);
 }
 
-int is_operator3(char c)
+int	is_operator3(char c)
 {
 	if (c == '>' || c == '<' || c == ';' || c == '|')
 		return (1);
 	return (0);
 }
 
-int ft_strlen_cmd(t_data *data)
+int	ft_strlen_cmd(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (data && ft_strcmp(data->word, "|") != 0)
@@ -42,11 +42,11 @@ int ft_strlen_cmd(t_data *data)
 	return (i);
 }
 
-void *ft_memset(void *str, int c, size_t len)
+void	*ft_memset(void *str, int c, size_t len)
 {
-	size_t i;
-	char ch;
-	char *s;
+	size_t	i;
+	char	ch;
+	char	*s;
 
 	s = str;
 	ch = c;
@@ -59,12 +59,12 @@ void *ft_memset(void *str, int c, size_t len)
 	return (str);
 }
 
-char *ft_realloc(char *expanded, char *retour, t_data *data)
+char	*ft_realloc(char *expanded, char *retour, t_data *data)
 {
-	int length;
-	int i;
-	char *str;
-	int k;
+	int		length;
+	int		i;
+	char	*str;
+	int		k;
 
 	length = ft_strlen(retour) + ft_strlen(expanded);
 	str = ft_malloc(sizeof(char) * (length + 2));

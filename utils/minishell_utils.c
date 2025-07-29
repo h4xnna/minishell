@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 #include "../minishell.h"
 
-int ft_strchr(char *left_char, char c)
+int	ft_strchr(char *left_char, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (left_char[i] != '\0')
@@ -28,11 +28,11 @@ int ft_strchr(char *left_char, char c)
 	return (0);
 }
 
-char *ft_strdup(char *s1)
+char	*ft_strdup(char *s1)
 {
-	char *str;
-	size_t i;
-	size_t len;
+	char	*str;
+	size_t	i;
+	size_t	len;
 
 	if (!s1)
 		return (NULL);
@@ -50,13 +50,13 @@ char *ft_strdup(char *s1)
 	return (str);
 }
 
-char *ft_strcat(char const *s1, char const *s2)
+char	*ft_strcat(char const *s1, char const *s2)
 {
-	int i;
-	int j;
-	char *str1;
-	int len1;
-	int len2;
+	int		i;
+	int		j;
+	char	*str1;
+	int		len1;
+	int		len2;
 
 	i = 0;
 	j = 0;
@@ -76,17 +76,17 @@ char *ft_strcat(char const *s1, char const *s2)
 	return (str1);
 }
 
-char *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *strcat;
+	char	*strcat;
 
 	strcat = ft_strcat(s1, s2);
 	return (strcat);
 }
 
-int ft_strlen(char const *args)
+int	ft_strlen(char const *args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!args)

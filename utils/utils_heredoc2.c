@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:41:42 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/28 23:51:07 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/29 13:29:11 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*search_in_env(char *expand, t_list_env *env)
 	return (NULL);
 }
 
-void exit_clean(int exit_code)
+void	exit_clean(int exit_code)
 {
 	ft_malloc(-1);
 	free_env_list(set_get_env(NULL));

@@ -15,10 +15,10 @@
 
 #include "minishell.h"
 
-int is_operator2(char *word)
+int	is_operator2(char *word)
 {
-	int i;
-	char *operators[6];
+	int		i;
+	char	*operators[6];
 
 	operators[0] = "PIPE";
 	operators[1] = "REDIROUT";
@@ -36,10 +36,10 @@ int is_operator2(char *word)
 	return (0);
 }
 
-int ends_with(const char *str, const char *suffix)
+int	ends_with(const char *str, const char *suffix)
 {
-	size_t len_str;
-	size_t len_suffix;
+	size_t	len_str;
+	size_t	len_suffix;
 
 	len_str = strlen(str);
 	len_suffix = strlen(suffix);
@@ -48,10 +48,10 @@ int ends_with(const char *str, const char *suffix)
 	return (strcmp(str + len_str - len_suffix, suffix) == 0);
 }
 
-void fill_args_cmd(t_data *data, int k)
+void	fill_args_cmd(t_data *data, int k)
 {
-	t_data *cmd;
-	int len;
+	t_data	*cmd;
+	int		len;
 
 	cmd = data;
 	len = ft_strlen_cmd(data);
@@ -63,8 +63,8 @@ void fill_args_cmd(t_data *data, int k)
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			cmd->args[k++] = data->word;
-			if (
-				ends_with(data->word, "/grep") || ft_strcmp(data->word, "grep") == 0)
+			if (ends_with(data->word, "/grep")
+				|| ft_strcmp(data->word, "grep") == 0)
 				cmd->args[k++] = ft_gc_strdup("--color=always");
 		}
 		else if (ft_strcmp(data->type, "ARG") == 0)
@@ -74,9 +74,9 @@ void fill_args_cmd(t_data *data, int k)
 	cmd->args[k] = NULL;
 }
 
-void get_args_cmd(t_data *data, t_list *list)
+void	get_args_cmd(t_data *data, t_list *list)
 {
-	int k;
+	int	k;
 
 	k = 0;
 	data = list->begin;
@@ -93,9 +93,9 @@ void get_args_cmd(t_data *data, t_list *list)
 	}
 }
 
-int get_cmd_nb(t_data *data, t_list *list)
+int	get_cmd_nb(t_data *data, t_list *list)
 {
-	int cmds_numb;
+	int	cmds_numb;
 
 	cmds_numb = 0;
 	data = list->begin;
