@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 19:44:03 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/26 16:05:43 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/28 23:52:28 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ void	test_builtins_child(t_data *data, t_list_env *envp)
 		ft_pwd();
 	else if (ft_strcmp(data->word, "env") == 0)
 		ft_env(envp, data);
+	else if (ft_strcmp(data->word, "cd") == 0)
+		ft_cd(data->args, envp);
+	else if (ft_strcmp(data->word, "unset") == 0)
+		ft_unset(envp, data->args);
+	else if (ft_strcmp(data->word, "export") == 0)
+		ft_export(envp, data->args);
 	free_env_list(envp);
 	ft_malloc(-1);
 	exit(0);
@@ -55,14 +61,11 @@ void	test_builtins_child(t_data *data, t_list_env *envp)
 
 void	test_builtins_parents(t_data *data, t_list_env *env)
 {
+	close(data->saved_stdin);
 	if (ft_strcmp(data->word, "exit") == 0)
 		ft_exit(data->args);
-	else if (ft_strcmp(data->word, "cd") == 0)
-		ft_cd(data->args, env);
-	else if (ft_strcmp(data->word, "unset") == 0)
-		ft_unset(env, data->args);
-	else if (ft_strcmp(data->word, "export") == 0)
-		ft_export(env, data->args);
+	(void)data;
+	(void)env;
 }
 // int main(void)
 // {

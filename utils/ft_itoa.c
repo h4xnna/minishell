@@ -65,7 +65,7 @@ char *ft_itoa(int n)
 	number = 0;
 	str = ft_malloc((len + 1) * sizeof(char));
 	if (!str)
-		exit_clean();
+		exit_clean(1);
 	if (nbr == 0)
 		str[0] = '0';
 	if (nbr < 0)

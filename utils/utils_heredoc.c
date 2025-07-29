@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 18:41:55 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/28 17:34:52 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/28 23:50:32 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void *ft_calloc(int nmemb, int size)
 
 	out = ft_malloc(nmemb * size);
 	if (!out)
-		exit_clean();
+		exit_clean(1);
 	ft_bzero(out, nmemb * size);
 	return (out);
 }
@@ -76,7 +76,7 @@ char *ft_realloc2(char *expanded, char *retour)
 	length = ft_strlen(retour) + ft_strlen(expanded);
 	str = ft_malloc(sizeof(char) * (length + 2));
 	if (!str)
-		exit_clean();
+		exit_clean(1);
 	k = 0;
 	i = 0;
 	while (retour[i])

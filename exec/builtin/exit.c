@@ -6,7 +6,7 @@
 /*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 22:41:33 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/24 15:58:53 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/28 23:48:23 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,23 +72,23 @@ static int	is_overflow(const char *str)
 	return (0);
 }
 
-int	ft_exit(char **args)
+void	ft_exit(char **args)
 {
 	long	code;
 
 	printf("exit\n");
 	if (!args[1])
-		exit(set_get_exit_status(-1));
+		exit_clean(set_get_exit_status(-1));
 	if (!is_numeric(args[1]) || is_overflow(args[1]))
 	{
 		dprintf(2, "exit: %s: numeric argument required\n", args[1]);
-		exit(255);
+		exit_clean(255);
 	}
 	if (args[2])
 	{
 		dprintf(2, "exit: too many arguments\n");
-		return (1);
+		exit_clean(1);
 	}
 	code = ft_atol(args[1]);
-	exit((unsigned char)code);
+	exit_clean(code);
 }

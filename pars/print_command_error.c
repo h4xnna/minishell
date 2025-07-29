@@ -36,6 +36,7 @@ void	print_error(t_list *list, char *args)
 		set_get_exit_status(0);
 		return ;
 	}
+	close(data->saved_stdin);
 	printf("bash:%s: command not found", data->word);
 	set_get_exit_status(127);
 	printf("\n");

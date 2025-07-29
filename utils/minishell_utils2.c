@@ -70,7 +70,7 @@ char *ft_realloc(char *expanded, char *retour, t_data *data)
 	str = ft_malloc(sizeof(char) * (length + 2));
 	k = 0;
 	if (!str)
-		exit_clean();
+		exit_clean(1);
 	i = 0;
 	while (retour[i])
 	{

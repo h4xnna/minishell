@@ -64,7 +64,7 @@ char *ft_strcat(char const *s1, char const *s2)
 	len2 = ft_strlen(s2);
 	str1 = ft_malloc((len1 + len2 + 1) * sizeof(char));
 	if (!str1 || !s1 || !s2)
-		exit_clean();
+		exit_clean(1);
 	while (s1[i] != '\0')
 	{
 		str1[i] = s1[i];

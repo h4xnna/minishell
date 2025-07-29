@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 14:28:44 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/28 17:34:52 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/07/28 23:50:32 by hmimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char *ft_gc_strdup(char *s1)
 	len = ft_strlen(s1);
 	str = ft_malloc(len + 1);
 	if (!str)
-		exit_clean();
+		exit_clean(1);
 	i = 0;
 	while (i < len)
 	{

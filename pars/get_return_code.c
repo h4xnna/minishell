@@ -49,7 +49,7 @@ void	process_heredoc_line(int fd, char *line, t_list_env *env)
 }
 
 int	handle_cmd_execution(t_data *data, t_list *list,
-							t_list_env *env_list, int saved_stdin)
+							t_list_env *env_list)
 {
 	while (data)
 	{
@@ -59,8 +59,8 @@ int	handle_cmd_execution(t_data *data, t_list *list,
 			if (data->here_doc_fd >= 0)
 				unlink("here_doc");
 			data->here_doc_fd = 0;
-			dup2(saved_stdin, STDIN_FILENO);
-			close(saved_stdin);
+			dup2(list->begin->saved_stdin, STDIN_FILENO);
+			close(list->begin->saved_stdin);
 			return (1);
 		}
 		data = data->next;
