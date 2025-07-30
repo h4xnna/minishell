@@ -12,7 +12,17 @@
 
 #include "minishell.h"
 
-int	is_redir_out(t_data *data)
+int	is_redir_out(t_data *data, int *redirout)
+{
+	if (ft_strcmp(data->type, "REDIR_OUT") == 0)
+	{
+		*redirout = 1;
+		return (1);
+	}
+	return (0);
+}
+
+int	is_redir_out2(t_data *data)
 {
 	if (ft_strcmp(data->type, "REDIR_OUT") == 0)
 		return (1);

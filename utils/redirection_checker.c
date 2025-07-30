@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int	search_redir(t_data *data, t_list_env *env)
+int	search_redir(t_data *data, t_list_env *env, int *redirout)
 {
 	while (data && ft_strcmp(data->type, "PIPE"))
 	{
@@ -23,7 +23,7 @@ int	search_redir(t_data *data, t_list_env *env)
 			if (!here_doc(data, env))
 				return (0);
 		}
-		else if (is_redir_out(data))
+		else if (is_redir_out(data, redirout))
 			ft_redir_out(data);
 		else if (is_redir_out_append(data))
 			ft_redir_out_append(data);

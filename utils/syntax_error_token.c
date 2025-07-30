@@ -38,7 +38,7 @@ int	check_file_after_redirin(t_data *data)
 
 int	check_file_after_redirout(t_data *data)
 {
-	if (is_redir_out(data) || is_redir_out_append(data))
+	if (is_redir_out2(data) || is_redir_out_append(data))
 	{
 		if (data->next && ft_strcmp(data->next->type, "FILE") == 0)
 			return (0);

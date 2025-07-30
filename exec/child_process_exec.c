@@ -53,25 +53,30 @@ void	pipe_creation(t_data *data, int cmds_numb)
 	}
 }
 
+void	check_pipes(int i, t_data *data, t_list *list, int cmds_numb)
+{
+	if (i == 0)
+		ft_first_cmd(list->begin->pipefd, i);
+	else if (i == cmds_numb - 1)
+		ft_last_cmd(list->begin->pipefd, i);
+	else
+		ft_middle_cmd(list->begin->pipefd, i);
+	ft_close_all_pipes(list->begin->pipefd, data, list);
+}
+
 int	child_process_pipe(t_data *data, t_list *list,
 						t_list_env *env_list, int i)
 {
 	int	cmds_numb;
+	int	redirout;
 
 	cmds_numb = get_cmd_nb(data, list);
+	redirout = 0;
 	signal(SIGINT, SIG_DFL);
-	if (!search_redir(data, env_list))
+	if (cmds_numb > 1)
+		check_pipes(i, data, list, cmds_numb);
+	if (!search_redir(data, env_list, &redirout))
 		exit(0);
-	if (!is_redir_out(data) && cmds_numb > 1)
-	{
-		if (i == 0)
-			ft_first_cmd(list->begin->pipefd, i);
-		else if (i == cmds_numb - 1)
-			ft_last_cmd(list->begin->pipefd, i);
-		else
-			ft_middle_cmd(list->begin->pipefd, i);
-		ft_close_all_pipes(list->begin->pipefd, data, list);
-	}
 	if (built_cmd_child(data->word))
 		test_builtins_child(data, env_list, list);
 	else

@@ -42,6 +42,7 @@ typedef struct s_data
 	int				j;
 	int				k;
 	int				len;
+	int				stdout;
 	char			**env_child_process;
 	int				cmds_numb;
 	int				here_doc_fd;
@@ -111,6 +112,8 @@ void		pipe_creation(t_data *data, int cmds_numb);
 int			child_process_pipe(t_data *data, t_list *list, t_list_env *env_list,
 				int i);
 void		free_pipes_and_pid(int cmds_numb, t_list *list, pid_t *pid);
+void		check_pipes(int i, t_data *data, t_list *list, int cmds_numb);
+void		ft_close_unused_pipes_for_child(int **pipefd, int cmds_numb, int current_cmd);
 
 // exec../builtin../echo
 void		ft_echo(char **av);
@@ -200,7 +203,8 @@ int			is_redir_in(t_data *data);
 void		ft_redir_in(t_data *data);
 
 // pars../redirection_out
-int			is_redir_out(t_data *data);
+int			is_redir_out(t_data *data, int *redirout);
+int			is_redir_out2(t_data *data);
 void		ft_redir_out(t_data *data);
 int			is_redir_out_append(t_data *data);
 void		ft_redir_out_append(t_data *data);
@@ -268,7 +272,7 @@ char		*search_in_env(char *expand, t_list_env *env);
 void		exit_clean(int exit_code);
 
 // utils../redirection_checker
-int			search_redir(t_data *data, t_list_env *env);
+int			search_redir(t_data *data, t_list_env *env, int *redirout);
 int			is_redir_start(t_data *data, t_list_env *env);
 
 // utils../syntax_error_token
