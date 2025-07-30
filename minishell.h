@@ -172,6 +172,7 @@ void		fill_args_cmd(t_data *data, int k);
 void		get_args_cmd(t_data *data, t_list *list);
 int			get_cmd_nb(t_data *data, t_list *list);
 int			parse_error_operators(char *args);
+int			skip_quotes(char *str, int start, char c);
 int			is_double_operator(const char *s);
 int			check_after(char *args, int *i);
 int			check_after_operator(char *args, int pos);

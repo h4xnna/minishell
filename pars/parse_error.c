@@ -6,7 +6,7 @@
 /*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:04:30 by acrusoe           #+#    #+#             */
-/*   Updated: 2025/07/28 13:10:58 by acrusoe          ###   ########.fr       */
+/*   Updated: 2025/07/30 09:10:38 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 int	skip_whitespace(char *str, int start)
 {
 	while (str[start] && str[start] == ' ')
+		start++;
+	return (start);
+}
+
+int	skip_quotes(char *str, int start, char c)
+{
+	while (str[start] && str[start] != c)
 		start++;
 	return (start);
 }
@@ -54,6 +61,10 @@ int	parse_error_operators(char *args)
 	i = 0;
 	while (args[i])
 	{
+		if (args[i] == '"' || args[i] == '\'')
+		{
+			i = skip_quotes(args, i, args[i]);
+		}
 		if (is_double_operator(&args[i]))
 		{
 			if (check_after(args, &i))
