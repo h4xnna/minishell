@@ -90,13 +90,21 @@ int	handle_builtin_if_needed(t_data *data, t_list_env *env_list, t_list *list)
 		test_builtins_parents(data, env_list, list);
 		return (1);
 	}
+	// if(ft_strcmp(data->next->type, "PIPE") == 0)
+	// {
+	// 	if (ft_strcmp(data->word, "exit") == 0)
+	// 	{
+	// 		ft_close_all_pipes(list->begin->pipefd, data, list);
+	// 		ft_exit(data->args);
+	// 	}
+	// }
 	return (0);
 }
 
 int	exec_main_function(t_data *data, t_list *list,
 					t_list_env *env_list, pid_t *pid)
 {
-	int	original_stdout;
+	int original_stdout;
 
 	original_stdout = dup(STDOUT_FILENO);
 	while (data && list->begin->ind < list->begin->cmds_numb)
@@ -107,6 +115,7 @@ int	exec_main_function(t_data *data, t_list *list,
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			dup2(original_stdout, STDOUT_FILENO);
+			close(original_stdout);
 			if (handle_builtin_if_needed(data, env_list, list))
 				return (1);
 			if (!handle_fork_and_exec(data, list, env_list, pid))

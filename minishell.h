@@ -31,6 +31,7 @@
 typedef struct s_data
 {
 	int				saved_stdin;
+	int				original_stdout;
 	char			*word;
 	char			*type;
 	int				index;

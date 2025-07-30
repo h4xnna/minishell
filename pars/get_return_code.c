@@ -59,7 +59,9 @@ int	handle_cmd_execution(t_data *data, t_list *list,
 			if (data->here_doc_fd >= 0)
 				unlink("here_doc");
 			data->here_doc_fd = 0;
+			printf("JE SUIS LE FD %d\n", list->begin->saved_stdin);
 			dup2(list->begin->saved_stdin, STDIN_FILENO);
+			printf("JE CLOSE LE FD %d\n", list->begin->saved_stdin);
 			close(list->begin->saved_stdin);
 			return (1);
 		}
