@@ -93,7 +93,6 @@ void	double_quotes_expansion(t_data *data, char *args, t_list_env *env)
 	data->i++;
 	k = 0;
 	temp[k++] = '$';
-	temp[k++] = '$';
 	while (args[data->i]
 		&& !is_quote(args[data->i])
 		&& args[data->i] != '$'
