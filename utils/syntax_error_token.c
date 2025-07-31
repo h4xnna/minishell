@@ -100,6 +100,11 @@ int	wrong_token_error(t_data *data, t_list *list)
 		printf("bash: syntax error near unexpected token\n");
 		return (1);
 	}
+	if (ft_strcmp(list->begin->type, "ARG") == 0)
+	{
+		printf("bash: command not found\n");
+		return (1);
+	}
 	while (data)
 	{
 		if (check_file_after_redirin(data))
