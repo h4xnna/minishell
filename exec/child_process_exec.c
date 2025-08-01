@@ -71,6 +71,7 @@ int	child_process_pipe(t_data *data, t_list *list,
 	
 	cmds_numb = get_cmd_nb(data, list);
 	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (cmds_numb > 1)
 		check_pipes(i, data, list, cmds_numb);
 	if (!search_redir_backward(data, env_list))
@@ -114,10 +115,7 @@ void	pids_handler(pid_t *pid, int cmds_numb)
 	while (k < cmds_numb)
 	{
 		if (waitpid(pid[k], &status, 0) == -1)
-		{
-			perror("waitpid");
 			return ;
-		}
 		if (k == cmds_numb - 1)
 			last_pid_handler(status);
 		k++;

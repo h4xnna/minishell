@@ -70,12 +70,7 @@ void	pipe_not_followed_by_cmd(t_data *data, t_list *list)
 	{
 		if (data->next && ft_strcmp(data->type, "PIPE") == 0)
 		{
-			if (ft_strcmp(data->type, "ARG") == 0 && !is_cmd_type(data))
-			{
-				data = data->next;
-				continue ;
-			}
-			else if (!is_redirections(data->next) && ft_strcmp(data->next->type, "CMD"))
+			if (!is_redirections(data->next) && ft_strcmp(data->next->type, "CMD"))
 				printf("bash: command not found\n");
 		}
 		data = data->next;

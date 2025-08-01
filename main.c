@@ -66,11 +66,15 @@ void	print_exec(t_list *list, char *args, t_list_env *env_list)
 	}
 	if (handle_cmd_execution(data, list, env_list))
 		return ;
-	if (ft_strcmp(list->begin->type, "HERE_DOC") == 0)
+	while (data)
 	{
-		here_doc(list->begin, env_list);
-		dup2(list->begin->saved_stdin, STDIN_FILENO);
-		close(list->begin->saved_stdin);
+		if (ft_strcmp(list->begin->type, "HERE_DOC") == 0)
+		{
+			here_doc(list->begin, env_list);
+			dup2(list->begin->saved_stdin, STDIN_FILENO);
+			close(list->begin->saved_stdin);
+		}
+		data = data->next;
 	}
 	print_error(list, args);
 }
@@ -121,6 +125,7 @@ void	program_handler(t_list *list, char *args, char **env,
 void	main_loop_function(t_list *list, char *args, char **env,
 						t_list_env *env_list)
 {
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		set_get_env(env_list);
