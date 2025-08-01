@@ -6,7 +6,7 @@
 /*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:04:30 by acrusoe           #+#    #+#             */
-/*   Updated: 2025/08/01 15:52:33 by acrusoe          ###   ########.fr       */
+/*   Updated: 2025/08/01 16:39:44 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ int	is_double_operator(const char *s)
 		return (1);
 	return (0);
 }
+int	is_redirs(char c)
+{
+	if (c == '>' || c == '<')
+		return (1);
+	return (0);
+}
 
 int	parse_error_operators(char *args)
 {
@@ -69,7 +75,7 @@ int	parse_error_operators(char *args)
 			if (check_after(args, &i))
 				return (1);
 		}
-		else if (is_operator3(args[i]))
+		else if (is_redirs(args[i]))
 		{
 			if (check_after_operator(args, i + 1))
 			{
