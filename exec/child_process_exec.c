@@ -68,14 +68,12 @@ int	child_process_pipe(t_data *data, t_list *list,
 						t_list_env *env_list, int i)
 {
 	int	cmds_numb;
-	int	redirout;
-
+	
 	cmds_numb = get_cmd_nb(data, list);
-	redirout = 0;
 	signal(SIGINT, SIG_DFL);
 	if (cmds_numb > 1)
 		check_pipes(i, data, list, cmds_numb);
-	if (!search_redir(data, env_list, &redirout))
+	if (!search_redir(data, env_list, list))
 		exit(0);
 	if (built_cmd_child(data->word))
 		test_builtins_child(data, env_list, list);

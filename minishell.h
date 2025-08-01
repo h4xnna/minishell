@@ -204,7 +204,7 @@ int			is_redir_in(t_data *data);
 void		ft_redir_in(t_data *data);
 
 // pars../redirection_out
-int			is_redir_out(t_data *data, int *redirout);
+int			is_redir_out(t_data *data);
 int			is_redir_out2(t_data *data);
 void		ft_redir_out(t_data *data);
 int			is_redir_out_append(t_data *data);
@@ -273,8 +273,8 @@ char		*search_in_env(char *expand, t_list_env *env);
 void		exit_clean(int exit_code);
 
 // utils../redirection_checker
-int			search_redir(t_data *data, t_list_env *env, int *redirout);
-int			is_redir_start(t_data *data, t_list_env *env);
+int			search_redir(t_data *data, t_list_env *env, t_list *list);
+int			is_redir_start(t_data *data, t_list_env *env, t_list *list);
 
 // utils../syntax_error_token
 int			wrong_token_error(t_data *data, t_list *list);
