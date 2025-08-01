@@ -35,6 +35,7 @@ typedef struct s_data
 	char			*word;
 	char			*type;
 	int				index;
+	int				redir_check;
 	int				ind;
 	char			**args;
 	int				flag;
@@ -273,8 +274,10 @@ char		*search_in_env(char *expand, t_list_env *env);
 void		exit_clean(int exit_code);
 
 // utils../redirection_checker
-int			search_redir(t_data *data, t_list_env *env, t_list *list);
+int			search_redir(t_data *data, t_list_env *env);
+int			search_redir_backward(t_data *data, t_list_env *env);
 int			is_redir_start(t_data *data, t_list_env *env, t_list *list);
+int			not_check(t_list *list);
 
 // utils../syntax_error_token
 int			wrong_token_error(t_data *data, t_list *list);

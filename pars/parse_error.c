@@ -6,7 +6,7 @@
 /*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:04:30 by acrusoe           #+#    #+#             */
-/*   Updated: 2025/07/30 18:44:07 by acrusoe          ###   ########.fr       */
+/*   Updated: 2025/08/01 15:52:33 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ int	parse_error_operators(char *args)
 	while (args[i])
 	{
 		if (args[i] == '"' || args[i] == '\'')
-		{
 			i = skip_quotes(args, i, args[i]);
-		}
 		else if (is_double_operator(&args[i]))
 		{
 			if (check_after(args, &i))
