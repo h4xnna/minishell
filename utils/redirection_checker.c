@@ -51,12 +51,20 @@ int	search_redir(t_data *data, t_list_env *env)
 
 int	search_redir_backward(t_data *data, t_list_env *env)
 {
-	while (data && ft_strcmp(data->type, "PIPE"))
+	int	original_stdin;
+
+	original_stdin = dup(STDIN_FILENO);
+	while (data && data->back && ft_strcmp(data->back->type, "PIPE") != 0)
+	{
+		data = data->back;
+	}
+	while (data && ft_strcmp(data->type, "CMD"))
 	{
 		if (is_redir_in(data))
 			ft_redir_in(data);
 		else if (has_heredoc(data))
 		{
+			dup2(original_stdin, STDIN_FILENO);
 			if (here_doc(data, env))
 				return (1);
 		}
@@ -64,7 +72,7 @@ int	search_redir_backward(t_data *data, t_list_env *env)
 			ft_redir_out(data);
 		else if (is_redir_out_append(data))
 			ft_redir_out_append(data);
-		data = data->back;
+		data = data->next;
 	}
 	return (1);
 }
