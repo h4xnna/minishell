@@ -6,7 +6,7 @@
 /*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/08/02 14:22:18 by acrusoe          ###   ########.fr       */
+/*   Updated: 2025/08/02 18:54:58 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,11 +175,13 @@ void	handle_heredoc_child(t_data *data, t_list_env *env)
 	while (1)
 	{
 		line = readline("\033[1m\033[31mheredoc → \033[0m");
-		if (!line || ft_strcmp(data->next->word, line) == 0)
+		if (!line)
 		{
-			write(2, "\nminishell: warning: here-document delimited by end-of-file\n", 60);
+			write(2, "minishell: warning: here-document delimited by end-of-file\n", 60);
 			break ;
 		}
+		if (ft_strcmp(data->next->word, line) == 0)
+			break ;
 		process_heredoc_line(fd, line, env);
 	}
 	close(fd);
