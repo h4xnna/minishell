@@ -130,6 +130,7 @@ void	main_loop_function(t_list *list, char *args, char **env,
 						t_list_env *env_list)
 {
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	while (1)
 	{
 		set_get_env(env_list);
