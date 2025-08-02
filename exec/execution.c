@@ -105,8 +105,10 @@ int	exec_main_function(t_data *data, t_list *list,
 					t_list_env *env_list, pid_t *pid)
 {
 	int original_stdout;
+	int	original_stdin;
 
 	original_stdout = dup(STDOUT_FILENO);
+	original_stdin = dup(STDIN_FILENO);
 	while (data && list->begin->ind < list->begin->cmds_numb)
 	{
 		signal(SIGINT, SIG_IGN);
@@ -116,18 +118,19 @@ int	exec_main_function(t_data *data, t_list *list,
 		{
 			dup2(original_stdout, STDOUT_FILENO);
 			close(original_stdout);
+			dup2(original_stdout, STDIN_FILENO);
+			close(original_stdin);
 			if (handle_builtin_if_needed(data, env_list, list))
 				return (1);
 			if (!handle_fork_and_exec(data, list, env_list, pid))
-			{
-				list->begin->redir_check = 1;
 				break ;
-			}
 		}
 		data = data->next;
 	}
 	dup2(original_stdout, STDOUT_FILENO);
 	close(original_stdout);
+	dup2(original_stdout, STDIN_FILENO);
+	close(original_stdin);
 	return (0);
 }
 

@@ -74,7 +74,7 @@ int	child_process_pipe(t_data *data, t_list *list,
 	signal(SIGQUIT, SIG_DFL);
 	if (cmds_numb > 1)
 		check_pipes(i, data, list, cmds_numb);
-	if (!search_redir_backward(data, env_list))
+	if (search_redir_backward(data, env_list))
 		exit(0);
 	if (!search_redir(data, env_list))
 		exit(0);

@@ -51,15 +51,13 @@ int	search_redir(t_data *data, t_list_env *env)
 
 int	search_redir_backward(t_data *data, t_list_env *env)
 {
-	// if (list->begin->redir_check == 0)
-	// 	is_redir_start(data, env, list);
 	while (data && ft_strcmp(data->type, "PIPE"))
 	{
 		if (is_redir_in(data))
 			ft_redir_in(data);
 		else if (has_heredoc(data))
 		{
-			if (!here_doc(data, env))
+			if (here_doc(data, env))
 				return (0);
 		}
 		else if (is_redir_out(data))
