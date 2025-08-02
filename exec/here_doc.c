@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmimouni <hmimouni@>                       +#+  +:+       +#+        */
+/*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 17:42:28 by hmimouni          #+#    #+#             */
-/*   Updated: 2025/07/29 14:57:42 by hmimouni         ###   ########.fr       */
+/*   Updated: 2025/08/02 14:22:18 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void	handle_signel(int sig)
 {
 	if (sig == SIGINT)
 	{
+		write(1, "\n", 1);
 		ft_malloc(-1);
 		free_env_list(set_get_env(NULL));
 	}
@@ -175,7 +176,10 @@ void	handle_heredoc_child(t_data *data, t_list_env *env)
 	{
 		line = readline("\033[1m\033[31mheredoc → \033[0m");
 		if (!line || ft_strcmp(data->next->word, line) == 0)
+		{
+			write(2, "\nminishell: warning: here-document delimited by end-of-file\n", 60);
 			break ;
+		}
 		process_heredoc_line(fd, line, env);
 	}
 	close(fd);
