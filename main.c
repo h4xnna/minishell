@@ -51,7 +51,9 @@
 void	print_exec(t_list *list, char *args, t_list_env *env_list)
 {
 	t_data	*data;
+	int	flag;
 
+	flag = 0;
 	if (!list || !list->begin)
 	{
 		print_error(list, args);
@@ -68,15 +70,17 @@ void	print_exec(t_list *list, char *args, t_list_env *env_list)
 		return ;
 	while (data)
 	{
-		if (ft_strcmp(list->begin->type, "HERE_DOC") == 0)
+		if (ft_strcmp(data->type, "HERE_DOC") == 0)
 		{
-			here_doc(list->begin, env_list);
-			dup2(list->begin->saved_stdin, STDIN_FILENO);
-			close(list->begin->saved_stdin);
+			here_doc(data, env_list);
+			dup2(data->saved_stdin, STDIN_FILENO);
+			close(data->saved_stdin);
+			flag = 1;
 		}
 		data = data->next;
 	}
-	print_error(list, args);
+	if (!flag)
+		print_error(list, args);
 }
 
 int	tokenisation_and_exec(t_list *list, char *args,

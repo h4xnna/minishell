@@ -58,7 +58,7 @@ int	search_redir_backward(t_data *data, t_list_env *env)
 		else if (has_heredoc(data))
 		{
 			if (here_doc(data, env))
-				return (0);
+				return (1);
 		}
 		else if (is_redir_out(data))
 			ft_redir_out(data);

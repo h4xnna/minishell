@@ -117,9 +117,7 @@ int	exec_main_function(t_data *data, t_list *list,
 		if (ft_strcmp(data->type, "CMD") == 0)
 		{
 			dup2(original_stdout, STDOUT_FILENO);
-			close(original_stdout);
-			dup2(original_stdout, STDIN_FILENO);
-			close(original_stdin);
+			dup2(original_stdin, STDIN_FILENO);
 			if (handle_builtin_if_needed(data, env_list, list))
 				return (1);
 			if (!handle_fork_and_exec(data, list, env_list, pid))
