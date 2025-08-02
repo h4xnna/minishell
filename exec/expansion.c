@@ -69,7 +69,8 @@ void	expansion(t_data *data, char *args, t_list_env *env)
 	while (args[data->i]
 		&& !is_operator(args[data->i])
 		&& !is_quote(args[data->i])
-		&& args[data->i] != '$')
+		&& args[data->i] != '$'
+		&& args[data->i] != '%')
 		var[k++] = args[data->i++];
 	var[k] = '\0';
 	expand = get_expand(var, env);
@@ -96,7 +97,8 @@ void	double_quotes_expansion(t_data *data, char *args, t_list_env *env)
 	while (args[data->i]
 		&& !is_quote(args[data->i])
 		&& args[data->i] != '$'
-		&& args[data->i] != ' ')
+		&& args[data->i] != ' '
+		&& args[data->i] != '%')
 		temp[k++] = args[data->i++];
 	temp[k] = '\0';
 	expanded = get_expand(temp, env);
