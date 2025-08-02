@@ -73,8 +73,8 @@ void	print_exec(t_list *list, char *args, t_list_env *env_list)
 		if (ft_strcmp(data->type, "HERE_DOC") == 0)
 		{
 			here_doc(data, env_list);
-			dup2(data->saved_stdin, STDIN_FILENO);
-			close(data->saved_stdin);
+			dup2(list->begin->saved_stdin, STDIN_FILENO);
+			close(list->begin->saved_stdin);
 			flag = 1;
 		}
 		data = data->next;
