@@ -6,7 +6,7 @@
 /*   By: acrusoe <acrusoe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 13:04:30 by acrusoe           #+#    #+#             */
-/*   Updated: 2025/08/01 16:39:44 by acrusoe          ###   ########.fr       */
+/*   Updated: 2025/08/02 14:27:46 by acrusoe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_after(char *args, int *i)
 {
 	if (check_after_operator(args, *i + 2))
 	{
-		printf("bash: parse error\n");
+		printf("bash: syntax error near unexpected token\n");
 		return (1);
 	}
 	(*i)++;
@@ -79,7 +79,7 @@ int	parse_error_operators(char *args)
 		{
 			if (check_after_operator(args, i + 1))
 			{
-				printf("bash: parse error\n");
+				printf("bash: syntax error near unexpected token\n");
 				return (1);
 			}
 		}
